@@ -13,20 +13,3 @@
   margin-left : 70%;
   margin-bottom: auto;
 }
-
-
-.heading{
-  height: 150px;
-  border-style: solid;
-}
-
-
-.tabs{
-  display: flex;
-  margin-top: -3%;
-}
-
-.tab{
-  margin-left: auto;
-  margin-right: auto;
-}
