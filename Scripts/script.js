@@ -3,7 +3,9 @@
 // food list
 function addToTextInput(){
   var addButton = document.getElementsByClassName('addButton');
-  var textInput = document.getElementsByClassName('textAddFood')
+  var textInput = document.getElementsByClassName('textAddFood');
+  var addText = document.getElementsByClassName('addText');
+
   addButton.style.display = "none";
   textInput.style.display = "block";
 }
@@ -14,6 +16,8 @@ function addToTextInput(){
 function removeToTextInput(){
   var removeButton = document.getElementsByClassName('removeButton');
   var textInput = document.getElementsByClassName('textRemoveFood');
+  var removeText = document.getElementsByClassName('removeText');
+
   removeButton.style.display = "none";
   textInput.style.display = "block";
 }
