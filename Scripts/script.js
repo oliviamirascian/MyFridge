@@ -1,5 +1,19 @@
-function buttonToTextInput(){
+// This function will hide the add button and show the text
+// input that will allow the user to add an item to their
+// food list
+function addToTextInput(){
   var addButton = document.getElementsByClassName('addButton');
-  var removeButton = document.getElementsByClassName('removeButton');
+  var textInput = document.getElementsByClassName('textAddFood')
+  addButton.style.display = "none";
+  textInput.style.display = "block";
+}
 
+// This function will hide the remove button and show the text
+// input that will allow the user to remove an item from their
+// food list
+function removeToTextInput(){
+  var removeButton = document.getElementsByClassName('removeButton');
+  var textInput = document.getElementsByClassName('textRemoveFood');
+  removeButton.style.display = "none";
+  textInput.style.display = "block";
 }
