@@ -1,0 +1,21 @@
+#fridgeTitle {
+  font-size: 50px;
+  text-align: center;
+  margin-top: 1%;
+}
+
+.heading{
+  height: 170px;
+  border-style: solid;
+}
+
+.tabs{
+  margin-bottom: 1%;
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
