@@ -4,14 +4,26 @@
   margin-top: 1%;
 }
 
+#search {
+  padding:7px;
+  background-color: lightyellow;
+  width: 200px;
+  padding: 7px;
+  border: 1px solid #333;
+  margin-left : 70%;
+  margin-bottom: auto;
+}
+
+
 .heading{
   height: 150px;
   border-style: solid;
 }
 
+
 .tabs{
   display: flex;
-  margin-top: 2%;
+  margin-top: -3%;
 }
 
 .tab{
