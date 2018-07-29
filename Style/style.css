@@ -19,3 +19,21 @@
   margin-right: auto;
   font-size: 20px;
 }
+
+.addButton{
+  height: 30px;
+  display: block;
+}
+
+.removeButton{
+  height: 30px;
+  display: block;
+}
+
+.textAddFood{
+  display: none;
+}
+
+.textRemoveFood{
+  display: none;
+}
