@@ -1,8 +1,4 @@
-#fridgeTitle {
-  font-size: 50px;
-  text-align: center;
-  margin-top: 1%;
-}
+/* Top part of every page */
 
 .heading{
   height: 150px;
@@ -20,6 +16,8 @@
   font-size: 20px;
 }
 
+/* nutriTracker.html */
+
 .addButton{
   height: 30px;
   display: block;
@@ -36,4 +34,12 @@
 
 .textRemoveFood{
   display: none;
+}
+
+/* recipes.html */
+
+#fridgeTitle {
+  font-size: 50px;
+  text-align: center;
+  margin-top: 1%;
 }
