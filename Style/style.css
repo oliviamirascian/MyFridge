@@ -44,6 +44,17 @@
   margin-top: 1%;
 }
 
+<<<<<<< HEAD
+#search{
+  padding:7px;
+  background-color: lightyellow;
+  width:200px;
+  padding:7px;
+  border: 1px solid #333;
+  margin-left:70%;
+  margin-bottom:auto;
+}
+=======
 #search {
   padding:7px;
   background-color: lightyellow;
@@ -55,3 +66,4 @@
 }
 
 /* fridge.html */
+>>>>>>> master
