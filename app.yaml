@@ -7,9 +7,6 @@ handlers:
 - url: /Style
   static_dir: style
 
-- url: /Style
-  static_dir: recipesStyle
-
 - url: /.*
   script: main.app
 
