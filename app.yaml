@@ -3,7 +3,7 @@ api_version: 1
 threadsafe: true
 
 handlers:
-  
+
 - url: /Style
   static_dir: style
 

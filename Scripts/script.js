@@ -25,5 +25,5 @@ function removeToTextInput(){
 // This function will move an object from the Today list to the
 // History list in the NutriTracker
 function moveToHistory(){
-  
+
 }
