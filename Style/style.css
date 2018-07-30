@@ -80,18 +80,36 @@ h1 {
 margins:0;
 }
 
-.wrapper {
+.wrapperrecipe {
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 700px;
 }
 
-#left {
+.wrapperfridge {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 700px;
+}
+
+#leftfridge {
   background-color: lightyellow;
   text-align: center;
 }
 
-#right {
+#rightfridge {
+  background-color: lightblue;
+  text-align: center;
+}
+
+
+
+#leftrecipe {
+  background-color: lightyellow;
+  text-align: center;
+}
+
+#rightrecipe {
   background-color: lightblue;
   text-align: center;
 }

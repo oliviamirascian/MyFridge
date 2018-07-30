@@ -8,15 +8,15 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-def foodInDB(response):
-    foodQuery = response.query()
+# def foodInDB(response):
+#     foodQuery = response.query()
+#
+#     foodBody = foodQuery.root.body.fetch()
+#
+#     if foodBody[0] == "":
+#         window.alert("That food is not in our database. Check for spelling errors.")
+#     else:
 
-    foodBody = foodQuery.root.body.fetch()
-
-    if foodBody[0] == "":
-        window.alert("That food is not in our database. Check for spelling errors.")
-    else:
-        
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
