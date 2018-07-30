@@ -44,12 +44,66 @@
 }
 
 #search{
+  align: center;
   padding:7px;
   background-color: lightyellow;
   width:200px;
   padding:7px;
   border: 1px solid #333;
-  margin-left:70%;
-  margin-bottom:auto;
 }
+
+#recipeAddRemove{
+margin-top: 30%;
+}
+
+#Savedrecipes{
+  float: right;
+}
+
+
+
+body,
+html {
+margin:0;
+padding:0;
+color:#000;
+background:#D1F3EB;
+}
+
+#header {
+padding:5px 10px;
+background:white;
+
+}
+
+h1 {
+margins:0;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 700px;
+}
+
+#left {
+  background-color: lightyellow;
+  text-align: center;
+}
+
+#right {
+  background-color: lightblue;
+  text-align: center;
+}
+
+#footer {
+clear:both;
+padding: 5px 10px;
+background: white;
+
+
+
+}
+
+
 /* fridge.html */
