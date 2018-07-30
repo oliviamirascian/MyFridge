@@ -21,3 +21,9 @@ function removeToTextInput(){
   removeButton.style.display = "none";
   textInput.style.display = "block";
 }
+
+// This function will move an object from the Today list to the
+// History list in the NutriTracker
+function moveToHistory(){
+  
+}
