@@ -8,6 +8,11 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+class MainPage(webapp2.RequestHandler):
+    def get(self):
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+        self.response.write(welcome_template.render())
+
 class FridgePage(webapp2.RequestHandler):
     def get(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
@@ -24,7 +29,8 @@ class RecipesPage(webapp2.RequestHandler):
         self.response.write(recipes_template.render())
 
 app = webapp2.WSGIApplication([
-    ('/', FridgePage),
+    ('/', MainPage),
+    ('/fridge', FridgePage),
     ('/nutritracker', NutriTrackerPage),
     ('/recipes', RecipesPage)
 ], debug=True)
