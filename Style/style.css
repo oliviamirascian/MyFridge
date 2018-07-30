@@ -43,13 +43,13 @@
   margin-top: 1%;
 }
 
-#search {
+#search{
   padding:7px;
   background-color: lightyellow;
-  width: 200px;
-  padding: 7px;
+  width:200px;
+  padding:7px;
   border: 1px solid #333;
-  margin-left : 70%;
-  margin-bottom: auto;
+  margin-left:70%;
+  margin-bottom:auto;
 }
 /* fridge.html */
