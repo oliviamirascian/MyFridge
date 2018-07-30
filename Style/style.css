@@ -60,21 +60,50 @@ margin-top: 30%;
   float: right;
 }
 
-#main {
-text-align: center;
-float:left;
-width:400px;
-background:#9c9;
-}
-#sidebar {
-text-align: center;
-float:right;
-width:400px;
-background:#c9c;
+
+
+body,
+html {
+margin:0;
+padding:0;
+color:#000;
+background:#D1F3EB;
 }
 
+#header {
+padding:5px 10px;
+background:white;
+
+}
+
+h1 {
+margins:0;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 700px;
+}
+
+#left {
+  background-color: lightyellow;
+  text-align: center;
+}
+
+#right {
+  background-color: lightblue;
+  text-align: center;
+}
+
+#footer {
+clear:both;
+padding: 5px 10px;
+background: white;
 
 
+
+}
 
 
 /* fridge.html */
