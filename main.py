@@ -2,6 +2,7 @@ from google.appengine.api import urlfetch
 import webapp2
 import jinja2
 import os
+from model import User
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -22,6 +23,24 @@ class MainPage(webapp2.RequestHandler):
     def get(self):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
+
+class CreateAccount(webapp2.RequestHandler):
+    def get(self):
+        createAccount_template = JINJA_ENVIRONMENT.get_template('templates/createAccount.html')
+        self.response.write(createAccount_template.render())
+
+    def post(self):
+        first_name = self.request.get('FirstName')
+        last_name = self.request.get('LastName')
+        username = self.request.get('Username')
+        password = self.request.get('Password')
+
+        user = User(first_name = first_name,
+                    last_name = last_name,
+                    username = username,
+                    password = password)
+        print ("Something")
+        user.put()
 
 class FridgePage(webapp2.RequestHandler):
     def get(self):
@@ -61,6 +80,7 @@ class RecipesPage(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
+    ('/createAccount',CreateAccount),
     ('/fridge', FridgePage),
     ('/nutritracker', NutriTrackerPage),
     ('/recipes', RecipesPage)
