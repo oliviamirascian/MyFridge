@@ -1,10 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <link rel="stylesheet" href="/Style/style.css">
     <meta charset="utf-8">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="/Scripts/script.js"></script>
+    <meta name="google-signin-client_id" content="15145183773-m2dh8cosvugqilo2ver83cta6q1qfbao.apps.googleusercontent.com">
     <title></title>
   </head>
-  <body>
-
+  <body id = "background">
+    <div class="">
+      <h1 id = "frontTitle" >MyFridge</h1>
+    </div>
+    <img src="https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg" alt="" id = "frontImage">
+    <div id="loginBox">
+      <form method="post" action = "/">
+        <h2>Username</h2>
+        <input type="text" name="welcome_username" placeholder="username" value = "">
+        <br>
+        <h2>Password</h2>
+        <input type="password" name="welcome_password" placeholder="password" value = "">
+        <br>
+        <br>
+        <button type="submit" name="button">Login</button>
+      </form>
+      <br><br>
+      <div class="g-signin2" data-onsuccess="onSignIn" id="googleSignIn"></div>
+      <br><br>
+      <a href="/createAccount">Create Account</a>
+      <a href="#" onclick="signOut();">Sign out</a>
+    </div>
   </body>
 </html>

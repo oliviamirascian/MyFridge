@@ -54,4 +54,129 @@
   margin-bottom: auto;
 }
 
+#recipeAddRemove{
+margin-top: 30%;
+}
+
+#Savedrecipes{
+  float: right;
+}
+
+
+
+body,
+html {
+margin:0;
+padding:0;
+color:#000;
+background:#D1F3EB;
+}
+
+#header {
+padding:5px 10px;
+background:white;
+
+}
+
+h1 {
+margins:0;
+}
+
+.wrapperrecipe {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 700px;
+}
+
+.wrapperfridge {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 700px;
+}
+
+#leftfridge {
+  background-color: lightyellow;
+  text-align: center;
+}
+
+#rightfridge {
+  background-color: lightblue;
+  text-align: center;
+}
+
+
+
+#leftrecipe {
+  background-color: lightyellow;
+  text-align: center;
+}
+
+#rightrecipe {
+  background-color: lightblue;
+  text-align: center;
+}
+
+#footer {
+clear:both;
+padding: 5px 10px;
+background: white;
+
+
+
+}
+
+
 /* fridge.html */
+
+
+
+/* welcome.html */
+#background{
+  background-color: #FEE6A5;
+}
+
+#frontTitle{
+  font-size: 50px;
+  text-align: center;
+  margin-top: 3%;
+}
+
+#loginBox{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -500px;
+  /*top: 275px;
+  left: 39%;*/
+  width: 300px;
+  height: 350px;
+  background-color: #D1F3EB;
+  border-radius: 50px;
+  text-align: center;
+  filter: opacity(90%)
+}
+
+#createAccountBox{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -550px;
+  /* top: 200px;
+  left: 39%; */
+  width: 300px;
+  height: 450px;
+  background-color: #D1F3EB;
+  border-radius: 50px;
+  text-align: center;
+}
+
+#frontImage{
+  position:relative;
+  height: 600px;
+  width: 100%;
+  filter: opacity(50%);
+}
+
+.abcRioButton{
+  margin: 0 auto;
+}
