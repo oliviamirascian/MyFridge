@@ -2,7 +2,6 @@ from google.appengine.api import urlfetch
 import webapp2
 import jinja2
 import os
-import win32api
 from model import User
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -16,7 +15,7 @@ def getFoodID(response):
     foodBody = foodQuery.root.body.fetch()
 
     if foodBody[0] == "":
-        win32api.MessageBox(0, 'That food is not in our database. Check for spelling errors.')
+        pass
     else:
         foodID = foodBody[0].id
         return foodID
@@ -32,79 +31,79 @@ def getFoodInfo(response):
     nutrition = foodBody.nutrition.nutrients.fetch()
 
     calories = {
-    'title': nutrition[0].title
-    'amount': nutrition[0].amount
-    'unit': nutrition[0].unit
+    'title': nutrition[0].title,
+    'amount': nutrition[0].amount,
+    'unit': nutrition[0].unit,
     'percentOfDailyNeeds': nutrition[0].percentOfDailyNeeds
     }
 
     fat = {
-    'title': nutrition[1].title
-    'amount': nutrition[1].amount
-    'unit': nutrition[1].unit
+    'title': nutrition[1].title,
+    'amount': nutrition[1].amount,
+    'unit': nutrition[1].unit,
     'percentOfDailyNeeds': nutrition[1].percentOfDailyNeeds
     }
 
     saturatedFat = {
-    'title': nutrition[2].title
-    'amount': nutrition[2].amount
-    'unit': nutrition[2].unit
+    'title': nutrition[2].title,
+    'amount': nutrition[2].amount,
+    'unit': nutrition[2].unit,
     'percentOfDailyNeeds': nutrition[2].percentOfDailyNeeds
     }
 
     carbs = {
-    'title': nutrition[3].title
-    'amount': nutrition[3].amount
-    'unit': nutrition[3].unit
+    'title': nutrition[3].title,
+    'amount': nutrition[3].amount,
+    'unit': nutrition[3].unit,
     'percentOfDailyNeeds': nutrition[3].percentOfDailyNeeds
     }
 
     sugar = {
-    'title': nutrition[4].title
-    'amount': nutrition[4].amount
-    'unit': nutrition[4].unit
+    'title': nutrition[4].title,
+    'amount': nutrition[4].amount,
+    'unit': nutrition[4].unit,
     'percentOfDailyNeeds': nutrition[4].percentOfDailyNeeds
     }
 
     cholesterol = {
-    'title': nutrition[5].title
-    'amount': nutrition[5].amount
-    'unit': nutrition[5].unit
+    'title': nutrition[5].title,
+    'amount': nutrition[5].amount,
+    'unit': nutrition[5].unit,
     'percentOfDailyNeeds': nutrition[5].percentOfDailyNeeds
     }
 
     sodium = {
-    'title': nutrition[6].title
-    'amount': nutrition[6].amount
-    'unit': nutrition[6].unit
+    'title': nutrition[6].title,
+    'amount': nutrition[6].amount,
+    'unit': nutrition[6].unit,
     'percentOfDailyNeeds': nutrition[6].percentOfDailyNeeds
     }
 
     protein = {
-    'title': nutrition[7].title
-    'amount': nutrition[7].amount
-    'unit': nutrition[7].unit
+    'title': nutrition[7].title,
+    'amount': nutrition[7].amount,
+    'unit': nutrition[7].unit,
     'percentOfDailyNeeds': nutrition[7].percentOfDailyNeeds
     }
 
     fiber = {
-    'title': nutrition[8].title
-    'amount': nutrition[8].amount
-    'unit': nutrition[8].unit
+    'title': nutrition[8].title,
+    'amount': nutrition[8].amount,
+    'unit': nutrition[8].unit,
     'percentOfDailyNeeds': nutrition[8].percentOfDailyNeeds
     }
 
     iron = {
-    'title': nutrition[22].title
-    'amount': nutrition[22].amount
-    'unit': nutrition[22].unit
+    'title': nutrition[22].title,
+    'amount': nutrition[22].amount,
+    'unit': nutrition[22].unit,
     'percentOfDailyNeeds': nutrition[22].percentOfDailyNeeds
     }
 
     calcium = {
-    'title': nutrition[24].title
-    'amount': nutrition[24].amount
-    'unit': nutrition[24].unit
+    'title': nutrition[24].title,
+    'amount': nutrition[24].amount,
+    'unit': nutrition[24].unit,
     'percentOfDailyNeeds': nutrition[24].percentOfDailyNeeds
     }
 
@@ -174,7 +173,7 @@ class FridgePage(webapp2.RequestHandler):
 
         getFoodInfo(response)
 
-        food = FoodFridge(self, calories, fat, saturatedFat, carbs, sugar, cholesterol, sodium, protein, fiber, potassium, iron, calcium)
+        food = FoodFridge(calories, fat, saturatedFat, carbs, sugar, cholesterol, sodium, protein, fiber, potassium, iron, calcium)
 
         food.put()
 
