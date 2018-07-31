@@ -9,6 +9,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+<<<<<<< HEAD
 # def foodInDB(response):
 #     foodQuery = response.query()
 #
@@ -19,10 +20,26 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 #     else:
 
 
+=======
+>>>>>>> working sign in
 class MainPage(webapp2.RequestHandler):
     def get(self):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
+
+    def post(self):
+        print("I'M IN POST!")
+        self.redirect("/fridge")
+        fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
+        username = self.request.get('welcome_username')
+        password = self.request.get('welcome_password')
+        user_info = User.query().filter(username == User.username).fetch()
+        if (username == user_info[0].username) and (password == user_info[0].password):
+            self.response.write(fridge_template.render())
+            self.redirect("/fridge")
+
+
+
 
 class CreateAccount(webapp2.RequestHandler):
     def get(self):
@@ -42,31 +59,14 @@ class CreateAccount(webapp2.RequestHandler):
         print ("Something")
         user.put()
 
+
+
+
+
 class FridgePage(webapp2.RequestHandler):
     def get(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         self.response.write(fridge_template.render())
-
-    def post(self):
-        addFood = self.request.get('addFood')
-        expirationDate = self.request.get('expirationDate')
-        removeFood = self.request.get('removeFood')
-
-        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query="+ addFood +"&number=1&metaInformation=true"
-
-        response = urlfetch.get(url,
-  headers={
-    "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
-    "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
-  }
-)
-
-        foodFridge = FoodFridge(name=addFood, expirationDate=expirationDate)
-
-
-        foodFridge.put()
-
-        url = foodFridge.get_url()
 
 class NutriTrackerPage(webapp2.RequestHandler):
     def get(self):
