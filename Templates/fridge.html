@@ -2,51 +2,83 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../Style/style.css">
-    <script type="text/javascript" src = "script.js"></script>
+    
+    <script type="text/javascript" src = "/Scripts/script.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <meta name="google-signin-client_id" content="15145183773-m2dh8cosvugqilo2ver83cta6q1qfbao.apps.googleusercontent.com">
+    <link rel="stylesheet" href="/Style/style.css">
     <title>MyFridge</title>
   </head>
   <body>
     <div class="heading">
 
-      <h1 id ="fridgeTitle" >MyFridge</h1>
+      <h1 id ="fridgeTitle" >My Fridge</h1>
 
       <div class="tabs">
-        <a href="/fridge" class = "tab">MyFridge</a>
-        <a href="/nutritracker" class = "tab">NutriTracker</a>
+        <a href="/fridge" class = "tab">My Fridge</a>
+        <a href="/nutritracker" class = "tab">Nutrition Tracker</a>
         <a href="/recipes" class = "tab">Fridge Recipes</a>
       </div>
     </div>
+    <a href="#" onclick="signOut();">Sign out</a>
 
-    <div class="fridge">
-      <h2>What's in my fridge?</h2>
-      <ul id="listFridge">
+    <div id="header"></div>
 
-      </ul>
+
+    </div>
+    <div class="wrapperfridge">
+      <div id="leftfridge">
+        <div class="fridge">
+          <h2>What's in my fridge?</h2>
+          <ul id="listFridge">
+
+          </ul>
+        </div>
+
+        <div id="fridgeAddRemove">
+          <form action="fridge.html" method="post">
+            <input type="image" src="https://julienbraida-van3kfw.netdna-ssl.com/wp-content/uploads/2015/01/add-icon.png" class="addButton">
+            <p class="addText">Add Food</p>
+            <input type="text" class="textAddFood" name="addFood">
+              <input type="submit">
+            <p id="expirationText">Expiration Date</p>
+            <input type="date" id="expirationDate" name="expirationDate">
+            <input type="submit">
+            <br>
+
+            <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
+            <p class="removeText">Remove Food</p>
+            <input type="text" class="textRemoveFood" name="removeFood">
+            <input type="submit">
+          </form>
+        </div>
+
+
+      </div>
+      <div id="rightfridge">
+        <div id="expiringSoon">
+          <h2>Expiring Soon:</h2>
+          <ul id="listExpiration">
+
+          </ul>
+        </div>
+
+        <div id="expired">
+          <h2>Expired:</h2>
+          <ul id="listExpired">
+
+          </ul>
+        </div>
+
+      </div>
     </div>
 
-    <div id="fridgeAddRemove">
-      <form class="" action="index.html" method="post">
-        <input type="image" src="https://cdn.pixabay.com/photo/2014/04/02/10/55/plus-304947_960_720.png" class="addButton">
-        <p class="addText">Add Food</p>
-        <input type="text" class="textAddFood">
-        <p id="expirationText">Expiration Date</p>
-        <input type="date" id="expirationDate">
-        <input type="submit">
-        <br>
 
-        <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
-        <p class="removeText">Remove Food</p>
-        <input type="text" class="textRemoveFood">
-        <input type="submit">
-      </form>
-    </div>
 
-    <div id="expiringSoon">
-      <h2>Expiring Soon:</h2>
-      <ul id="listExpiration">
+        <div id="footer">
+        <p>footer</p>
 
-      </ul>
-    </div>
+        </div>
+
   </body>
 </html>
