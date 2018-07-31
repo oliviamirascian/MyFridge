@@ -142,6 +142,18 @@ class CreateAccount(webapp2.RequestHandler):
         print ("Something")
         user.put()
 
+class FridgePage(webapp2.RequestHandler):
+    def get(self):
+        fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
+        self.response.write(fridge_template.render())
+
+    def post(self):
+        addFood = self.request.get('addFood')
+        expirationDate = self.request.get('expirationDate')
+        removeFood = self.request.get('removeFood')
+
+        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query="+ addFood +"&number=1&metaInformation=true"
+
         response = urlfetch.get(url,
           headers={
             "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
@@ -160,10 +172,11 @@ class CreateAccount(webapp2.RequestHandler):
           }
         )
 
-class FridgePage(webapp2.RequestHandler):
-    def get(self):
-        fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
-        self.response.write(fridge_template.render())
+        getFoodInfo(response)
+
+        food = FoodFridge(self, calories, fat, saturatedFat, carbs, sugar, cholesterol, sodium, protein, fiber, potassium, iron, calcium)
+
+        food.put()
 
 class NutriTrackerPage(webapp2.RequestHandler):
     def get(self):
