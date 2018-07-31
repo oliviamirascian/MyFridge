@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    
+
     <script type="text/javascript" src = "/Scripts/script.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     <meta name="google-signin-client_id" content="15145183773-m2dh8cosvugqilo2ver83cta6q1qfbao.apps.googleusercontent.com">
@@ -15,11 +15,11 @@
       <h1 id ="fridgeTitle" >My Fridge</h1>
 
       <div class="tabs">
-        <a href="/fridge" class = "tab">My Fridge</a>
-        <a href="/nutritracker" class = "tab">Nutrition Tracker</a>
-        <a href="/recipes" class = "tab">Fridge Recipes</a>
-      </div>
-    </div>
+    <button>   <a href="/fridge" class = "tab" id="ButtonMyFridge"> My Fridge </a> </button>
+  <button> <a href="/nutritracker" class = "tab" id="ButtonMyNutriTrack">  Nutrition Tracker </a> </button>
+  <button>  <a href="/recipes" class = "tab" id="ButtonMyFridge"> Fridge Recipes </a> </button>
+</div>
+
     <a href="#" onclick="signOut();">Sign out</a>
 
     <div id="header"></div>
@@ -29,13 +29,13 @@
     <div class="wrapperfridge">
       <div id="leftfridge">
         <div class="fridge">
-          <h2>What's in my fridge?</h2>
           <ul id="listFridge">
 
           </ul>
         </div>
 
-        <div id="fridgeAddRemove">
+<div id="fridgeAddRemovebox">
+      <div id="fridgeAddRemove">
           <form action="fridge.html" method="post">
             <input type="image" src="https://julienbraida-van3kfw.netdna-ssl.com/wp-content/uploads/2015/01/add-icon.png" class="addButton">
             <p class="addText">Add Food</p>
@@ -45,7 +45,6 @@
             <input type="date" id="expirationDate" name="expirationDate">
             <input type="submit">
             <br>
-
             <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
             <p class="removeText">Remove Food</p>
             <input type="text" class="textRemoveFood" name="removeFood">
@@ -53,7 +52,7 @@
           </form>
         </div>
 
-
+</div>
       </div>
       <div id="rightfridge">
         <div id="expiringSoon">
