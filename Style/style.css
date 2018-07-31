@@ -170,11 +170,14 @@ background: white;
 }
 
 #loginBox{
-  position: absolute;
-  top: 300px;
-  left: 39%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -500px;
+  /*top: 275px;
+  left: 39%;*/
   width: 300px;
-  height: 300px;
+  height: 350px;
   background-color: #D1F3EB;
   border-radius: 50px;
   text-align: center;
@@ -182,9 +185,12 @@ background: white;
 }
 
 #createAccountBox{
-  position: absolute;
-  top: 200px;
-  left: 39%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -550px;
+  /* top: 200px;
+  left: 39%; */
   width: 300px;
   height: 450px;
   background-color: #D1F3EB;
@@ -197,4 +203,8 @@ background: white;
   height: 600px;
   width: 100%;
   filter: opacity(50%);
+}
+
+.abcRioButton{
+  margin: 0 auto;
 }
