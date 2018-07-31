@@ -37,25 +37,31 @@
 }
 */
 /* recipes.html */
-
 #fridgeTitle {
   font-size: 50px;
   text-align: center;
   margin-top: 1%;
 }
 
-<<<<<<< Updated upstream
 #search{
   align: center;
-=======
-#search {
->>>>>>> Stashed changes
   padding:7px;
-  background-color: lightyellow;
-  width: 200px;
+  background-color: white;
+  width:200px;
+  padding:7px;
+  border: 1px solid #607d8b;
+}
+#submit{
   padding: 7px;
-  border: 1px solid #333;
-<<<<<<< Updated upstream
+  background: #607d8b;
+  border: 1px solid #607d8b;
+  color: white;
+  margin-left: -5px;
+  cursor: pointer;
+}
+#submit:hover{
+  background: #333;
+  transition: all 0.40s;
 }
 
 #recipeAddRemove{
@@ -65,7 +71,6 @@ margin-top: 30%;
 #Savedrecipes{
   float: right;
 }
-
 
 
 body,
@@ -108,6 +113,21 @@ margins:0;
   text-align: center;
 }
 
+.wrappernutri {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 700px;
+}
+#leftnutri {
+  background-color: lightyellow;
+  text-align: center;
+}
+
+#rightnutri {
+  background-color: lightblue;
+  text-align: center;
+}
+
 
 
 #leftrecipe {
@@ -130,53 +150,4 @@ background: white;
 }
 
 
-=======
-  margin-left : 70%;
-  margin-bottom: auto;
-}
-
->>>>>>> Stashed changes
 /* fridge.html */
-
-
-
-/* welcome.html */
-#background{
-  background-color: #FEE6A5;
-}
-
-#frontTitle{
-  font-size: 50px;
-  text-align: center;
-  margin-top: 3%;
-}
-
-#loginBox{
-  position: absolute;
-  top: 300px;
-  left: 39%;
-  width: 300px;
-  height: 300px;
-  background-color: #D1F3EB;
-  border-radius: 50px;
-  text-align: center;
-  filter: opacity(90%)
-}
-
-#createAccountBox{
-  position: absolute;
-  top: 200px;
-  left: 39%;
-  width: 300px;
-  height: 450px;
-  background-color: #D1F3EB;
-  border-radius: 50px;
-  text-align: center;
-}
-
-#frontImage{
-  position:relative;
-  height: 600px;
-  width: 100%;
-  filter: opacity(50%);
-}

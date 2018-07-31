@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="../Style/style.css">
     <script type="text/javascript" src = "script.js"></script>
-    <title>MyFridge</title>
+    <title>My Fridge</title>
   </head>
+
   <body>
     <div class="heading">
 
@@ -17,30 +18,38 @@
         <a href="/recipes" class = "tab">Fridge Recipes</a>
       </div>
     </div>
-    <div>
-      <h2 class = "header">What I Ate:</h2>
-      <h3 class = "subheader">Today:</h3>
-      <ul class="foodList">
 
-      </ul>
-      <form class="" action="index.html" method="post">
-        <input type="image" src="https://cdn.pixabay.com/photo/2014/04/02/10/55/plus-304947_960_720.png"
-        onclick="addToTextInput()" class="addButton">
-        <p class="addText">Add Food</p>
-        <input type="text" class="textAddFood">
-        <input type="submit">
-        <br>
+<div id="header"></div>
 
-        <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png"
-        onclick="removeToTextInput()" class="removeButton">
-        <p class="removeText">Remove Food</p>
-        <input type="text" class="textRemoveFood">
-        <input type="submit">
-      </form>
-      <h3 class = "subheader">History:</h3>
-      <ul class="foodList">
 
-      </ul>
+      <div class="wrappernutri">
+        <div id="leftnutri">
+
+
+            <h2 class = "header">What I Ate:</h2>
+            <h3 class = "subheader">Today:</h3>
+            <ul class="foodList"></ul>
+            <form class="" action="index.html" method="post">
+              <input type="image" src="https://julienbraida-van3kfw.netdna-ssl.com/wp-content/uploads/2015/01/add-icon.png"
+              onclick="addToTextInput()" class="addButton">
+              <p class="addText">Add Food</p>
+              <input type="text" class="textAddFood">
+              <input type="submit">
+              <br>
+
+              <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png"
+              onclick="removeToTextInput()" class="removeButton">
+              <p class="removeText">Remove Food</p>
+              <input type="text" class="textRemoveFood">
+              <input type="submit">
+            </div>
+
+        <div id="rightnutri">
+          <h3> History</h3>
+          <ul class="foodList">
+</form>
+        </div>
+      </div>
     </div>
 
   </body>
