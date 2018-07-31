@@ -7,40 +7,27 @@ class FoodFridge(ndb.Model):
     expirationDate = ndb.StringProperty(required=True)
     image = ""
 
-    calories = ""
-    fat = ""
-    saturatedFat = ""
-    carbs = ""
-    sugar = ""
-    cholesterol = ""
-    sodium = ""
-    protein = ""
-    fiber = ""
-    iron = ""
-    calcium = ""
+    # calories = ""
+    # saturatedFat = ""
+    # carbs = ""
+    # sugar = ""
+    # cholesterol = ""
+    # sodium = ""
+    # protein = ""
+    # fiber = ""
 
-    # vitaminC = ""
-    # vitaminK = ""
-    # vitaminB6 = ""
-    # vitaminB2 = ""
-    # vitaminE = ""
-    # vitaminB1 = ""
-    # vitaminA = ""
-    # vitaminB5 = ""
-
-    def __init__(self, calories, fat, saturatedFat, carbs, sugar, cholesterol, sodium, protein, fiber, potassium, iron, calcium):
-        self.calories = calories
-        self.fat = fat
-        self.saturatedFat = saturatedFat
-        self.carbs = carbs
-        self.sugar = sugar
-        self.cholesterol = cholesterol
-        self.sodium = sodium
-        self.protein = protein
-        self.fiber = fiber
-        self.potassium = potassium
-        self.iron = iron
-        self.calcium = calcium
+    def __init__(self, name, expirationDate, image):
+        self.name = name
+        self.expirationDate = expirationDate
+        self.image = image
+        # self.calories = calories
+        # self.saturatedFat = saturatedFat
+        # self.carbs = carbs
+        # self.sugar = sugar
+        # self.cholesterol = cholesterol
+        # self.sodium = sodium
+        # self.protein = protein
+        # self.fiber = fiber
 
 class User(ndb.Model):
     first_name = ndb.StringProperty(required = True)
