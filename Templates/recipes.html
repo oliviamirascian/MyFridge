@@ -2,9 +2,11 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+
     <link rel="stylesheet" href="/Style/style.css">
     <script type="text/javascript" src = "/Scripts/script.js"></script>
     <title>MyFridge</title>
+
   </head>
 
   <body>
@@ -14,7 +16,7 @@
 
       <div class="tabs">
         <a href="/fridge" class = "tab">MyFridge</a>
-        <a href="/nutritracker" class = "tab">NutriTracker</a>
+        <a href="/nutritracker" class = "tab">Nutrition Tracker</a>
         <a href="/recipes" class = "tab">Fridge Recipes</a>
       </div>
     </div>
@@ -53,7 +55,12 @@
 </div>
 <div class="wrapperrecipe">
   <div id="leftrecipe">
-    <h1>Recommend Based on list</h1>
+  <form action= "google.com">
+    <input type="text" placeholder="Search Recipe..."
+    maxlength="30" id="search">
+    <input type="submit" value="Go!" id="submit">
+  </form>
+    <h1> Recommend Based on list</h1>
     <form class="" action="index.html" method="post">
       <input type="image" src="https://julienbraida-van3kfw.netdna-ssl.com/wp-content/uploads/2015/01/add-icon.png" class="addButton">
       <br>
@@ -62,7 +69,7 @@
     </form>
   </div>
   <div id="rightrecipe">
-    <h1>Saved Recipes</h1>
+    <h1>+ Saved Recipes</h1>
 
   </div>
 </div>

@@ -44,9 +44,24 @@
   margin-top: 1%;
 }
 
-#search{
-  align: center;
+#search {
   padding:7px;
+  background-color: white;
+  width:200px;
+  padding:7px;
+  border: 1px solid #607d8b;
+}
+#submit{
+  padding: 7px;
+  background: #607d8b;
+  border: 1px solid #607d8b;
+  color: white;
+  margin-left: -5px;
+  cursor: pointer;
+}
+#submit:hover{
+  background: #333;
+  transition: all 0.40s;
   background-color: lightyellow;
   width: 200px;
   padding: 7px;
@@ -60,7 +75,6 @@ margin-top: 30%;
 #Savedrecipes{
   float: right;
 }
-
 
 
 body,
@@ -99,6 +113,21 @@ margins:0;
 }
 
 #rightfridge {
+  background-color: lightblue;
+  text-align: center;
+}
+
+.wrappernutri {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 700px;
+}
+#leftnutri {
+  background-color: lightyellow;
+  text-align: center;
+}
+
+#rightnutri {
   background-color: lightblue;
   text-align: center;
 }
