@@ -15,17 +15,24 @@
       <h1 id ="fridgeTitle" >Nutrition Tracker</h1>
 
       <div class="tabs">
-    <button>   <a href="/fridge" class = "tab" id="ButtonMyFridge"> My Fridge </a> </button>
-  <button> <a href="/nutritracker" class = "tab" id="ButtonMyNutriTrack">  Nutrition Tracker </a> </button>
-  <button>  <a href="/recipes" class = "tab" id="ButtonMyFridge"> Fridge Recipes </a> </button>
+        <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button>
+        </form>
+
+        <form  action="/nutritracker"> <button type="submit" class = "tab" > Nutrition Track </button>
+        </form>
+
+     <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button>
+     </form>
   </div>
+
+  <a href="#" onclick="signOut()" type="submit" class = "tab" > Sign Out </a>
 
 <div id="header"></div>
 
 
       <div class="wrappernutri">
         <div id="leftnutri">
-
+<div id="nutriaddremovebox">
 
             <h2 class = "header">What I Ate:</h2>
             <h3 class = "subheader">Today:</h3>
@@ -44,9 +51,9 @@
               <input type="text" class="textRemoveFood">
               <input type="submit">
             </div>
-
+</div>
         <div id="rightnutri">
-          <h3> History</h3>
+          <h2> History</h2>
           <ul class="foodList">
 </form>
         </div>
