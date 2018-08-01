@@ -345,6 +345,11 @@ background: white;
   filter: opacity(50%);
 }
 
+#incorrect{
+  font-size: 15px;
+  color: red;
+}
+
 .abcRioButton{
   margin: 0 auto;
 }

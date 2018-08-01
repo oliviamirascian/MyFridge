@@ -22,4 +22,3 @@ class User(ndb.Model):
     username = ndb.StringProperty(required = True)
     password = ndb.StringProperty(required = True)
     fridge_foods = ndb.KeyProperty(FoodFridge, repeated = True)
-    eaten_foods = ndb.KeyProperty(FoodAte, repeated = True)
