@@ -38,8 +38,12 @@
           <form action="/addfridge" method="GET">
             <input type="image" src="https://julienbraida-van3kfw.netdna-ssl.com/wp-content/uploads/2015/01/add-icon.png" class="addButton">
           </form>
-          <form action="/removefridge" method="GET">
+
+          <form action="/fridge" method="GET">
             <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
+            <p class="removeText">Remove Food</p>
+            <input type="text" class="textRemoveFood" id="removeFoodFridge" name="removeFood">
+            <input type="button" onclick="removeItemFromFridge()" name="removeFoodButton" value="Submit">
           </form>
         </div>
 

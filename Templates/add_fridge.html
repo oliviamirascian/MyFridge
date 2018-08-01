@@ -35,8 +35,14 @@
         </div>
 
         <div id="fridgeAddRemove">
-          <form action="/addfridge" method="GET">
+          <form action="/fridge" method="GET">
             <input type="image" src="https://julienbraida-van3kfw.netdna-ssl.com/wp-content/uploads/2015/01/add-icon.png" class="addButton">
+            <p class="addText">Add Food</p>
+            <input type="text" class="textAddFood" id="addFoodFridge" name="addFood">
+            <p id="expirationText">Expiration Date</p>
+            <input type="date" id="expirationDate" name="expirationDate">
+            <input type="button" onclick="addItemToFridge()" name="addFoodButton" value="Submit">
+            <br>
           </form>
           <form action="/removefridge" method="GET">
             <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
