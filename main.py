@@ -2,6 +2,7 @@ from google.appengine.api import urlfetch
 import webapp2
 import jinja2
 import os
+import json
 from model import User
 from model import FoodFridge
 
@@ -11,23 +12,20 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 def getFoodID(response):
-    foodQuery = response.query()
-
-    foodBody = foodQuery.root.body.fetch()
-
-    if foodBody[0] == "":
+    query = response[0]
+    if query == "":
         foodID = -1
     else:
-        foodID = foodBody[0].id
+        foodID = query["id"]
         return foodID
 
 def getFoodInfo(response):
-    foodQuery = response.query()
+    name = response["name"]
+    image = response["image"]
 
-    foodBody = foodQuery.root.body
+    results = [name,image]
 
-    name = foodBody.fetch()[0].name
-    image = foodBody.fetch()[0].image
+    return results
 
     # nutrition = foodBody.nutrition.nutrients.fetch()
     #
@@ -91,15 +89,22 @@ def getFoodInfo(response):
 
     return foodInfo
 
-
+class TestClass(webapp2.RequestHandler):
+    def get(self):
+        response = urlfetch.fetch("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query=appl&number=10&intolerances=egg",
+          headers={
+            "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
+            "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
+          }
+        ).content
+        json_response = json.loads(response)
+        print response
 class MainPage(webapp2.RequestHandler):
     def get(self):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
     def post(self):
-        print("I'M IN POST!")
-        self.redirect("/fridge")
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         username = self.request.get('welcome_username')
         password = self.request.get('welcome_password')
@@ -131,39 +136,45 @@ class FridgePage(webapp2.RequestHandler):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         self.response.write(fridge_template.render())
 
+class AddFridgePage(webapp2.RequestHandler):
+    def get(self):
+        add_fridge_template = JINJA_ENVIRONMENT.get_template('templates/add_fridge.html')
+        self.response.write(add_fridge_template.render())
     def post(self):
         addFood = self.request.get('addFood')
         expirationDate = self.request.get('expirationDate')
 
         url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query="+ addFood +"&number=1&metaInformation=true"
 
-        response = urlfetch.get(url,
+        response = urlfetch.fetch(url,
           headers={
             "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
             "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
           }
-        )
+        ).content
+        json_response = json.loads(response)
+
+        foodID = str(getFoodID(json_response))
 
         if foodID == -1:
             fridge_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
             self.response.write(fridge_template.render())
 
-        foodID = getFoodID(response)
-
         idUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/"+ foodID +"/information?amount=1"
 
-        response = urlfetch.get(idUrl,
+        response = urlfetch.fetch(idUrl,
           headers={
             "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
             "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
           }
-        )
+        ).content
+        json_response = json.loads(response)
 
-        name = getFoodInfo(response)[0]
+        name = getFoodInfo(json_response)[0]
 
-        image = getFoodInfo(response)[1]
+        image = getFoodInfo(json_response)[1]
 
-        food = FoodFridge(name,expirationDate,image)
+        food = FoodFridge(name=name,expirationDate=expirationDate,image=image)
 
         food.put()
 
@@ -175,6 +186,11 @@ class FridgePage(webapp2.RequestHandler):
 
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         self.response.write(fridge_template.render())
+
+class RemoveFridgePage(webapp2.RequestHandler):
+    def get(self):
+        remove_fridge_template = JINJA_ENVIRONMENT.get_template('templates/remove_fridge.html')
+        self.response.write(remove_fridge_template.render())
 
 class NutriTrackerPage(webapp2.RequestHandler):
     def get(self):
@@ -190,6 +206,9 @@ app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/createAccount',CreateAccount),
     ('/fridge', FridgePage),
+    ('/addfridge', AddFridgePage),
+    ('/removefridge', RemoveFridgePage),
     ('/nutritracker', NutriTrackerPage),
-    ('/recipes', RecipesPage)
+    ('/recipes', RecipesPage),
+    ('/test', TestClass)
 ], debug=True)
