@@ -28,6 +28,22 @@ function moveToHistory(){
 
 }
 
+function addItemToFridge(){
+  var ul = document.getElementById("listFridge");
+  var input = document.getElementById("addFoodFridge");
+  var li = document.createElement('li');
+  li.setAttribute('id',input.value);
+  li.appendChild(document.createTextNode(input.value));
+  ul.appendChild(li);
+}
+
+function removeItemFromFridge(){
+  var ul = document.getElementById("listFridge");
+  var input = document.getElementById("removeFoodFridge");
+  var item = document.getElementById(input.value);
+  ul.removeChild(item);
+}
+
 // welcome.html
 
 function signOut() {
