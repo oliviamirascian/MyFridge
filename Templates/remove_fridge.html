@@ -14,10 +14,10 @@
       <h1 id ="fridgeTitle" >My Fridge</h1>
 
       <div class="tabs">
-        <a href="/fridge" class = "tab">My Fridge</a>
-        <a href="/nutritracker" class = "tab">Nutrition Tracker</a>
-        <a href="/recipes" class = "tab">Fridge Recipes</a>
-      </div>
+    <button>   <a href="/fridge" class = "tab" id="ButtonMyFridge"> My Fridge </a> </button>
+  <button> <a href="/nutritracker" class = "tab" id="ButtonMyNutriTrack">  Nutrition Tracker </a> </button>
+  <button>  <a href="/recipes" class = "tab" id="ButtonMyFridge"> Fridge Recipes </a> </button>
+</div>
     </div>
     <a href="#" onclick="signOut();">Sign out</a>
 
@@ -41,6 +41,8 @@
 
           <form action="/fridge" method="GET">
             <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
+          </form>
+          <form action="/fridge" method="POST">
             <p class="removeText">Remove Food</p>
             <input type="text" class="textRemoveFood" id="removeFoodFridge" name="removeFood">
             <input type="button" onclick="removeItemFromFridge()" name="removeFoodButton" value="Submit">

@@ -28,7 +28,7 @@ class FoodFridge(ndb.Model):
         # self.sodium = sodium
         # self.protein = protein
         # self.fiber = fiber
-
+        
 class User(ndb.Model):
     first_name = ndb.StringProperty(required = True)
     last_name = ndb.StringProperty(required = True)
