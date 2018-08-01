@@ -4,6 +4,7 @@ import jinja2
 import os
 import json
 from model import User
+from webapp2_extras import sessions
 from model import FoodFridge
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -20,6 +21,116 @@ def getFoodID(response):
         return foodID
 
 def getFoodInfo(response):
+    foodQuery = response.query()
+
+    foodBody = foodQuery.root.body
+
+    name = foodBody.fetch()[0].name
+    image = foodBody.fetch()[0].image
+
+    nutrition = foodBody.nutrition.nutrients.fetch()
+
+    calories = {
+    'title': nutrition[0].title,
+    'amount': nutrition[0].amount,
+    'unit': nutrition[0].unit,
+    'percentOfDailyNeeds': nutrition[0].percentOfDailyNeeds
+    }
+
+    fat = {
+    'title': nutrition[1].title,
+    'amount': nutrition[1].amount,
+    'unit': nutrition[1].unit,
+    'percentOfDailyNeeds': nutrition[1].percentOfDailyNeeds
+    }
+
+    saturatedFat = {
+    'title': nutrition[2].title,
+    'amount': nutrition[2].amount,
+    'unit': nutrition[2].unit,
+    'percentOfDailyNeeds': nutrition[2].percentOfDailyNeeds
+    }
+
+    carbs = {
+    'title': nutrition[3].title,
+    'amount': nutrition[3].amount,
+    'unit': nutrition[3].unit,
+    'percentOfDailyNeeds': nutrition[3].percentOfDailyNeeds
+    }
+
+    sugar = {
+    'title': nutrition[4].title,
+    'amount': nutrition[4].amount,
+    'unit': nutrition[4].unit,
+    'percentOfDailyNeeds': nutrition[4].percentOfDailyNeeds
+    }
+
+    cholesterol = {
+    'title': nutrition[5].title,
+    'amount': nutrition[5].amount,
+    'unit': nutrition[5].unit,
+    'percentOfDailyNeeds': nutrition[5].percentOfDailyNeeds
+    }
+
+    sodium = {
+    'title': nutrition[6].title,
+    'amount': nutrition[6].amount,
+    'unit': nutrition[6].unit,
+    'percentOfDailyNeeds': nutrition[6].percentOfDailyNeeds
+    }
+
+    protein = {
+    'title': nutrition[7].title,
+    'amount': nutrition[7].amount,
+    'unit': nutrition[7].unit,
+    'percentOfDailyNeeds': nutrition[7].percentOfDailyNeeds
+    }
+
+    fiber = {
+    'title': nutrition[8].title,
+    'amount': nutrition[8].amount,
+    'unit': nutrition[8].unit,
+    'percentOfDailyNeeds': nutrition[8].percentOfDailyNeeds
+    }
+
+    iron = {
+    'title': nutrition[22].title,
+    'amount': nutrition[22].amount,
+    'unit': nutrition[22].unit,
+    'percentOfDailyNeeds': nutrition[22].percentOfDailyNeeds
+    }
+
+    calcium = {
+    'title': nutrition[24].title,
+    'amount': nutrition[24].amount,
+    'unit': nutrition[24].unit,
+    'percentOfDailyNeeds': nutrition[24].percentOfDailyNeeds
+    }
+
+class BaseHandler(webapp2.RequestHandler):
+    def dispatch(self):
+        # Get a session store for this request.
+        self.session_store = sessions.get_store(request=self.request)
+
+        try:
+            # Dispatch the request.
+            webapp2.RequestHandler.dispatch(self)
+        finally:
+            # Save all sessions.
+            self.session_store.save_sessions(self.response)
+
+    @webapp2.cached_property
+    def session(self):
+        # Returns a session using the default cookie key.
+        return self.session_store.get_session()
+
+    def isLoggedIn(self):
+        if self.session.get('username') is "":
+            return False
+        return True
+
+
+class MainPage(BaseHandler):
     name = response["name"]
     image = response["image"]
 
@@ -104,16 +215,24 @@ class MainPage(webapp2.RequestHandler):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
+        if self.isLoggedIn():
+            self.redirect("/fridge")
+
     def post(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         username = self.request.get('welcome_username')
         password = self.request.get('welcome_password')
         user_info = User.query().filter(username == User.username).fetch()
-        if (username == user_info[0].username) and (password == user_info[0].password):
-            self.response.write(fridge_template.render())
-            self.redirect("/fridge")
+        if(len(user_info)>0):
+            if password == user_info[0].password:
+                self.redirect("/fridge")
+                self.session['username'] = username
+            else:
+                self.redirect("/")
+        else:
+            self.redirect("/")
 
-class CreateAccount(webapp2.RequestHandler):
+class CreateAccount(BaseHandler):
     def get(self):
         createAccount_template = JINJA_ENVIRONMENT.get_template('templates/createAccount.html')
         self.response.write(createAccount_template.render())
@@ -124,17 +243,19 @@ class CreateAccount(webapp2.RequestHandler):
         username = self.request.get('Username')
         password = self.request.get('Password')
 
-        user = User(first_name = first_name,
-                    last_name = last_name,
-                    username = username,
-                    password = password)
-        print ("Something")
-        user.put()
 
-class FridgePage(webapp2.RequestHandler):
+
+class FridgePage(BaseHandler):
     def get(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
-        self.response.write(fridge_template.render())
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+
+        # checks if session username is  ""
+        if self.isLoggedIn():
+            self.response.write(fridge_template.render())
+        else:
+            self.response.write(welcome_template.render())
+
 
 class AddFridgePage(webapp2.RequestHandler):
     def get(self):
@@ -156,6 +277,17 @@ class AddFridgePage(webapp2.RequestHandler):
 
         foodID = str(getFoodID(json_response))
 
+        #session stuff
+
+        # To set a value:
+        self.session['username'] = self.request.get('welcome_username')
+        # To get a value:
+        username = self.session.get('username')
+
+        print username
+
+        getFoodID(response)
+        
         if foodID == -1:
             fridge_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
             self.response.write(fridge_template.render())
@@ -178,6 +310,8 @@ class AddFridgePage(webapp2.RequestHandler):
 
         food.put()
 
+
+class NutriTrackerPage(BaseHandler):
         fridge_variable_dict = {
         'food_name': name,
         'image': image,
@@ -201,10 +335,15 @@ class NutriTrackerPage(webapp2.RequestHandler):
         nutriTracker_template = JINJA_ENVIRONMENT.get_template('templates/nutriTracker.html')
         self.response.write(nutriTracker_template.render())
 
-class RecipesPage(webapp2.RequestHandler):
+class RecipesPage(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         self.response.write(recipes_template.render())
+
+config = {}
+config['webapp2_extras.sessions'] = {
+    'secret_key': 'my-super-secret-key',
+}
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
@@ -215,4 +354,4 @@ app = webapp2.WSGIApplication([
     ('/nutritracker', NutriTrackerPage),
     ('/recipes', RecipesPage),
     ('/test', TestClass)
-], debug=True)
+], debug=True, config = config)
