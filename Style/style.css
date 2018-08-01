@@ -1,5 +1,7 @@
 /* Top part of every page */
 
+
+}
 .heading{
   height: 150px;
   border-style: solid;
@@ -8,12 +10,35 @@
 .tabs{
   display: flex;
   margin-top: 4%;
+  margin-left:auto;
+  width: 100%;
+  color: #f2f2f2;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+button{
+ width: 100%;
+ margin-left: auto;
+ margin-right: auto;
+background-color: lightyellow;
+}
+a {
+  text-decoration: none;
+  width: 100px;
+
+
+
 }
 
 .tab{
   margin-left: auto;
   margin-right: auto;
   font-size: 20px;
+}
+
+.tabs a:hover {
+  background: #ddd;
+  color: black;
 }
 
 /* nutriTracker.html */
@@ -44,9 +69,25 @@
   margin-top: 1%;
 }
 
-#search{
-  align: center;
+#search {
   padding:7px;
+  background-color: white;
+  width:200px;
+  padding:7px;
+  border: 1px solid #607d8b;
+  background-repeat: no-repeat;
+}
+#submit{
+  padding: 7px;
+  background: #607d8b;
+  border: 1px solid #607d8b;
+  color: white;
+  margin-left: -5px;
+  cursor: pointer;
+}
+#submit:hover{
+  background: #333;
+  transition: all 0.40s;
   background-color: lightyellow;
   width: 200px;
   padding: 7px;
@@ -62,10 +103,9 @@ margin-top: 30%;
 }
 
 
-
 body,
 html {
-margin:0;
+margin;
 padding:0;
 color:#000;
 background:#D1F3EB;
@@ -97,8 +137,36 @@ margins:0;
   background-color: lightyellow;
   text-align: center;
 }
-
+#fridgeAddRemovebox{
+position: relative;
+margin-left: auto;
+margin-right: auto;
+margin-top: -00px;
+/*top: 275px;
+left: 39%;*/
+width: 300px;
+height: 350px;
+background-color: lightblue;
+border-radius: 50px;
+text-align: center;
+filter: opacity(90%)
+}
 #rightfridge {
+  background-color: lightblue;
+  text-align: center;
+}
+
+.wrappernutri {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 700px;
+}
+#leftnutri {
+  background-color: lightyellow;
+  text-align: center;
+}
+
+#rightnutri {
   background-color: lightblue;
   text-align: center;
 }

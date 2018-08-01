@@ -192,6 +192,10 @@ class RemoveFridgePage(webapp2.RequestHandler):
         remove_fridge_template = JINJA_ENVIRONMENT.get_template('templates/remove_fridge.html')
         self.response.write(remove_fridge_template.render())
 
+    def post(self):
+        removeFood = self.request.get("removeFood")
+        del FoodFridge().removeFood
+
 class NutriTrackerPage(webapp2.RequestHandler):
     def get(self):
         nutriTracker_template = JINJA_ENVIRONMENT.get_template('templates/nutriTracker.html')
