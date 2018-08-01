@@ -42,8 +42,37 @@ class FoodFridge(ndb.Model):
         self.iron = iron
         self.calcium = calcium
 
+class FoodAte(ndb.Model):
+    food = ndb.StringProperty(required = True)
+    calories = ""
+    fat = ""
+    saturatedFat = ""
+    carbs = ""
+    sugar = ""
+    cholesterol = ""
+    sodium = ""
+    protein = ""
+    fiber = ""
+    iron = ""
+    calcium = ""
+
+    def __init__(self, calories, fat, saturatedFat, carbs, sugar, cholesterol, sodium, protein, fiber, potassium, iron, calcium):
+        self.calories = calories
+        self.fat = fat
+        self.saturatedFat = saturatedFat
+        self.carbs = carbs
+        self.sugar = sugar
+        self.cholesterol = cholesterol
+        self.sodium = sodium
+        self.protein = protein
+        self.fiber = fiber
+        self.potassium = potassium
+        self.iron = iron
+        self.calcium = calcium
 class User(ndb.Model):
     first_name = ndb.StringProperty(required = True)
     last_name = ndb.StringProperty(required = True)
     username = ndb.StringProperty(required = True)
     password = ndb.StringProperty(required = True)
+    fridge_foods = ndb.KeyProperty(FoodFridge, repeated = True)
+    eaten_foods = ndb.KeyProperty(FoodAte, repeated = True)
