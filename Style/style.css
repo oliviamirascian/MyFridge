@@ -1,19 +1,87 @@
 /* Top part of every page */
 
-.heading{
-  height: 150px;
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display|Poppins:300,400,500,600,700,800,900");
+.col-md-offset-right-1, .col-lg-offset-right-1 {
+  margin-right: 8.33333333%;
+}
+body,
+html {
+margin:0;
+padding:0;
+color:#000;
+background:#EFEFEF;
+}
+
+#header {
+padding:5px 10px;
+background:white;
+
+}
+p{
+    font-family: "Poppins", sans-serif;
+}
+
+
+
+h1{
+  font-size: 40px;
+  line-height: 48px;
+  font-family: "Poppins", sans-serif;
+  color: #908f8f;
+  font-weight: 500;
   border-style: solid;
 }
+
+h2{
+  font-family: "Poppins", sans-serif;
+  color: #A9A9A9;
+
+}
+
+
+
 
 .tabs{
   display: flex;
   margin-top: 4%;
+  margin-left:auto;
+  width: 100%;
+  color: #f2f2f2;
+  padding: 14px 16px;
+  text-decoration: none;
+
+}
+button{
+ width: 100%;
+ margin-left: auto;
+ margin-right: auto;
+background-color: #ff5053;
+}
+form{
+  width: 100%;
+}
+a {
+  text-decoration: none;
+  width: 100px;
+  color: black;
+}
+
+button:hover{
+  transition: all 0.40s;
+  background-color: #d84244;
+  cursor: pointer;
 }
 
 .tab{
   margin-left: auto;
   margin-right: auto;
   font-size: 20px;
+  color: white;
+}
+
+.tabs a:hover {
+  background: #ddd;
+  color: black;
 }
 
 /* nutriTracker.html */
@@ -50,6 +118,7 @@
   width:200px;
   padding:7px;
   border: 1px solid #607d8b;
+  background-repeat: no-repeat;
 }
 #submit{
   padding: 7px;
@@ -62,8 +131,7 @@
 #submit:hover{
   background: #333;
   transition: all 0.40s;
-  background-color: lightyellow;
-  width: 200px;
+  background-color: #445963;
   padding: 7px;
   border: 1px solid #333;
 }
@@ -77,19 +145,7 @@ margin-top: 30%;
 }
 
 
-body,
-html {
-margin:0;
-padding:0;
-color:#000;
-background:#D1F3EB;
-}
 
-#header {
-padding:5px 10px;
-background:white;
-
-}
 
 h1 {
 margins:0;
@@ -108,12 +164,96 @@ margins:0;
 }
 
 #leftfridge {
-  background-color: lightyellow;
+  background-color: #ff5053;
   text-align: center;
 }
+#fridgeAddRemovebox{
+position: relative;
+margin-left: auto;
+margin-right: auto;
+margin-top: -00px;
+/*top: 275px;
+left: 39%;*/
+width: 300px;
+height: 350px;
+background-color: #CAEBF2;
+border-radius: 50px;
+text-align: center;
+filter: opacity(90%)
+}
+#nutriaddremovebox{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -00px;
+  /*top: 275px;
+  left: 39%;*/
+  width: 300px;
+  height: 350px;
+  background-color: #CAEBF2;
+  border-radius: 50px;
+  text-align: center;
+  filter: opacity(90%)
+
+
+}
+
+#recipesearchbox{
+
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -00px;
+  /*top: 275px;
+  left: 39%;*/
+  width: 300px;
+  height: 100px;
+  background-color: #CAEBF2;
+  border-radius: 30px;
+  text-align: center;
+  filter: opacity(90%)
+
+
+}
+
+
+#recipeaddremovebox{
+
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -00px;
+  /*top: 275px;
+  left: 39%;*/
+  width: 300px;
+  height: 100px;
+  background-color: #CAEBF2;
+  border-radius: 30px;
+  text-align: center;
+  filter: opacity(90%)
+
+
+}
+
+
+
+h4{
+  font-size: 40px;
+  line-height: 48px;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  font-weight: 500;
+  border-style: solid;
+
+}
+
+
+
+
+
 
 #rightfridge {
-  background-color: lightblue;
+  background-color: #CAEBF2;
   text-align: center;
 }
 
@@ -123,24 +263,24 @@ margins:0;
   height: 700px;
 }
 #leftnutri {
-  background-color: lightyellow;
+  background-color: #c1c1c1;
   text-align: center;
 }
 
 #rightnutri {
-  background-color: lightblue;
+  background-color: #CAEBF2;
   text-align: center;
 }
 
 
 
 #leftrecipe {
-  background-color: lightyellow;
+  background-color: #ff5053;
   text-align: center;
 }
 
 #rightrecipe {
-  background-color: lightblue;
+  background-color: #CAEBF2;
   text-align: center;
 }
 
@@ -178,7 +318,7 @@ background: white;
   left: 39%;*/
   width: 300px;
   height: 350px;
-  background-color: #D1F3EB;
+  background-color: #CAEBF2;
   border-radius: 50px;
   text-align: center;
   filter: opacity(90%)
@@ -193,7 +333,7 @@ background: white;
   left: 39%; */
   width: 300px;
   height: 450px;
-  background-color: #D1F3EB;
+  background-color: #CAEBF2;
   border-radius: 50px;
   text-align: center;
 }
