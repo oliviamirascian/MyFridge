@@ -9,22 +9,35 @@
     <link rel="stylesheet" href="/Style/style.css">
     <title>MyFridge</title>
   </head>
+
   <body>
-    <div class="heading">
+
+
+
+<div class="heading">
 
       <h1 id ="fridgeTitle" >My Fridge</h1>
-      
-  <div class="tabs">
-    <button>   <a href="/fridge" class = "tab" id="ButtonMyFridge"> My Fridge </a> </button>
-    <button> <a href="/nutritracker" class = "tab" id="ButtonMyNutriTrack">  Nutrition Tracker </a> </button>
-    <button>  <a href="/recipes" class = "tab" id="ButtonMyFridge"> Fridge Recipes </a> </button>
-  </div>
 
-    <a href="#" onclick="signOut();">Sign out</a>
+
+<div class="tabs">
+
+         <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button>
+         </form>
+
+         <form  action="/nutritracker"> <button type="submit" class = "tab" > Nutrition Track </button>
+         </form>
+
+      <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button>
+      </form>
+</div>
+
+<a href="#" onclick="signOut()" type="submit" class = "tab" > Sign Out </a>
 
     <div id="header"></div>
 
-    </div>
+
+
+</div>
     <div class="wrapperfridge">
       <div id="leftfridge">
         <div class="fridge">

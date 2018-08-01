@@ -12,38 +12,22 @@
   </head>
 
   <body>
+
     <div class="heading">
 
-      <h1 id ="fridgeTitle" >My Recipes</h1>
 
       <div class="tabs">
-        <a href="/fridge" class = "tab">MyFridge</a>
-        <a href="/nutritracker" class = "tab">Nutrition Tracker</a>
-        <a href="/recipes" class = "tab">Fridge Recipes</a>
-      </div>
-    </div>
-    <a href="#" onclick="signOut();">Sign out</a>
+        <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button>
+        </form>
 
-    <form>
-      <input type= "text"  placeholder="Search Recipe..."
-      Maxlength="30"   id="search">
-      <input type= "submit"  value="Go">
-      
-      <!-- <div class="tabs" role="button" aria-label="Basic example">
-         <button type="button" href="/fridge" class="tab" role="button" aria-pressed="true">My Fridge</button>
-        <button type="button" href="/nutritracker" class="tab">Nutrition Tracker</button>
-        <button type="button" href="/recipes" class="tab">Fridge Recipes</button>
-      </div> -->
+        <form  action="/nutritracker"> <button type="submit" class = "tab" > Nutrition Track </button>
+        </form>
 
-
-
-      <div class="tabs">
-    <button>   <a href="/fridge" class = "tab" > My Fridge </a> </button>
-  <button> <a href="/nutritracker" class = "tab" >  Nutrition Tracker </a> </button>
-  <button>  <a href="/recipes" class = "tab" > Fridge Recipes </a> </button>
+     <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button>
+     </form>
 </div>
 
-
+<a href="#" onclick="signOut()" type="submit" class = "tab" > Sign Out </a>
 
 <div id="header"></div>
 
@@ -51,21 +35,30 @@
 </div>
 <div class="wrapperrecipe">
   <div id="leftrecipe">
+    <br>
+    <br>
+    <div id="recipesearchbox">
   <form action= "google.com">
+    <br>
+    <br>
     <input type="text" placeholder="Search Recipe..."
     maxlength="30" id="search">
     <input type="submit" value="Go!" id="submit">
   </form>
-    <h1> Recommend Based on list</h1>
+  <br>
+  <br>
+  <div id="reciperecommendbox">
+    <h4> More Recipes based on list </h4>
     <form class="" action="index.html" method="post">
-      <input type="image" src="https://julienbraida-van3kfw.netdna-ssl.com/wp-content/uploads/2015/01/add-icon.png" class="addButton">
-      <br>
+
 
       <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
     </form>
   </div>
+  </div>
+</div>
   <div id="rightrecipe">
-    <h1>+ Saved Recipes</h1>
+    <h2>+ Saved Recipes</h2>
 
   </div>
 </div>
