@@ -190,7 +190,7 @@ class FridgePage(BaseHandler):
     def get(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-        username = self.session['username']
+        username = self.session.get('username')
 
         d = {
             'username': username
@@ -226,13 +226,6 @@ class AddFridgePage(BaseHandler):
         json_response = json.loads(response)
 
         foodID = str(getFoodID(json_response))
-
-        #session stuff
-
-        # To set a value:
-        self.session['username'] = self.request.get('welcome_username')
-        # To get a value:
-        username = self.session.get('username')
 
         print username
 
