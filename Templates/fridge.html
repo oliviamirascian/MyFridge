@@ -29,6 +29,7 @@
 
       <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button>
       </form>
+
 </div>
 
 
@@ -44,28 +45,40 @@
 
 
 
-    <div id="header"></div>
+<div id="header"></div>
 
 
 
 </div>
-    <div class="wrapperfridge">
-      <div id="leftfridge">
-        <div class="fridge">
+
+<div class="wrapperfridge">
+  <div id="leftfridge">
+      <div class="fridge">
           <h2>What's in my fridge?</h2>
-          <ul id="listFridge">
-
-          </ul>
+          <div id="addFoodButton"> Add Food </div>
+          <div id="addFoodForm">
+            Enter Food
+            <input type="text" name="Name" id="addFoodText"> <br>
+            Enter Expiration Date
+            <input type="date" name="Expiration Date" id="addFoodDate"> <br>
+            <div id="Displayfoodbutton" onclick="addFood()">Add Food</div>
+            {% for food in food_fridge %}
+            <div class="fridgefood-div" style=" ">
+              <p id="foodName">{{food.name}}</p>
+              <img src={{food.image}}>
+              <p id="foodExpiration">{{food.expirationDate}}</p>
+            </div>
+            {% endfor %}
         </div>
+    </div>
 
-        <div id="fridgeAddRemovebox">
-          <form action="/addfridge" method="GET">
-            <input type="image" src="https://julienbraida-van3kfw.netdna-ssl.com/wp-content/uploads/2015/01/add-icon.png" class="addButton">
+        <!-- <div id="fridgeAddRemovebox">
+
           </form>
           <form action="/removefridge" method="GET">
             <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
           </form>
-        </div>
+        </div> -->
 
 </div>
       <div id="rightfridge">
@@ -86,11 +99,6 @@
       </div>
 
 </div>
-
-        <div id="footer">
-        <p>footer</p>
-
-        </div>
 
   </body>
 </html>

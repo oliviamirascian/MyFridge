@@ -13,99 +13,83 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 def getFoodID(response):
-    query = response[0]
-    if query == "":
+    if len(response) == 0:
         foodID = -1
-    else:
-        foodID = query["id"]
         return foodID
+    query = response[0]
+    foodID = query["id"]
+    return foodID
 
 def getFoodInfo(response):
-    foodQuery = response.query()
+    name = response["name"]
+    image = response["image"]
 
-    foodBody = foodQuery.root.body
+    # nutrition = foodBody.nutrition.nutrients.fetch()
+    #
+    # calories = {
+    # 'title': nutrition[0].title,
+    # 'amount': nutrition[0].amount,
+    # 'unit': nutrition[0].unit,
+    # 'percentOfDailyNeeds': nutrition[0].percentOfDailyNeeds
+    # }
+    #
+    # saturatedFat = {
+    # 'title': nutrition[2].title,
+    # 'amount': nutrition[2].amount,
+    # 'unit': nutrition[2].unit,
+    # 'percentOfDailyNeeds': nutrition[2].percentOfDailyNeeds
+    # }
+    #
+    # carbs = {
+    # 'title': nutrition[3].title,
+    # 'amount': nutrition[3].amount,
+    # 'unit': nutrition[3].unit,
+    # 'percentOfDailyNeeds': nutrition[3].percentOfDailyNeeds
+    # }
+    #
+    # sugar = {
+    # 'title': nutrition[4].title,
+    # 'amount': nutrition[4].amount,
+    # 'unit': nutrition[4].unit,
+    # 'percentOfDailyNeeds': nutrition[4].percentOfDailyNeeds
+    # }
+    #
+    # cholesterol = {
+    # 'title': nutrition[5].title,
+    # 'amount': nutrition[5].amount,
+    # 'unit': nutrition[5].unit,
+    # 'percentOfDailyNeeds': nutrition[5].percentOfDailyNeeds
+    # }
+    #
+    # sodium = {
+    # 'title': nutrition[6].title,
+    # 'amount': nutrition[6].amount,
+    # 'unit': nutrition[6].unit,
+    # 'percentOfDailyNeeds': nutrition[6].percentOfDailyNeeds
+    # }
+    #
+    # protein = {
+    # 'title': nutrition[7].title,
+    # 'amount': nutrition[7].amount,
+    # 'unit': nutrition[7].unit,
+    # 'percentOfDailyNeeds': nutrition[7].percentOfDailyNeeds
+    # }
+    #
+    # fiber = {
+    # 'title': nutrition[8].title,
+    # 'amount': nutrition[8].amount,
+    # 'unit': nutrition[8].unit,
+    # 'percentOfDailyNeeds': nutrition[8].percentOfDailyNeeds
+    # }
 
-    name = foodBody.fetch()[0].name
-    image = foodBody.fetch()[0].image
+    foodInfo = [name,image]
 
-    nutrition = foodBody.nutrition.nutrients.fetch()
+    return foodInfo
 
-    calories = {
-    'title': nutrition[0].title,
-    'amount': nutrition[0].amount,
-    'unit': nutrition[0].unit,
-    'percentOfDailyNeeds': nutrition[0].percentOfDailyNeeds
-    }
-
-    fat = {
-    'title': nutrition[1].title,
-    'amount': nutrition[1].amount,
-    'unit': nutrition[1].unit,
-    'percentOfDailyNeeds': nutrition[1].percentOfDailyNeeds
-    }
-
-    saturatedFat = {
-    'title': nutrition[2].title,
-    'amount': nutrition[2].amount,
-    'unit': nutrition[2].unit,
-    'percentOfDailyNeeds': nutrition[2].percentOfDailyNeeds
-    }
-
-    carbs = {
-    'title': nutrition[3].title,
-    'amount': nutrition[3].amount,
-    'unit': nutrition[3].unit,
-    'percentOfDailyNeeds': nutrition[3].percentOfDailyNeeds
-    }
-
-    sugar = {
-    'title': nutrition[4].title,
-    'amount': nutrition[4].amount,
-    'unit': nutrition[4].unit,
-    'percentOfDailyNeeds': nutrition[4].percentOfDailyNeeds
-    }
-
-    cholesterol = {
-    'title': nutrition[5].title,
-    'amount': nutrition[5].amount,
-    'unit': nutrition[5].unit,
-    'percentOfDailyNeeds': nutrition[5].percentOfDailyNeeds
-    }
-
-    sodium = {
-    'title': nutrition[6].title,
-    'amount': nutrition[6].amount,
-    'unit': nutrition[6].unit,
-    'percentOfDailyNeeds': nutrition[6].percentOfDailyNeeds
-    }
-
-    protein = {
-    'title': nutrition[7].title,
-    'amount': nutrition[7].amount,
-    'unit': nutrition[7].unit,
-    'percentOfDailyNeeds': nutrition[7].percentOfDailyNeeds
-    }
-
-    fiber = {
-    'title': nutrition[8].title,
-    'amount': nutrition[8].amount,
-    'unit': nutrition[8].unit,
-    'percentOfDailyNeeds': nutrition[8].percentOfDailyNeeds
-    }
-
-    iron = {
-    'title': nutrition[22].title,
-    'amount': nutrition[22].amount,
-    'unit': nutrition[22].unit,
-    'percentOfDailyNeeds': nutrition[22].percentOfDailyNeeds
-    }
-
-    calcium = {
-    'title': nutrition[24].title,
-    'amount': nutrition[24].amount,
-    'unit': nutrition[24].unit,
-    'percentOfDailyNeeds': nutrition[24].percentOfDailyNeeds
-    }
+class RecipeDisplayPage(webapp2.RequestHandler):
+    def get(self):
+        recipe_display_template = JINJA_ENVIRONMENT.get_template('templates/recipe_display.html')
+        self.response.write(recipe_display_template.render())
 
 class BaseHandler(webapp2.RequestHandler):
     def dispatch(self):
@@ -205,15 +189,13 @@ class FridgePage(BaseHandler):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
-
-
-class AddFridgePage(BaseHandler):
+class FridgeFoodPage(BaseHanddler):
     def get(self):
-        add_fridge_template = JINJA_ENVIRONMENT.get_template('templates/add_fridge.html')
-        self.response.write(add_fridge_template.render())
+        self.response.write(food)
     def post(self):
-        addFood = self.request.get('addFood')
-        expirationDate = self.request.get('expirationDate')
+        body = json.loads(self.request.body)
+        addFood = body['addFood']
+        expirationDate = body['expirationDate']
 
         url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query="+ addFood +"&number=1&metaInformation=true"
 
@@ -227,7 +209,11 @@ class AddFridgePage(BaseHandler):
 
         foodID = str(getFoodID(json_response))
 
-        print username
+        print foodID
+
+        if foodID == "-1":
+            return self.redirect("/notfound")
+            return
 
         getFoodID(response)
 
@@ -253,10 +239,13 @@ class AddFridgePage(BaseHandler):
 
         food.put()
 
+        food_fridge = FoodFridge.query().fetch()
+
         fridge_variable_dict = {
         'food_name': name,
         'image': image,
-        'expiration_date': expirationDate
+        'expiration_date': expirationDate,
+        'food_fridge': food_fridge
         }
 
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
@@ -296,6 +285,34 @@ class RecipesPage(BaseHandler):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         self.response.write(recipes_template.render())
 
+    def post(self):
+        search = self.request.get('search')
+
+        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?number=10&offset=0&query=" + search
+
+        response = urlfetch.fetch(url,
+  headers={
+    "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
+    "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
+  }
+).content
+
+        json_response = json.loads(response)
+
+        results = json_response["results"][0]
+
+        recipeID = results["id"]
+        recipeTitle = results["title"]
+        readyInMinutes = results["readyInMinutes"]
+        servings = results["servings"]
+        recipeImage = results["recipeImage"]
+
+class NotFoundPage(webapp2.RequestHandler):
+    def get(self):
+        not_found_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
+        self.response.write(not_found_template.render())
+
+
 config = {}
 config['webapp2_extras.sessions'] = {
     'secret_key': 'my-super-secret-key',
@@ -305,9 +322,11 @@ app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/createAccount',CreateAccount),
     ('/fridge', FridgePage),
-    ('/addfridge', AddFridgePage),
+    ('/fridgefood', FridgeFoodPage),
     ('/removefridge', RemoveFridgePage),
     ('/nutritracker', NutriTrackerPage),
     ('/recipes', RecipesPage),
+    ('/recipedisplay', RecipeDisplayPage),
+    ('/notfound', NotFoundPage)
     ('/signIn', FridgePage)
 ], debug=True, config = config)
