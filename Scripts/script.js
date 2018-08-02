@@ -29,8 +29,10 @@ function addFood(){
       addFood: document.getElementById("addFoodText").value,
       expirationDate: document.getElementById("addFoodDate").value,
     })
-  }).then(response => response.json())
-  .then(data => console.log(data));
+  }).then((response) => response.json())
+  .then(function(jsonfoodID) {
+    console.log(jsonfoodID);
+  })
 }
 
 // This function will move an object from the Today list to the
