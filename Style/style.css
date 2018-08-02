@@ -73,6 +73,7 @@ button:hover{
 }
 
 .tab{
+
   margin-left: auto;
   margin-right: auto;
   font-size: 20px;
@@ -296,7 +297,26 @@ background: white;
 
 /* fridge.html */
 
+#belowTitle{
+  height: 20px;
+  display: inline;
+}
 
+#belowTitle{
+  padding-top: 20px;
+}
+
+#temp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#loggedIn{
+  width: 160px;
+  margin-left: auto;
+  /* border-style: solid; */
+  /* margin-right: 85% */
+}
 
 /* welcome.html */
 #background{
@@ -324,6 +344,7 @@ background: white;
   filter: opacity(90%)
 }
 
+
 #createAccountBox{
   position: relative;
   margin-left: auto;
@@ -336,6 +357,7 @@ background: white;
   background-color: #CAEBF2;
   border-radius: 50px;
   text-align: center;
+  filter:opacity(90%);
 }
 
 #frontImage{

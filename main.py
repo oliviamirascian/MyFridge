@@ -136,8 +136,8 @@ class MainPage(BaseHandler):
 
 
 
-        # if self.isLoggedIn():
-        #     self.redirect("/fridge")
+        if self.isLoggedIn():
+            self.redirect("/fridge")
 
     def post(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
@@ -179,6 +179,11 @@ class CreateAccount(BaseHandler):
                     password = password)
 
         user.put()
+
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+        self.response.write(welcome_template.render())
+
+
 
 
 class FridgePage(BaseHandler):
