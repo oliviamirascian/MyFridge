@@ -86,10 +86,7 @@ def getFoodInfo(response):
 
     return foodInfo
 
-class RecipeDisplayPage(webapp2.RequestHandler):
-    def get(self):
-        recipe_display_template = JINJA_ENVIRONMENT.get_template('templates/recipe_display.html')
-        self.response.write(recipe_display_template.render())
+
 
 class BaseHandler(webapp2.RequestHandler):
     def dispatch(self):
@@ -112,6 +109,11 @@ class BaseHandler(webapp2.RequestHandler):
         if self.session.get('username') == "":
             return False
         return True
+
+class RecipeDisplayPage(BaseHandler):
+    def get(self):
+        recipe_display_template = JINJA_ENVIRONMENT.get_template('templates/recipe_display.html')
+        self.response.write(recipe_display_template.render())
 
 class MainPage(BaseHandler):
     def get(self):
@@ -242,7 +244,7 @@ class FridgeFoodPage(BaseHandler):
             fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
             self.response.write(fridge_template.render())
 
-class RemoveFridgePage(webapp2.RequestHandler):
+class RemoveFridgePage(BaseHandler):
     def get(self):
         remove_fridge_template = JINJA_ENVIRONMENT.get_template('templates/remove_fridge.html')
         self.response.write(remove_fridge_template.render())
@@ -271,34 +273,48 @@ class NutriTrackerPage(BaseHandler):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
+
+
 class RecipesPage(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         self.response.write(recipes_template.render())
 
     def post(self):
-        search = self.request.get('search')
-
+        # search = self.request.get('search')
+        # response = requests.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients=apples%2Cflour%2Csugar&number=5&ranking=1")
         url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?number=10&offset=0&query=" + search
 
-        response = urlfetch.fetch(url,
-  headers={
-    "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
-    "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
-  }
-).content
 
-        json_response = json.loads(response)
+        # response = urlfetch.fetch(url,
+        #   headers={
+        #     "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
+        #     "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
+        #   })
 
-        results = json_response["results"][0]
+        # response = unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C+gluten&number=10&offset=0&query=burger&type=main+course",
+        #   headers={
+        #     "X-Mashape-Key": "ceGfx1RjCxmshNMIFfB6bxNB8oOxp1oSHW1jsn90cKPmiAquIu",
+        #     "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
+        #   }
+        # )
 
-        recipeID = results["id"]
-        recipeTitle = results["title"]
-        readyInMinutes = results["readyInMinutes"]
-        servings = results["servings"]
-        recipeImage = results["recipeImage"]
 
-class NotFoundPage(webapp2.RequestHandler):
+        # json_response = json.loads(response)
+        #
+        # results = json_response["results"][0]
+        #
+        # recipeID = results["id"]
+        # recipeTitle = results["title"]
+        # readyInMinutes = results["readyInMinutes"]
+        # servings = results["servings"]
+        # recipeImage = results["recipeImage"]
+
+class DisplayRecipesPage(BaseHandler):
+    def get(self):
+        recipes_display_template = JINJA_ENVIRONMENT.get_template('templates/recipe_display.html')
+        self.respone.write()
+class NotFoundPage(BaseHandler):
     def get(self):
         not_found_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
         self.response.write(not_found_template.render())
