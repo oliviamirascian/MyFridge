@@ -174,7 +174,7 @@ class FridgePage(BaseHandler):
     def get(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-        username = self.session['username']
+        username = self.session.get('username')
 
         d = {
             'username': username
