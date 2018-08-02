@@ -110,11 +110,6 @@ class BaseHandler(webapp2.RequestHandler):
             return False
         return True
 
-class RecipeDisplayPage(BaseHandler):
-    def get(self):
-        recipe_display_template = JINJA_ENVIRONMENT.get_template('templates/recipe_display.html')
-        self.response.write(recipe_display_template.render())
-
 class MainPage(BaseHandler):
     def get(self):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
@@ -257,7 +252,7 @@ class NutriTrackerPage(BaseHandler):
     def get(self):
         nutriTracker_template = JINJA_ENVIRONMENT.get_template('templates/nutriTracker.html')
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-        username = self.session['username']
+        username = self.session.get('username')
 
         d = {
             'username': username
@@ -265,7 +260,7 @@ class NutriTrackerPage(BaseHandler):
 
         if self.isLoggedIn():
             self.response.write(nutriTracker_template.render(d))
-            print self.session['username']
+            print self.session.get('username')
         else:
             self.response.write(welcome_template.render())
     def post(self):
@@ -281,9 +276,10 @@ class RecipesPage(BaseHandler):
         self.response.write(recipes_template.render())
 
     def post(self):
+        pass
         # search = self.request.get('search')
         # response = requests.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients=apples%2Cflour%2Csugar&number=5&ranking=1")
-        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?number=10&offset=0&query=" + search
+        # url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?number=10&offset=0&query=" + search
 
 
         # response = urlfetch.fetch(url,
@@ -310,10 +306,41 @@ class RecipesPage(BaseHandler):
         # servings = results["servings"]
         # recipeImage = results["recipeImage"]
 
-class DisplayRecipesPage(BaseHandler):
+RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=5&ranking=1&ingredients={}"
+
+class RecipesDisplay(BaseHandler):
     def get(self):
-        recipes_display_template = JINJA_ENVIRONMENT.get_template('templates/recipe_display.html')
-        self.respone.write()
+        recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
+        ingredients = self.request.get('food')
+        url = RECIPE_API_URL_TEMPLATE.format(ingredients.replace(',', '%2C').replace(' ', ''))
+        result = urlfetch.fetch(
+            url=url,
+            headers={
+                "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                "Accept": "application/json"
+            },
+            validate_certificate=True,#makes website more secuire
+            method=urlfetch.GET,#get request
+            deadline=30# gives it at most 30 seconds until it errors
+        )
+
+        # [ { recipe info 1 }, {recipe info 2},...]
+        # the map operates on each element individually
+        # x is first { recipe info 1 }, turning it into [img name], then x is { recipe info 2},...
+        # so then becomes [ [img name 1], [img name 2] ]
+
+        # 200 means it's good
+        if result.status_code == 200:
+            print(result.content)
+            food_images = list(map(lambda x: (x["title"],x["image"]), json.loads(result.content)))#makes it an array of image urls
+            self.response.write(recipes_template.render(food_images=food_images))
+            # do stuff you want
+        else:
+            self.response.write("oops an api call error occured")
+            # handle the error
+    def post(self):
+        pass
+
 class NotFoundPage(BaseHandler):
     def get(self):
         not_found_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
@@ -333,7 +360,7 @@ app = webapp2.WSGIApplication([
     ('/removefridge', RemoveFridgePage),
     ('/nutritracker', NutriTrackerPage),
     ('/recipes', RecipesPage),
-    ('/recipedisplay', RecipeDisplayPage),
+    ('/recipesdisplay', RecipesDisplay),
     ('/notfound', NotFoundPage),
     ('/signIn', FridgePage)
 ], debug=True, config = config)

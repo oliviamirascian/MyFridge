@@ -18,6 +18,10 @@ class FoodFridge(ndb.Model):
 class FoodEat(ndb.Model):
     name = ndb.StringProperty(required = True)
 
+class Recipe(ndb.Model):
+    name = ndb.StringProperty(required = True)
+    picture = ndb.StringProperty(required = True)
+
 class User(ndb.Model):
     first_name = ndb.StringProperty(required = True)
     last_name = ndb.StringProperty(required = True)
@@ -25,3 +29,4 @@ class User(ndb.Model):
     password = ndb.StringProperty(required = True)
     fridge_foods = ndb.KeyProperty(FoodFridge, repeated = True)
     eaten_foods = ndb.KeyProperty(FoodEat, repeated = True)
+    recipes = ndb.KeyProperty(Recipe, repeated = True)
