@@ -174,7 +174,7 @@ class FridgePage(BaseHandler):
     def get(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-        username = self.session['username']
+        username = self.session.get('username')
 
         d = {
             'username': username
@@ -189,7 +189,7 @@ class FridgePage(BaseHandler):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
-class FridgeFoodPage(BaseHanddler):
+class FridgeFoodPage(BaseHandler):
     def get(self):
         self.response.write(food)
     def post(self):
@@ -210,12 +210,16 @@ class FridgeFoodPage(BaseHanddler):
         foodID = str(getFoodID(json_response))
 
         print foodID
-
+        return webapp2.Response(foodID)
+        print("Cattien is here")
         if foodID == "-1":
-            return self.redirect("/notfound")
             return
-
-        getFoodID(response)
+        elif foodID == -1:
+            print ("foodID is a number")
+        else:
+            print ("we don't know")
+            self.response.write("/notfound")
+        return
 
         if foodID == -1:
             fridge_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
@@ -327,6 +331,6 @@ app = webapp2.WSGIApplication([
     ('/nutritracker', NutriTrackerPage),
     ('/recipes', RecipesPage),
     ('/recipedisplay', RecipeDisplayPage),
-    ('/notfound', NotFoundPage)
+    ('/notfound', NotFoundPage),
     ('/signIn', FridgePage)
 ], debug=True, config = config)

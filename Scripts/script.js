@@ -27,9 +27,10 @@ function addFood(){
     method: "POST",
     body: JSON.stringify({
       addFood: document.getElementById("addFoodText").value,
-      expirationDate: document.getElementById("addFoodDate").value
+      expirationDate: document.getElementById("addFoodDate").value,
     })
-  })
+  }).then(response => response.json())
+  .then(data => console.log(data));
 }
 
 // This function will move an object from the Today list to the
