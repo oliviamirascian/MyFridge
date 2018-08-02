@@ -57,11 +57,14 @@
           <h2>What's in my fridge?</h2>
           <div id="addFoodButton"> Add Food </div>
           <div id="addFoodForm">
-            Enter Food
-            <input type="text" name="Name" id="addFoodText"> <br>
-            Enter Expiration Date
-            <input type="date" name="Expiration Date" id="addFoodDate"> <br>
-            <div id="Displayfoodbutton" onclick="addFood()">Add Food</div>
+            <form action="/fridgefood" method="POST">
+              Enter Food
+              <input type="text" name="addFood" id="addFoodText"> <br>
+              Enter Expiration Date
+              <input type="date" name="expirationDate" id="addFoodDate"> <br>
+              <input type="submit" id="Displayfoodbutton" value="Add Food">
+            </form>
+
             {% for food in food_fridge %}
             <div class="fridgefood-div" style=" ">
               <p id="foodName">{{food.name}}</p>
