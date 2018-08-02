@@ -4,6 +4,7 @@ import jinja2
 import os
 import json
 from model import User
+from webapp2_extras import sessions
 from model import FoodFridge
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -90,21 +91,62 @@ class RecipeDisplayPage(webapp2.RequestHandler):
         recipe_display_template = JINJA_ENVIRONMENT.get_template('templates/recipe_display.html')
         self.response.write(recipe_display_template.render())
 
-class MainPage(webapp2.RequestHandler):
+class BaseHandler(webapp2.RequestHandler):
+    def dispatch(self):
+        # Get a session store for this request.
+        self.session_store = sessions.get_store(request=self.request)
+
+        try:
+            # Dispatch the request.
+            webapp2.RequestHandler.dispatch(self)
+        finally:
+            # Save all sessions.
+            self.session_store.save_sessions(self.response)
+
+    @webapp2.cached_property
+    def session(self):
+        # Returns a session using the default cookie key.
+        return self.session_store.get_session()
+
+    def isLoggedIn(self):
+        if self.session.get('username') == "":
+            return False
+        return True
+
+class MainPage(BaseHandler):
     def get(self):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
+
+
+        if self.isLoggedIn():
+            self.redirect("/fridge")
+
     def post(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+
+        d = {
+            'phrase': 'Incorrect password or username'
+        }
+
         username = self.request.get('welcome_username')
         password = self.request.get('welcome_password')
         user_info = User.query().filter(username == User.username).fetch()
-        if (username == user_info[0].username) and (password == user_info[0].password):
-            self.response.write(fridge_template.render())
-            self.redirect("/fridge")
 
-class CreateAccount(webapp2.RequestHandler):
+        if(len(user_info)>0):
+            if password == user_info[0].password:
+                self.redirect("/fridge")
+                self.session['username'] = username
+            else:
+                self.response.write(welcome_template.render(d))
+
+        else:
+            self.response.write(welcome_template.render(d))
+
+
+class CreateAccount(BaseHandler):
     def get(self):
         createAccount_template = JINJA_ENVIRONMENT.get_template('templates/createAccount.html')
         self.response.write(createAccount_template.render())
@@ -119,15 +161,35 @@ class CreateAccount(webapp2.RequestHandler):
                     last_name = last_name,
                     username = username,
                     password = password)
-        print ("Something")
+
         user.put()
 
-class FridgePage(webapp2.RequestHandler):
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+        self.response.write(welcome_template.render())
+
+
+
+
+class FridgePage(BaseHandler):
     def get(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
-        self.response.write(fridge_template.render())
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+        username = self.session['username']
 
-class FridgeFoodPage(webapp2.RequestHandler):
+        d = {
+            'username': username
+        }
+        # checks if session username is  ""
+        if self.isLoggedIn():
+            self.response.write(fridge_template.render(d))
+        else:
+            self.response.write(welcome_template.render())
+    def post(self):
+        self.session['username'] = ""
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+        self.response.write(welcome_template.render())
+
+class FridgeFoodPage(BaseHanddler):
     def get(self):
         self.response.write(food)
     def post(self):
@@ -152,6 +214,12 @@ class FridgeFoodPage(webapp2.RequestHandler):
         if foodID == "-1":
             return self.redirect("/notfound")
             return
+
+        getFoodID(response)
+
+        if foodID == -1:
+            fridge_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
+            self.response.write(fridge_template.render())
 
         idUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/"+ foodID +"/information?amount=1"
 
@@ -192,12 +260,27 @@ class RemoveFridgePage(webapp2.RequestHandler):
         removeFood = self.request.get("removeFood")
         del FoodFridge().removeFood
 
-class NutriTrackerPage(webapp2.RequestHandler):
+class NutriTrackerPage(BaseHandler):
     def get(self):
         nutriTracker_template = JINJA_ENVIRONMENT.get_template('templates/nutriTracker.html')
-        self.response.write(nutriTracker_template.render())
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+        username = self.session['username']
 
-class RecipesPage(webapp2.RequestHandler):
+        d = {
+            'username': username
+        }
+
+        if self.isLoggedIn():
+            self.response.write(nutriTracker_template.render(d))
+            print self.session['username']
+        else:
+            self.response.write(welcome_template.render())
+    def post(self):
+        self.session['username'] = ""
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+        self.response.write(welcome_template.render())
+
+class RecipesPage(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         self.response.write(recipes_template.render())
@@ -230,6 +313,10 @@ class NotFoundPage(webapp2.RequestHandler):
         self.response.write(not_found_template.render())
 
 
+config = {}
+config['webapp2_extras.sessions'] = {
+    'secret_key': 'my-super-secret-key',
+}
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
@@ -241,4 +328,5 @@ app = webapp2.WSGIApplication([
     ('/recipes', RecipesPage),
     ('/recipedisplay', RecipeDisplayPage),
     ('/notfound', NotFoundPage)
-], debug=True)
+    ('/signIn', FridgePage)
+], debug=True, config = config)
