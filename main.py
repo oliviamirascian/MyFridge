@@ -190,8 +190,9 @@ class FridgePage(BaseHandler):
         self.response.write(welcome_template.render())
 
 class FridgeFoodPage(BaseHandler):
+    def get(self):
+        self.response.write(food)
     def post(self):
-        fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         addFood = self.request.get('addFood')
         expirationDate = self.request.get('expirationDate')
 
@@ -223,7 +224,7 @@ class FridgeFoodPage(BaseHandler):
 
             name = getFoodInfo(json_response)[0]
 
-            image = "https://spoonacular.com/cdn/ingredients_100x100/" + getFoodInfo(json_response)[1]
+            image = getFoodInfo(json_response)[1]
 
             food = FoodFridge(name=name,expirationDate=expirationDate,image=image)
 
@@ -237,10 +238,9 @@ class FridgeFoodPage(BaseHandler):
             'expiration_date': expirationDate,
             'food_fridge': food_fridge
             }
-            food_fridge_dict = {
-                "food_fridge_key": "food_fridge",
-            }
-            self.response.write(fridge_template.render(food_fridge=food_fridge))
+
+            fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
+            self.response.write(fridge_template.render())
 
 class RemoveFridgePage(webapp2.RequestHandler):
     def get(self):

@@ -65,6 +65,13 @@
               <input type="submit" id="Displayfoodbutton" value="Add Food">
             </form>
 
+            {% for food in food_fridge %}
+            <div class="fridgefood-div" style=" ">
+              <p id="foodName">{{food.name}}</p>
+              <img src={{food.image}}>
+              <p id="foodExpiration">{{food.expirationDate}}</p>
+            </div>
+            {% endfor %}
         </div>
     </div>
 
@@ -75,13 +82,6 @@
             <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
           </form>
         </div> -->
-        {% for food in food_fridge %}
-        <div class="fridgefood-div" style=" ">
-          <p id="foodName">{{food.name}}</p>
-          <img src="{{food.image}}">
-          <p id="foodExpiration">{{food.expirationDate}}</p>
-        </div>
-        {% endfor %}
 
 </div>
       <div id="rightfridge">
