@@ -12,20 +12,16 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 def getFoodID(response):
-    query = response[0]
-    if query == "":
+    if len(response) == 0:
         foodID = -1
-    else:
-        foodID = query["id"]
         return foodID
+    query = response[0]
+    foodID = query["id"]
+    return foodID
 
 def getFoodInfo(response):
     name = response["name"]
     image = response["image"]
-
-    results = [name,image]
-
-    return results
 
     # nutrition = foodBody.nutrition.nutrients.fetch()
     #
@@ -89,16 +85,11 @@ def getFoodInfo(response):
 
     return foodInfo
 
-class TestClass(webapp2.RequestHandler):
+class RecipeDisplayPage(webapp2.RequestHandler):
     def get(self):
-        response = urlfetch.fetch("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query=appl&number=10&intolerances=egg",
-          headers={
-            "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
-            "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
-          }
-        ).content
-        json_response = json.loads(response)
-        print response
+        recipe_display_template = JINJA_ENVIRONMENT.get_template('templates/recipe_display.html')
+        self.response.write(recipe_display_template.render())
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
@@ -136,13 +127,13 @@ class FridgePage(webapp2.RequestHandler):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         self.response.write(fridge_template.render())
 
-class AddFridgePage(webapp2.RequestHandler):
+class FridgeFoodPage(webapp2.RequestHandler):
     def get(self):
-        add_fridge_template = JINJA_ENVIRONMENT.get_template('templates/add_fridge.html')
-        self.response.write(add_fridge_template.render())
+        self.response.write(food)
     def post(self):
-        addFood = self.request.get('addFood')
-        expirationDate = self.request.get('expirationDate')
+        body = json.loads(self.request.body)
+        addFood = body['addFood']
+        expirationDate = body['expirationDate']
 
         url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query="+ addFood +"&number=1&metaInformation=true"
 
@@ -156,9 +147,11 @@ class AddFridgePage(webapp2.RequestHandler):
 
         foodID = str(getFoodID(json_response))
 
-        if foodID == -1:
-            fridge_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
-            self.response.write(fridge_template.render())
+        print foodID
+
+        if foodID == "-1":
+            return self.redirect("/notfound")
+            return
 
         idUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/"+ foodID +"/information?amount=1"
 
@@ -178,10 +171,13 @@ class AddFridgePage(webapp2.RequestHandler):
 
         food.put()
 
+        food_fridge = FoodFridge.query().fetch()
+
         fridge_variable_dict = {
         'food_name': name,
         'image': image,
-        'expiration_date': expirationDate
+        'expiration_date': expirationDate,
+        'food_fridge': food_fridge
         }
 
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
@@ -206,13 +202,43 @@ class RecipesPage(webapp2.RequestHandler):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         self.response.write(recipes_template.render())
 
+    def post(self):
+        search = self.request.get('search')
+
+        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?number=10&offset=0&query=" + search
+
+        response = urlfetch.fetch(url,
+  headers={
+    "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
+    "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
+  }
+).content
+
+        json_response = json.loads(response)
+
+        results = json_response["results"][0]
+
+        recipeID = results["id"]
+        recipeTitle = results["title"]
+        readyInMinutes = results["readyInMinutes"]
+        servings = results["servings"]
+        recipeImage = results["recipeImage"]
+
+class NotFoundPage(webapp2.RequestHandler):
+    def get(self):
+        not_found_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
+        self.response.write(not_found_template.render())
+
+
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/createAccount',CreateAccount),
     ('/fridge', FridgePage),
-    ('/addfridge', AddFridgePage),
+    ('/fridgefood', FridgeFoodPage),
     ('/removefridge', RemoveFridgePage),
     ('/nutritracker', NutriTrackerPage),
     ('/recipes', RecipesPage),
-    ('/test', TestClass)
+    ('/recipedisplay', RecipeDisplayPage),
+    ('/notfound', NotFoundPage)
 ], debug=True)

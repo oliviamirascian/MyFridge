@@ -22,6 +22,16 @@ function removeToTextInput(){
   textInput.style.display = "block";
 }
 
+function addFood(){
+  fetch("/fridgefood", {
+    method: "POST",
+    body: JSON.stringify({
+      addFood: document.getElementById("addFoodText").value,
+      expirationDate: document.getElementById("addFoodDate").value
+    })
+  })
+}
+
 // This function will move an object from the Today list to the
 // History list in the NutriTracker
 function moveToHistory(){
@@ -93,3 +103,15 @@ function onLoad() {
     gapi.auth2.init();
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  button = document.getElementById('addFoodButton');
+  button.onclick = function() {
+    const foodForm = document.getElementById('addFoodForm');
+    if (foodForm.style.display === 'inline-block') {
+      foodForm.style.display = 'none';
+    } else {
+      foodForm.style.display = 'inline-block';
+    }
+  }
+});
