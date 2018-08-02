@@ -16,56 +16,60 @@
     <div class="heading">
 
 
-      <div class="tabs">
-        <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button>
-        </form>
+    <div class="tabs">
+        <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button></form>
 
-        <form  action="/nutritracker"> <button type="submit" class = "tab" > Nutrition Track </button>
-        </form>
+        <form  action="/nutritracker"> <button type="submit" class = "tab" > Nutrition Track </button></form>
 
-     <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button>
-     </form>
-</div>
+        <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button></form>
+      </div>
 
-<a href="#" onclick="signOut()" type="submit" class = "tab" > Sign Out </a>
+      <a href="#" onclick="signOut()" type="submit" class = "tab" > Sign Out </a>
 
-<div id="header"></div>
+      <div id="header"></div>
+    </div>
 
-
-</div>
 <div class="wrapperrecipe">
   <div id="leftrecipe">
     <br>
     <br>
     <div id="recipesearchbox">
-  <form action= "/recipedisplay" method = "post">
-    <br>
-    <br>
-    <input type="text" placeholder="Search Recipe..."
-    maxlength="30" id="search">
-    <input type="submit" value="Go!" id="submit">
-  </form>
-  <br>
-  <br>
-  <div id="reciperecommendbox">
-    <h4> More Recipes based on list </h4>
-    <form class="" action="index.html" method="post">
 
+      <form action= "/recipesdisplay" method = "get">
+        <br>
+        <br>
+        <input type="text" placeholder="Search Recipe..." maxlength="30" id="search" name = "food">
+        <input type="submit" value="Go!" id="submit">
+      </form>
 
-      <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
-    </form>
+      <br>
+      <br>
+
+      <div class="">
+        {% for i in food_images %}
+          <p>{{i[0]}}</p>
+          <img src={{i[1]}} />
+          <br />
+        {% endfor %}
+      </div>
+
+      <div id="reciperecommendbox">
+        <h4> More Recipes based on list </h4>
+        <form class="" action="index.html" method="post">
+          <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
+        </form>
+      </div>
+
+    </div>
   </div>
-  </div>
-</div>
+
   <div id="rightrecipe">
     <h2>+ Saved Recipes</h2>
-
   </div>
+
 </div>
 
-<div id="footer">
-<p>footer</p>
+
 
   </body>
 </html>
-</div>
