@@ -27,8 +27,11 @@ function addFood(){
     method: "POST",
     body: JSON.stringify({
       addFood: document.getElementById("addFoodText").value,
-      expirationDate: document.getElementById("addFoodDate").value
+      expirationDate: document.getElementById("addFoodDate").value,
     })
+  }).then((response) => response.json())
+  .then(function(jsonfoodID) {
+    console.log(jsonfoodID);
   })
 }
 
