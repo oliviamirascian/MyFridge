@@ -15,6 +15,8 @@ class FoodFridge(ndb.Model):
     # sodium = ""
     # protein = ""
     # fiber = ""
+class FoodEat(ndb.Model):
+    name = ndb.StringProperty(required = True)
 
 class User(ndb.Model):
     first_name = ndb.StringProperty(required = True)
@@ -22,3 +24,4 @@ class User(ndb.Model):
     username = ndb.StringProperty(required = True)
     password = ndb.StringProperty(required = True)
     fridge_foods = ndb.KeyProperty(FoodFridge, repeated = True)
+    eaten_foods = ndb.KeyProperty(FoodEat, repeated = True)
