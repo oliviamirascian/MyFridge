@@ -308,6 +308,7 @@ class RecipesPage(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         username = self.session.get('username')
+        time.sleep(.250)
         if self.isLoggedIn():
             user = User.query().filter(username == User.username).fetch()[0]
             keys = user.recipes
@@ -394,70 +395,8 @@ class RecipesPage(BaseHandler):
                     recipes_name.append(model.name)
 
         d = {'all_recipe_models' : recipe_models_list}
-        self.response.write(recipes_template.render(d))
-
-# class RecipesDisplay(BaseHandler):
-#     def get(self):
-#         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
-#         username = self.session.get('username')
-#         if self.isLoggedIn():
-#             user = User.query().filter(username == User.username).fetch()[0]
-#             keys = user.recipes
-#             recipe_models_list = []
-#             recipes_name = []
-#             for i in keys:
-#                 model = i.get()
-#                 if model:
-#                     if model.name not in recipes_name:
-#                         recipes_name.append(model.name)
-#                         recipe_models_list.append(model)
-#
-#             d = {'all_recipe_models' : recipe_models_list,
-#                 'username': username
-#             }
-#
-#             food_keys = user.fridge_foods
-#             food_names_list = []
-#             for i in food_keys:
-#                 model = i.get()
-#                 food_names_list.append(model.name)
-#             ingredients = ""
-#             for i in food_names_list:
-#                 ingredients = ingredients + i + " "
-#             # ingredients = self.request.get('food')
-#             if "," not in ingredients:
-#                 url = RECIPE_API_URL_TEMPLATE.format(ingredients.replace(' ', '%2C'))
-#             else:
-#                 url = RECIPE_API_URL_TEMPLATE.format(ingredients.replace(',', '%2C').replace(' ', ''))
-#             result = urlfetch.fetch(
-#                 url=url,
-#                 headers={
-#                     "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
-#                     "Accept": "application/json"
-#                 },
-#                 validate_certificate=True,#makes website more secuire
-#                 method=urlfetch.GET,#get request
-#                 deadline=30# gives it at most 30 seconds until it errors
-#             )
-#
-#             # [ { recipe info 1 }, {recipe info 2},...]
-#             # the map operates on each element individually
-#             # x is first { recipe info 1 }, turning it into [img name], then x is { recipe info 2},...
-#             # so then becomes [ [img name 1], [img name 2] ]
-#
-#             # 200 means it's good
-#             if result.status_code == 200:
-#                 print(result.content)
-#                 food_images = list(map(lambda x: (x["title"],x["image"]), json.loads(result.content)))#makes it an array of image urls
-#                 self.response.write(recipes_template.render(food_images=food_images,**d))
-#                 # do stuff you want
-#             else:
-#                 self.response.write("oops an api call error occured")
-#                 # handle the error
-#         else:
-#             self.redirect('/')
-#     def post(self):
-#         pass
+        # self.response.write(recipes_template.render(d))
+        self.redirect("/recipes?")
 
 class RemoveRecipe(BaseHandler):
     def post(self):

@@ -61,6 +61,7 @@ function checkExpirationDate(){
   console.log(foodList)
   var expiringSoon = document.getElementById("expiringSoon");
   var expired = document.getElementById("expired");
+  var foodListLength = foodList.lenth;
   for (var i = 0; i < foodList.length; i++){
     var food = foodList[i];
     var foodExpiration = food.getElementsByTagName("p")[1].innerHTML;
