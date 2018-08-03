@@ -63,7 +63,7 @@
         {% for i in food_images %}
           <form class="" action="/recipes" method="post">
             <!-- <p>{{i[0]}}</p> -->
-            <p class="recipe-header" name="recipe_name">{{i[0]}}</p>
+            <input type="text" name="recipe_name" class="recipe-header" value="{{i[0]}}" readonly>
             <!-- <img src={{i[1]}} /> -->
             <input type="image" name="" src="{{i[1]}}" style="border-radius: 10px;">
             <input type="hidden" name="recipe_picture" value="{{i[1]}}">
@@ -79,9 +79,9 @@
   <div id="rightrecipe">
     <h2>+ Saved Recipes</h2>
     {% for i in all_recipe_models %}
-    
+
       <h4>{{i.name}}</h4>
-      <img src="{{i.picture}}" alt="" style="border-radius:10px>
+      <img src="{{i.picture}}" alt="" style="border-radius:10px">
       <form class="" action="/removeRecipe" method="post">
         <input type="submit" name="" value="Delete">
         <input type="hidden" name="recipe" value="{{i.name}}">

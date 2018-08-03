@@ -172,7 +172,7 @@ class FridgeFoodPage(BaseHandler):
     def post(self):
         addFood = self.request.get('addFood')
         expirationDate = self.request.get('expirationDate')
-        
+
         if expirationDate == "":
             expirationDate = " "
 
@@ -274,11 +274,12 @@ class RemoveFridgePage(BaseHandler):
 #         self.response.write(welcome_template.render())
 
 
-
+RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=4&ranking=1&ingredients={}"
 class RecipesPage(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         username = self.session.get('username')
+        time.sleep(.250)
         if self.isLoggedIn():
             user = User.query().filter(username == User.username).fetch()[0]
             keys = user.recipes
@@ -298,8 +299,9 @@ class RecipesPage(BaseHandler):
             food_keys = user.fridge_foods
             food_names_list = []
             for i in food_keys:
-                model = i.get()
-                food_names_list.append(model.name)
+                    model = i.get()
+                    if model:
+                        food_names_list.append(model.name)
             ingredients = ""
             for i in food_names_list:
                 ingredients = ingredients + i + " "
@@ -338,6 +340,7 @@ class RecipesPage(BaseHandler):
     def post(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         name = self.request.get('recipe_name')
+
         picture = self.request.get('recipe_picture')
         recipe = Recipe(name = name,
                         picture = picture)
@@ -364,9 +367,9 @@ class RecipesPage(BaseHandler):
                     recipes_name.append(model.name)
 
         d = {'all_recipe_models' : recipe_models_list}
-        self.response.write(recipes_template.render(d))
+        # self.response.write(recipes_template.render(d))
+        self.redirect("/recipes?")
 
-RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=5&ranking=1&ingredients={}"
 
 # class RecipesDisplay(BaseHandler):
 #     def get(self):
@@ -441,10 +444,11 @@ class RemoveRecipe(BaseHandler):
         new_recipe_keys = []
         for i in recipe_keys:
             model = i.get()
-            if model.name != recipe:
-                print model.name
-                print recipe
-                new_recipe_keys.append(i)
+            if model:
+                if model.name != recipe:
+                    print model.name
+                    print recipe
+                    new_recipe_keys.append(i)
 
         user.recipes = new_recipe_keys
         user.put()
@@ -464,7 +468,8 @@ class RemoveRecipe(BaseHandler):
             d = {'all_recipe_models' : recipe_models_list,
                 'username': username
             }
-            self.response.write(recipes_template.render(d))
+            self.redirect("/recipes")
+            # self.response.write(recipes_template.render(d))
         else:
             self.redirect("/")
 
