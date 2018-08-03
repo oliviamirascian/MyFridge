@@ -41,6 +41,54 @@ function moveToHistory(){
 
 }
 
+function checkExpirationDate(){
+  var today = new Date();
+  if ((today.getMonth()+1) < 10){
+    var month = "0" + String(today.getMonth()+1);
+  } else {
+    var month = String(today.getMonth()+1);
+  }
+  if (today.getDate() < 10){
+    var day = "0"+ String(today.getDate());
+  } else {
+    var day = String(today.getDate());
+  }
+  var date = String(today.getFullYear())+month+day;
+  var dateCompare = Number(date);
+  var foodList = document.getElementsByClassName("fridgefood-div");
+  // var food = foodList.getElementById("foodItem");
+  console.log(foodList)
+  var expiringSoon = document.getElementById("expiringSoon");
+  var expired = document.getElementById("expired");
+  for (var i = 0; i < foodList.length; i++){
+    var food = foodList[i];
+    var foodExpiration = food.getElementsByTagName("p")[1].innerHTML;
+    if(foodExpiration == "Expires  "){
+      food.getElementsByTagName("p")[1].innerHTML = "Does not expire";
+    } else {
+      var foodExpirationCompare = Number(foodExpiration.replace(/-|Expires| /g,""));
+      if ((foodExpirationCompare - dateCompare) <= 0){
+        food.classList.add("expired-div");
+        expired.appendChild(food);
+      } else if ((foodExpirationCompare - dateCompare) <= 8){
+        food.classList.add("expiringsoon-div");
+        expiringSoon.appendChild(food);
+      }
+    }
+  }
+
+  expiringSoon = document.getElementsByClassName("expiringsoon-div");
+  for (var i = 0; i < expiringSoon.length; i++){
+    var expiringSoonItems = expiringSoon[i];
+    var foodExpiration = expiringSoonItems.getElementsByTagName("p")[1].innerHTML;
+    var foodExpirationCompare = Number(foodExpiration.replace(/-/g,""));
+    if (dateCompare >= foodExpirationCompare){
+      expired.appendChild(expiringSoonItems);
+    }
+  }
+
+}
+
 function addItemToFridge(){
   var ul = document.getElementById("listFridge");
   var input = document.getElementById("addFoodFridge");
@@ -66,45 +114,7 @@ function removeItemFromFridge(){
 //   window.location = "http://localhost:8080";
 // }
 
-function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  window.location = "http://localhost:8080/fridge";
-}
-
-function onLoad() {
-  gapi.load('auth2', function() {
-    gapi.auth2.init();
-  });
-}
-
 // welcome.html
-
-function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function () {
-    console.log('User signed out.');
-  });
-  window.location = "http://localhost:8080";
-}
-
-function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  window.location = "http://localhost:8080/fridge";
-}
-
-function onLoad() {
-  gapi.load('auth2', function() {
-    gapi.auth2.init();
-  });
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   button = document.getElementById('addFoodButton');

@@ -6,15 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scake=1">
 
     <script type="text/javascript" src = "/Scripts/script.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-    <meta name="google-signin-client_id" content="15145183773-m2dh8cosvugqilo2ver83cta6q1qfbao.apps.googleusercontent.com">
     <link rel="stylesheet" href="/Style/style.css">
     <title>MyFridge</title>
 <link href="css/bootstram.min.css" rel="stylesheer">
 
   </head>
 
-  <body>
+  <body onload="checkExpirationDate()">
 
 
 
@@ -25,16 +23,14 @@
 
       <div class="tabs">
 
-               <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button>
-               </form>
+            <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button></form>
+
+
+            <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button></form>
 
 
 
-            <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button>
-            </form>
-
-            <form  action="/aboutus"> <button type="submit" class = "tababoutus" > About Us </button>
-            </form>
+            <form  action="/aboutus"> <button type="submit" class = "tababoutus" > About Us </button></form>
 
       </div>
 
@@ -50,8 +46,7 @@
 
 
 
-<div id="header"></div>
-
+  <div id="header"></div>
 
 
 </div>
@@ -80,29 +75,28 @@
             <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
           </form>
         </div> -->
+      <div id="foodList">
         {% for food in food_fridge %}
-        <div class="fridgefood-div" style=" ">
-          <p id="foodName">{{food.name}}</p>
-          <img src="{{food.image}}"> </div>
-
-         <p type="submit" id="foodExpiration"> {{food.expirationDate}}</p>
-
+        <div class="fridgefood-div">
+          <p class="foodName">{{food.name}}</p>
+          <img src="{{food.image}}">
+          <p class="foodExpiration">Expires {{food.expirationDate}}</p>
+        </div>
         {% endfor %}
+      </div>
 
 </div>
       <div id="rightfridge">
+        <h2>Expiring Soon:</h2>
         <div id="expiringSoon">
-          <h2>Expiring Soon:</h2>
-          <ul id="listExpiration">
 
-          </ul>
+
         </div>
 
+        <h2>Expired:</h2>
         <div id="expired">
-          <h2>Expired:</h2>
-          <ul id="listExpired">
 
-          </ul>
+
         </div>
 
       </div>

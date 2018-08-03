@@ -3,9 +3,8 @@ import webapp2
 import jinja2
 import os
 import json
-from model import User
 from webapp2_extras import sessions
-from model import FoodFridge
+from model import FoodFridge,Recipe,User
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -23,64 +22,6 @@ def getFoodID(response):
 def getFoodInfo(response):
     name = response["name"]
     image = response["image"]
-
-    # nutrition = foodBody.nutrition.nutrients.fetch()
-    #
-    # calories = {
-    # 'title': nutrition[0].title,
-    # 'amount': nutrition[0].amount,
-    # 'unit': nutrition[0].unit,
-    # 'percentOfDailyNeeds': nutrition[0].percentOfDailyNeeds
-    # }
-    #
-    # saturatedFat = {
-    # 'title': nutrition[2].title,
-    # 'amount': nutrition[2].amount,
-    # 'unit': nutrition[2].unit,
-    # 'percentOfDailyNeeds': nutrition[2].percentOfDailyNeeds
-    # }
-    #
-    # carbs = {
-    # 'title': nutrition[3].title,
-    # 'amount': nutrition[3].amount,
-    # 'unit': nutrition[3].unit,
-    # 'percentOfDailyNeeds': nutrition[3].percentOfDailyNeeds
-    # }
-    #
-    # sugar = {
-    # 'title': nutrition[4].title,
-    # 'amount': nutrition[4].amount,
-    # 'unit': nutrition[4].unit,
-    # 'percentOfDailyNeeds': nutrition[4].percentOfDailyNeeds
-    # }
-    #
-    # cholesterol = {
-    # 'title': nutrition[5].title,
-    # 'amount': nutrition[5].amount,
-    # 'unit': nutrition[5].unit,
-    # 'percentOfDailyNeeds': nutrition[5].percentOfDailyNeeds
-    # }
-    #
-    # sodium = {
-    # 'title': nutrition[6].title,
-    # 'amount': nutrition[6].amount,
-    # 'unit': nutrition[6].unit,
-    # 'percentOfDailyNeeds': nutrition[6].percentOfDailyNeeds
-    # }
-    #
-    # protein = {
-    # 'title': nutrition[7].title,
-    # 'amount': nutrition[7].amount,
-    # 'unit': nutrition[7].unit,
-    # 'percentOfDailyNeeds': nutrition[7].percentOfDailyNeeds
-    # }
-    #
-    # fiber = {
-    # 'title': nutrition[8].title,
-    # 'amount': nutrition[8].amount,
-    # 'unit': nutrition[8].unit,
-    # 'percentOfDailyNeeds': nutrition[8].percentOfDailyNeeds
-    # }
 
     foodInfo = [name,image]
 
@@ -172,17 +113,15 @@ class CreateAccount(BaseHandler):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
-
-
-
 class FridgePage(BaseHandler):
     def get(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         username = self.session.get('username')
-
+        food_fridge = FoodFridge.query().fetch()
         d = {
-            'username': username
+            'username': username,
+            'food_fridge': food_fridge
         }
         # checks if session username is  ""
         if self.isLoggedIn():
@@ -195,13 +134,20 @@ class FridgePage(BaseHandler):
         self.response.write(welcome_template.render())
 
 class FridgeFoodPage(BaseHandler):
-    def get(self):
-        self.response.write(food)
     def post(self):
+        print("this works")
         addFood = self.request.get('addFood')
         expirationDate = self.request.get('expirationDate')
 
-        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query="+ addFood +"&number=1&metaInformation=true"
+        if expirationDate == "":
+            expirationDate = " "
+
+        if " " in addFood:
+            urlFood = addFood.replace(" ", "-")
+        else:
+            urlFood = addFood
+
+        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query="+ urlFood +"&number=1&metaInformation=true"
 
         response = urlfetch.fetch(url,
           headers={
@@ -209,6 +155,7 @@ class FridgeFoodPage(BaseHandler):
             "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
           }
         ).content
+        print(response)
         json_response = json.loads(response)
 
         foodID = str(getFoodID(json_response))
@@ -235,17 +182,18 @@ class FridgeFoodPage(BaseHandler):
 
             food.put()
 
-            food_fridge = FoodFridge.query().fetch()
+            # food_fridge = FoodFridge.query().fetch()
 
-            fridge_variable_dict = {
-            'food_name': name,
-            'image': image,
-            'expiration_date': expirationDate,
-            'food_fridge': food_fridge
-            }
+            # fridge_variable_dict = {
+            # 'food_name': name,
+            # 'image': image,
+            # 'expiration_date': expirationDate,
+            # 'food_fridge': food_fridge,
+            # }
 
-            fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
-            self.response.write(fridge_template.render(fridge_variable_dict))
+            # fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
+            # self.response.write(fridge_template.render(fridge_variable_dict))
+            self.redirect("/fridge")
 
 class RemoveFridgePage(BaseHandler):
     def get(self):
@@ -281,39 +229,61 @@ class RemoveFridgePage(BaseHandler):
 class RecipesPage(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
-        self.response.write(recipes_template.render())
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
 
+        username = self.session.get('username')
+
+        # checks if session username is  ""
+        if self.isLoggedIn():
+            user = User.query().filter(username == User.username).fetch()[0]
+            keys = user.recipes
+            recipe_models_list = []
+            recipes_name = []
+            for i in keys:
+                model = i.get()
+                if model:
+                    for i in recipe_models_list:
+                        recipes_name.append(i.name)
+                    if model.name not in recipes_name:
+                        recipe_models_list.append(model)
+
+            d = {'all_recipe_models' : recipe_models_list,
+                'username': username
+            }
+            self.response.write(recipes_template.render(d))
+        else:
+            self.response.write(welcome_template.render())
     def post(self):
-        AboutUs_template = JINJA_ENVIRONMENT.get_template('templates/AboutUs.html')
-        self.response.write(AboutUs_template.render())
-        # search = self.request.get('search')
-        # response = requests.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients=apples%2Cflour%2Csugar&number=5&ranking=1")
-        # url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?number=10&offset=0&query=" + search
+        recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
+        name = self.request.get('recipe_name')
+        picture = self.request.get('recipe_picture')
+        recipe = Recipe(name = name,
+                        picture = picture)
+        #just key
+        recipe_key = recipe.put()
+        #whole recipe model
+        recipe_model = recipe_key.get()
+        #finds user
+        username = self.session.get('username')
+        user = User.query().filter(username == User.username).fetch()[0]
 
+        #store in database
+        user.recipes.append(recipe_key)
+        user.put()
 
-        # response = urlfetch.fetch(url,
-        #   headers={
-        #     "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
-        #     "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
-        #   })
+        keys = user.recipes
+        recipe_models_list = []
+        recipes_name = []
+        for i in keys:
+            model = i.get()
+            if model:
+                for i in recipe_models_list:
+                    recipes_name.append(i.name)
+                if model.name not in recipes_name:
+                    recipe_models_list.append(model)
 
-        # response = unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C+gluten&number=10&offset=0&query=burger&type=main+course",
-        #   headers={
-        #     "X-Mashape-Key": "ceGfx1RjCxmshNMIFfB6bxNB8oOxp1oSHW1jsn90cKPmiAquIu",
-        #     "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
-        #   }
-        # )
-
-
-        # json_response = json.loads(response)
-        #
-        # results = json_response["results"][0]
-        #
-        # recipeID = results["id"]
-        # recipeTitle = results["title"]
-        # readyInMinutes = results["readyInMinutes"]
-        # servings = results["servings"]
-        # recipeImage = results["recipeImage"]
+        d = {'all_recipe_models' : recipe_models_list}
+        self.response.write(recipes_template.render(d))
 
 RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=5&ranking=1&ingredients={}"
 
@@ -321,7 +291,34 @@ class RecipesDisplay(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         ingredients = self.request.get('food')
-        url = RECIPE_API_URL_TEMPLATE.format(ingredients.replace(',', '%2C').replace(' ', ''))
+        # username = self.session.get('username')
+        #
+        # # checks if session username is  ""
+        # if self.isLoggedIn():
+        #     user = User.query().filter(username == User.username).fetch()[0]
+        #     keys = user.recipes
+        #     recipe_models_list = []
+        #     recipes_name = []
+        #     for i in keys:
+        #         model = i.get()
+        #         if model:
+        #             for i in recipe_models_list:
+        #                 recipes_name.append(i.name)
+        #             if model.name not in recipes_name:
+        #                 recipe_models_list.append(model)
+        #
+        #     d = {'all_recipe_models' : recipe_models_list,
+        #         'username': username
+        #     }
+        #     self.response.write(recipes_template.render(d))
+        # else:
+        #     self.response.write(welcome_template.render())
+
+
+        if "," not in ingredients:
+            url = RECIPE_API_URL_TEMPLATE.format(ingredients.replace(' ', '%2C'))
+        else:
+            url = RECIPE_API_URL_TEMPLATE.format(ingredients.replace(',', '%2C').replace(' ', ''))
         result = urlfetch.fetch(
             url=url,
             headers={
@@ -347,6 +344,7 @@ class RecipesDisplay(BaseHandler):
         else:
             self.response.write("oops an api call error occured")
             # handle the error
+
     def post(self):
         pass
 

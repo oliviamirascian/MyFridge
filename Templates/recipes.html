@@ -5,8 +5,6 @@
 
     <link rel="stylesheet" href="/Style/style.css">
     <script type="text/javascript" src = "/Scripts/script.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-    <meta name="google-signin-client_id" content="15145183773-m2dh8cosvugqilo2ver83cta6q1qfbao.apps.googleusercontent.com">
     <title>MyFridge</title>
 
   </head>
@@ -14,9 +12,12 @@
   <body>
 
     <div class="heading">
+      <h1 id ="fridgeTitle" >Recipes</h1>
 
-          <h1 id ="fridgeTitle" >Recipes</h1>
 
+      <div class="tabs">
+
+        <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button></form>
 
           <div class="tabs">
 
@@ -63,26 +64,34 @@
       <br>
       <br>
 
-      <div class="">
-        {% for i in food_images %}
-          <p>{{i[0]}}</p>
-          <img src={{i[1]}} />
-          <br />
-        {% endfor %}
-      </div>
 
       <div id="reciperecommendbox">
-        <h4> More Recipes based on list </h4>
-        <form class="" action="index.html" method="post">
-          <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
-        </form>
+        <h4> Possible Recipes based on Fridge</h4>
       </div>
 
+      <div class="">
+        {% for i in food_images %}
+          <form class="" action="/recipes" method="post">
+            <!-- <p>{{i[0]}}</p> -->
+            <input type="text" name="recipe_name" value="{{i[0]}}">
+            <!-- <img src={{i[1]}} /> -->
+            <input type="image" name="" src="{{i[1]}}">
+            <input type="hidden" name="recipe_picture" value="{{i[1]}}">
+            <br>
+            <input type="submit" name="" value="Save">
+          </form>
+          <br><br>
+        {% endfor %}
+      </div>
     </div>
   </div>
 
   <div id="rightrecipe">
     <h2>+ Saved Recipes</h2>
+    {% for i in all_recipe_models %}
+      <h4>{{i.name}}</h4>
+      <img src="{{i.picture}}" alt="">
+    {% endfor %}
   </div>
 
 </div>
