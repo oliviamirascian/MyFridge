@@ -41,6 +41,54 @@ function moveToHistory(){
 
 }
 
+function checkExpirationDate(){
+  var today = new Date();
+  if ((today.getMonth()+1) < 10){
+    var month = "0" + String(today.getMonth()+1);
+  } else {
+    var month = String(today.getMonth()+1);
+  }
+  if (today.getDate() < 10){
+    var day = "0"+ String(today.getDate());
+  } else {
+    var day = String(today.getDate());
+  }
+  var date = String(today.getFullYear())+month+day;
+  var dateCompare = Number(date);
+  var foodList = document.getElementsByClassName("fridgefood-div");
+  // var food = foodList.getElementById("foodItem");
+  console.log(foodList)
+  var expiringSoon = document.getElementById("expiringSoon");
+  var expired = document.getElementById("expired");
+  for (var i = 0; i < foodList.length; i++){
+    var food = foodList[i];
+    var foodExpiration = food.getElementsByTagName("p")[1].innerHTML;
+    if(foodExpiration == "Expires  "){
+      food.getElementsByTagName("p")[1].innerHTML = "Does not expire";
+    } else {
+      var foodExpirationCompare = Number(foodExpiration.replace(/-|Expires| /g,""));
+      if ((foodExpirationCompare - dateCompare) <= 0){
+        food.classList.add("expired-div");
+        expired.appendChild(food);
+      } else if ((foodExpirationCompare - dateCompare) <= 8){
+        food.classList.add("expiringsoon-div");
+        expiringSoon.appendChild(food);
+      }
+    }
+  }
+
+  expiringSoon = document.getElementsByClassName("expiringsoon-div");
+  for (var i = 0; i < expiringSoon.length; i++){
+    var expiringSoonItems = expiringSoon[i];
+    var foodExpiration = expiringSoonItems.getElementsByTagName("p")[1].innerHTML;
+    var foodExpirationCompare = Number(foodExpiration.replace(/-/g,""));
+    if (dateCompare >= foodExpirationCompare){
+      expired.appendChild(expiringSoonItems);
+    }
+  }
+
+}
+
 function addItemToFridge(){
   var ul = document.getElementById("listFridge");
   var input = document.getElementById("addFoodFridge");

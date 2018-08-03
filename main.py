@@ -164,17 +164,15 @@ class CreateAccount(BaseHandler):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
-
-
-
 class FridgePage(BaseHandler):
     def get(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         username = self.session.get('username')
-
+        food_fridge = FoodFridge.query().fetch()
         d = {
-            'username': username
+            'username': username,
+            'food_fridge': food_fridge
         }
         # checks if session username is  ""
         if self.isLoggedIn():
@@ -187,13 +185,20 @@ class FridgePage(BaseHandler):
         self.response.write(welcome_template.render())
 
 class FridgeFoodPage(BaseHandler):
-    def get(self):
-        self.response.write(food)
     def post(self):
+        print("this works")
         addFood = self.request.get('addFood')
         expirationDate = self.request.get('expirationDate')
 
-        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query="+ addFood +"&number=1&metaInformation=true"
+        if expirationDate == "":
+            expirationDate = " "
+
+        if " " in addFood:
+            urlFood = addFood.replace(" ", "-")
+        else:
+            urlFood = addFood
+
+        url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query="+ urlFood +"&number=1&metaInformation=true"
 
         response = urlfetch.fetch(url,
           headers={
@@ -201,6 +206,7 @@ class FridgeFoodPage(BaseHandler):
             "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
           }
         ).content
+        print(response)
         json_response = json.loads(response)
 
         foodID = str(getFoodID(json_response))
@@ -227,17 +233,18 @@ class FridgeFoodPage(BaseHandler):
 
             food.put()
 
-            food_fridge = FoodFridge.query().fetch()
+            # food_fridge = FoodFridge.query().fetch()
 
-            fridge_variable_dict = {
-            'food_name': name,
-            'image': image,
-            'expiration_date': expirationDate,
-            'food_fridge': food_fridge
-            }
+            # fridge_variable_dict = {
+            # 'food_name': name,
+            # 'image': image,
+            # 'expiration_date': expirationDate,
+            # 'food_fridge': food_fridge,
+            # }
 
-            fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
-            self.response.write(fridge_template.render(fridge_variable_dict))
+            # fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
+            # self.response.write(fridge_template.render(fridge_variable_dict))
+            self.redirect("/fridge")
 
 class RemoveFridgePage(BaseHandler):
     def get(self):

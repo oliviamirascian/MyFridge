@@ -10,7 +10,7 @@
     <title>MyFridge</title>
   </head>
 
-  <body>
+  <body onload="checkExpirationDate()">
 
 
 
@@ -75,28 +75,28 @@
             <input type="image" src="http://pngimg.com/uploads/minus/minus_PNG64.png" class="removeButton">
           </form>
         </div> -->
+      <div id="foodList">
         {% for food in food_fridge %}
-        <div class="fridgefood-div" style=" ">
-          <p id="foodName">{{food.name}}</p>
+        <div class="fridgefood-div">
+          <p class="foodName">{{food.name}}</p>
           <img src="{{food.image}}">
-          <p id="foodExpiration">{{food.expirationDate}}</p>
+          <p class="foodExpiration">Expires {{food.expirationDate}}</p>
         </div>
         {% endfor %}
+      </div>
 
 </div>
       <div id="rightfridge">
+        <h2>Expiring Soon:</h2>
         <div id="expiringSoon">
-          <h2>Expiring Soon:</h2>
-          <ul id="listExpiration">
 
-          </ul>
+
         </div>
 
+        <h2>Expired:</h2>
         <div id="expired">
-          <h2>Expired:</h2>
-          <ul id="listExpired">
 
-          </ul>
+
         </div>
 
       </div>
