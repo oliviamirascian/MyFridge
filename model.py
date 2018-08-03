@@ -7,17 +7,6 @@ class FoodFridge(ndb.Model):
     expirationDate = ndb.StringProperty(required=True)
     image = ndb.StringProperty(required=True)
 
-    # calories = ""
-    # saturatedFat = ""
-    # carbs = ""
-    # sugar = ""
-    # cholesterol = ""
-    # sodium = ""
-    # protein = ""
-    # fiber = ""
-class FoodEat(ndb.Model):
-    name = ndb.StringProperty(required = True)
-
 class Recipe(ndb.Model):
     name = ndb.StringProperty(required = True)
     picture = ndb.StringProperty(required = True)
@@ -28,5 +17,4 @@ class User(ndb.Model):
     username = ndb.StringProperty(required = True)
     password = ndb.StringProperty(required = True)
     fridge_foods = ndb.KeyProperty(FoodFridge, repeated = True)
-    eaten_foods = ndb.KeyProperty(FoodEat, repeated = True)
     recipes = ndb.KeyProperty(Recipe, repeated = True)
