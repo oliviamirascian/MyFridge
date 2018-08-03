@@ -45,11 +45,9 @@
     <br>
     <br>
     <div id="recipesearchbox">
-
-      <form action= "/recipesdisplay" method = "get">
-        <br>
-        <br>
-        <input type="text" placeholder="Search Recipe..." maxlength="30" id="search" name = "food">
+      <br><br>
+      <form class="" action="/recipeInstructions" method="get">
+        <input type="text" placeholder="Search Recipe Instructions..." maxlength="30" id="search" name = "recipeName">
         <input type="submit" value="Go!" id="submit">
       </form>
 
@@ -83,6 +81,10 @@
     {% for i in all_recipe_models %}
       <h4>{{i.name}}</h4>
       <img src="{{i.picture}}" alt="">
+      <form class="" action="/removeRecipe" method="post">
+        <input type="submit" name="" value="Delete">
+        <input type="hidden" name="recipe" value="{{i.name}}">
+      </form>
     {% endfor %}
   </div>
 
