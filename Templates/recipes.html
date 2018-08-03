@@ -65,13 +65,13 @@
       {% endfor %}
     </div>
   </div>
-
   <div id="rightrecipe">
     <h2>+ Saved Recipes</h2>
+
     {% for i in all_recipe_models %}
-    
+
       <h4>{{i.name}}</h4>
-      <img src="{{i.picture}}" alt="" style="border-radius:10px>
+      <img src="{{i.picture}}" alt="" style="border-radius:10px">
       <form class="" action="/removeRecipe" method="post">
         <input type="submit" name="" value="Delete">
         <input type="hidden" name="recipe" value="{{i.name}}">

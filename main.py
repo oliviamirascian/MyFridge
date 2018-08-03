@@ -135,17 +135,6 @@ class FridgePage(BaseHandler):
         if self.isLoggedIn():
             user = User.query().filter(username == User.username).fetch()[0]
             keys = user.fridge_foods
-            # user = User.query().filter(username == User.username).fetch()[0]
-            # keys = user.recipes
-            # recipe_models_list = []
-            # recipes_name = []
-            # for i in keys:
-            #     model = i.get()
-            #     if model:
-            #         for i in recipe_models_list:
-            #             recipes_name.append(i.name)
-            #         if model.name not in recipes_name:
-            #             recipe_models_list.append(model)
 
             food_fridge = []
             for i in keys:
@@ -172,7 +161,7 @@ class FridgeFoodPage(BaseHandler):
     def post(self):
         addFood = self.request.get('addFood')
         expirationDate = self.request.get('expirationDate')
-        
+
         if expirationDate == "":
             expirationDate = " "
 
@@ -227,36 +216,12 @@ class FridgeFoodPage(BaseHandler):
             user.fridge_foods.append(food_key)
             user.put()
 
-
-
-
-            # food_fridge = FoodFridge.query().fetch()
-            #
-            # fridge_variable_dict = {
-            # 'food_name': name,
-            # 'image': image,
-            # 'expiration_date': expirationDate,
-            # 'food_fridge': food_fridge,
-            # }
-            #
-            # fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
-            # self.response.write(fridge_template.render(fridge_variable_dict))
             self.redirect("/fridge")
 
 class RemoveFridgePage(BaseHandler):
     def post(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
-        # recipe = self.request.get('recipe')
-        # username = self.session.get('username')
-        # user = User.query().filter(username == User.username).fetch()[0]
-        # recipe_keys = user.recipes
-        # new_recipe_keys = []
-        # for i in recipe_keys:
-        #     model = i.get()
-        #     if model.name != recipe:
-        #         print model.name
-        #         print recipe
-        #         new_recipe_keys.append(i)
+        expirationDate = self.request.get('expirationDate')
         food = self.request.get('foodName')
         username = self.session.get('username')
         user = User.query().filter(username == User.username).fetch()[0]
@@ -264,7 +229,7 @@ class RemoveFridgePage(BaseHandler):
         for i in food_keys:
             model = i.get()
             if model:
-                if model.name == food:
+                if (model.name == food) and (model.expirationDate == expirationDate):
                     food_keys.remove(i)
                     break
 
