@@ -3,6 +3,7 @@ import webapp2
 import jinja2
 import os
 import json
+import time
 from webapp2_extras import sessions
 from model import FoodFridge,Recipe,User
 
@@ -59,7 +60,7 @@ class MainPage(BaseHandler):
 
 
         if self.isLoggedIn():
-            self.redirect("/AboutUs")
+            self.redirect("/aboutus")
 
     def post(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
@@ -86,7 +87,16 @@ class MainPage(BaseHandler):
 class AboutUs(BaseHandler):
     def get(self):
         AboutUs_template = JINJA_ENVIRONMENT.get_template('templates/AboutUs.html')
-        self.response.write(AboutUs_template.render())
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+
+        username = self.session.get('username')
+        d = {
+            'username': username
+        }
+        if self.isLoggedIn():
+            self.response.write(AboutUs_template.render(d))
+        else:
+            self.response.write(welcome_template.render())
 
     def post(self):
         pass
@@ -118,6 +128,7 @@ class FridgePage(BaseHandler):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         username = self.session.get('username')
+        time.sleep(.250)
         food_fridge = FoodFridge.query().fetch()
         d = {
             'username': username,
