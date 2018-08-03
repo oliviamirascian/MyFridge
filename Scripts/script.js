@@ -32,6 +32,7 @@ function addFood(){
   }).then((response) => response.json())
   .then(function(jsonfoodID) {
     console.log(jsonfoodID);
+    console.log('Im here');
   })
 }
 
