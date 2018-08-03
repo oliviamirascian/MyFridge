@@ -59,7 +59,7 @@ class MainPage(BaseHandler):
 
 
         if self.isLoggedIn():
-            self.redirect("/fridge")
+            self.redirect("/AboutUs")
 
     def post(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
@@ -82,6 +82,14 @@ class MainPage(BaseHandler):
 
         else:
             self.response.write(welcome_template.render(d))
+
+class AboutUs(BaseHandler):
+    def get(self):
+        AboutUs_template = JINJA_ENVIRONMENT.get_template('templates/AboutUs.html')
+        self.response.write(AboutUs_template.render())
+
+    def post(self):
+        pass
 
 
 class CreateAccount(BaseHandler):
@@ -196,25 +204,26 @@ class RemoveFridgePage(BaseHandler):
         removeFood = self.request.get("removeFood")
         del FoodFridge().removeFood
 
-class NutriTrackerPage(BaseHandler):
-    def get(self):
-        nutriTracker_template = JINJA_ENVIRONMENT.get_template('templates/nutriTracker.html')
-        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-        username = self.session.get('username')
+# class NutriTrackerPage(BaseHandler):
+#     def get(self):
+#         nutriTracker_template = JINJA_ENVIRONMENT.get_template('templates/nutriTracker.html')
+#         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+#         username = self.session.get('username')
+#
+#         d = {
+#             'username': username
+#         }
+#
+#         if self.isLoggedIn():
+#             self.response.write(nutriTracker_template.render(d))
+#             print self.session.get('username')
+#         else:
+#             self.response.write(welcome_template.render())
+#     def post(self):
+#         self.session['username'] = ""
+#         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+#         self.response.write(welcome_template.render())
 
-        d = {
-            'username': username
-        }
-
-        if self.isLoggedIn():
-            self.response.write(nutriTracker_template.render(d))
-        else:
-            self.response.write(welcome_template.render())
-    def post(self):
-        # self.session['username'] = ""
-        # welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-        # self.response.write(welcome_template.render())
-        pass
 
 
 class RecipesPage(BaseHandler):
@@ -339,6 +348,7 @@ class RecipesDisplay(BaseHandler):
     def post(self):
         pass
 
+
 class NotFoundPage(BaseHandler):
     def get(self):
         not_found_template = JINJA_ENVIRONMENT.get_template('templates/not_found.html')
@@ -352,11 +362,12 @@ config['webapp2_extras.sessions'] = {
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
+    ('/aboutus', AboutUs),
     ('/createAccount',CreateAccount),
     ('/fridge', FridgePage),
     ('/fridgefood', FridgeFoodPage),
     ('/removefridge', RemoveFridgePage),
-    ('/nutritracker', NutriTrackerPage),
+    # ('/nutritracker', NutriTrackerPage),
     ('/recipes', RecipesPage),
     ('/recipesdisplay', RecipesDisplay),
     ('/notfound', NotFoundPage),

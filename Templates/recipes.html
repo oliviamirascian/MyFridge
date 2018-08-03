@@ -12,7 +12,6 @@
   <body>
 
     <div class="heading">
-
       <h1 id ="fridgeTitle" >Recipes</h1>
 
 
@@ -20,30 +19,32 @@
 
         <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button></form>
 
-        <form  action="/nutritracker"> <button type="submit" class = "tab" > Nutrition Track </button></form>
+          <div class="tabs">
 
-        <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button></form>
+                   <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button>
+                   </form>
 
-      </div>
+
+
+                <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button>
+                </form>
+
+                <form  action="/aboutus"> <button type="submit" class = "tababoutus" > About Us </button>
+                </form>
+
+          </div>
 
 
       <form id="temp" class="signOut" action="/signIn" method="post">
-
         <div id = "belowTitle">
           <input type="submit" name="" value="Sign Out">
         </div>
-
         <div class="work">
           <p id = "loggedIn">{{username}} is logged in</p>
         </div>
-
       </form>
 
-
-
-
       <div id="header"></div>
-
 
     </div>
 

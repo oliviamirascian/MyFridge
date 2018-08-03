@@ -14,10 +14,19 @@
       <h1 id ="fridgeTitle" >My Fridge</h1>
 
       <div class="tabs">
-    <button>   <a href="/fridge" class = "tab" id="ButtonMyFridge"> My Fridge </a> </button>
-  <button> <a href="/nutritracker" class = "tab" id="ButtonMyNutriTrack">  Nutrition Tracker </a> </button>
-  <button>  <a href="/recipes" class = "tab" id="ButtonMyFridge"> Fridge Recipes </a> </button>
-</div>
+
+               <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button>
+               </form>
+
+
+
+            <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button>
+            </form>
+
+            <form  action="/aboutus"> <button type="submit" class = "tababoutus" > About Us </button>
+            </form>
+
+      </div>
 </div>
     <a href="#" onclick="signOut();">Sign out</a>
 
