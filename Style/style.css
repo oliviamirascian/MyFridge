@@ -10,11 +10,59 @@ html {
 margin:0;
 padding:0;
 color:#000;
-background:#EFEFEF;
+background:#f7f7f7;
 }
+
+.nameOlivia {
+  font-family: "Poppins", sans-serif;
+  font-size: 70px;
+  text-align: center;
+  position: relative;
+  padding-left: 80px;
+  right: 100px;
+  color: white;
+}
+
+
+.nameJustin {
+  font-family: "Poppins", sans-serif;
+  font-size: 70px;
+  text-align: center;
+  position: relative;
+  padding-left: 200px;
+  right: 100px;
+  color: white;
+}
+
+.nameCattien {
+  font-family: "Poppins", sans-serif;
+  font-size: 70px;
+  text-align: center;
+  position: relative;
+  padding-left: 200px;
+  right: 100px;
+  color: white;
+}
+.linkedin {
+  padding-left: 100px;
+}
+
 .container {
   position: relative;
   float: inherit;
+  padding-right: 100px;
+}
+.containerjustin {
+    position: relative;
+    float: inherit;
+    padding-left: 100px;
+
+
+}
+.containercattien {
+    position: relative;
+    float: inherit;
+    padding-left: 100px;
 
 
 }
@@ -25,14 +73,37 @@ background:#EFEFEF;
   align-content: center;
   height: auto;
 }
+.overlaycattien {
+  position: absolute;
+width:360px;
+height:360px;
+border-radius:400px;
+  top: 0;
+  bottom: 0;
+  align:center;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: white;
+}
 
-
+.overlayjustin {
+  position: absolute;
+width:360px;
+height:360px;
+border-radius:400px;
+  top: 0;
+  bottom: 0;
+  align:center;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: white;
+}
 
 .overlay {
   position: absolute;
-width:260px;
-height:260px;
-border-radius:300px;
+width:360px;
+height:360px;
+border-radius:400px;
   top: 0;
   bottom: 0;
   align:center;
@@ -46,7 +117,42 @@ border-radius:300px;
 
 }
 
+.container:hover .text{
+  transition: scale(1);
 
+
+}
+
+.containerjustin:hover .overlayjustin {
+  opacity: 0.7;
+
+}
+
+.containerjustin:hover .text{
+  transition: scale(1);
+
+
+}
+.containercattien:hover .overlaycattien {
+  opacity: 0.7;
+
+}
+
+.containercattien:hover .text{
+  transition: scale(1);
+
+
+}
+
+.text{
+padding-top: 80px ;
+color: black;
+text-align: center;
+font-size: 20px;
+font-family: "Poppins", sans-serif;
+
+
+}
 
 #header {
 padding:5px 10px;
@@ -185,14 +291,16 @@ button:hover{
 
 #submit{
   padding: 7px;
-  background: #607d8b;
+  background: white;
   border: 1px solid #607d8b;
   color: white;
   margin-left: -5px;}
 
 
 #Displayfoodbutton:hover {
-  background-color: grey;
+  background-color: #f4f3f3;
+  color: black;
+   cursor: pointer;
 
 
 
@@ -210,6 +318,7 @@ button:hover{
 
 .fridgefood-div:hover + #foodExpiration {
   display:inline-table;
+
 }
 
 
@@ -228,7 +337,7 @@ button:hover{
 .fridgefood-div:hover {
   color: grey;
  box-shadow: 0 13px 13px rgba(230, 228, 228, 0.4);
- cursor: pointer;
+
 
 
 
@@ -266,7 +375,10 @@ color: white;
 .wrapperaboutus {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  height: 500px;
+
+  height: 1000px;
+
+
 
   /* text-align: center; */
 }
@@ -278,11 +390,11 @@ color: white;
 }
 
 #middleaboutus{
-  background-color: #CAEBF2;
+  background-color: #88939cc9;
 }
 
 #rightaboutus{
-  background-color: #ff5053;
+  background-color: #fea5a669;
 }
 
 .wrapperrecipe {
@@ -294,17 +406,17 @@ color: white;
 .wrapperfridge {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 700px;
+  height: 2000px;
 }
 
 .wrappernutri {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 700px;
+  height: 200px;
 }
 
 #leftfridge {
-  background-color: #ff5053;
+  background-color: #ff5053db;
   text-align: center;
 
 }
@@ -404,6 +516,7 @@ h4{
 #rightfridge {
   background-color: #CAEBF2;
   text-align: center;
+;
 }
 
 
@@ -420,7 +533,7 @@ h4{
 
 
 #leftrecipe {
-  background-color: #ff5053;
+  background-color: #ff5053db;
   text-align: center;
   height: 100%;
 }
@@ -467,56 +580,103 @@ background: white;
 
 /* welcome.html */
 #background{
-  background-color: #FEE6A5;
+  background-color: #f7f7f7;
 }
 
 #frontTitle{
-  font-size: 50px;
+  font-size: 100px;
+  font-family: "Poppins", sans-serif;;
   text-align: center;
-  margin-top: 3%;
+  box-sizing: border-box;
+  padding-left: 40px;
+  display: inline-block;
+  margin-top: 1%;
+  color: grey;
+  width: auto;
+  position: relative;
+
+
+}
+#loginbutton{
+  text-align: center;
+  font-size: 16px;
+  color: black;
+  height: 30px;
+  width:80px;
+  border-radius: 10px;
+  background-color: #9b9b9b40;
+
+
+}
+#loginbutton:hover{
+  background: #85848440;
+  color: white;
+
 }
 
 #loginBox{
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -500px;
+  margin-top: -600px;
   /*top: 275px;
   left: 39%;*/
   width: 300px;
   height: 350px;
-  background-color: #CAEBF2;
+  background-color: white;
   border-radius: 50px;
   text-align: center;
-  filter: opacity(90%)
+  filter: opacity(95%)
 }
 
+#createAccountbutton{
+  text-align: center;
+  font-size: 16px;
+  color: black;
+  height: 50px;
+  width:150px;
+
+  border-radius: 10px;
+  background-color: #9b9b9b40;
+
+}
+#createAccountbutton:hover{
+  background: #85848440;
+  color: white;
+
+}
 
 #createAccountBox{
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -550px;
+  margin-top: -650px;
   /* top: 200px;
   left: 39%; */
   width: 300px;
   height: 450px;
-  background-color: #CAEBF2;
+  background-color: white;
   border-radius: 50px;
   text-align: center;
-  filter:opacity(90%);
+  filter: opacity(95%)
 }
 
 #frontImage{
   position:relative;
-  height: 600px;
+  height: 800px;
   width: 100%;
-  filter: opacity(50%);
+  filter: opacity(70%);
 }
+#Welcometext {
+  font-size: 40px;
 
+
+
+}
 #incorrect{
   font-size: 15px;
   color: red;
+  background-color: white;
 }
 
 .abcRioButton{
@@ -525,7 +685,8 @@ background: white;
 
 #addFoodButton {
   width: 100px;
-  color: grey;
+  color:white;
+  font-family: "Poppins", sans-serif;
   background-color: #acc7dcd6;
   height: 30px;
   line-height: 30px;
@@ -535,27 +696,29 @@ background: white;
 }
 #addFoodButton:hover {
   transition: all 0.40s;
-  background-color: #acc7dc;
+  background-color: #9f9aaa;
 
 }
 
 #addFoodForm {
 
-background-color: #ffffffc7;
+background-color: #ec4c4e;
+  font-family: "Poppins", sans-serif;
 display: none;
 padding: 8px 3px;
 overflow: hidden;
 text-decoration: none;
 color: inherit;
+float: left;
 text-align: center;
 cursor: pointer;
 border-radius: 10px;
-margin-left: -15%;
+
 
 }
 
 #Displayfoodbutton{
-border: 2px solid red;
+border: 2px solid white;
 border-radius: 8px;
-color: red;
+color: grey;
 }

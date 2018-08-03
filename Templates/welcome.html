@@ -7,14 +7,18 @@
     <script src="/Scripts/script.js"></script>
     <meta name="google-signin-client_id" content="15145183773-m2dh8cosvugqilo2ver83cta6q1qfbao.apps.googleusercontent.com">
     <title></title>
-  </head>
-  <body id = "background">
-    <div class="">
-      <h1 id = "frontTitle" >MyFridge</h1>
+
+  <body id = "background"> </body>
+ <img src="https://www.twomato.com/assets/images/loader.gif" alt="" style="width:260px; padding-left:350px; height:160px">
+      <div id = "frontTitle" >My Fridge</div>
+      <img src="https://www.twomato.com/assets/images/loader.gif" alt="" style="width:260px; padding-right:350px; float: right; height:160px">
+      <br> <br>
     </div>
-    <img src="https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg" alt="" id = "frontImage">
+    <img src="https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg" alt="" id="frontImage" >
+</head>
     <div id="loginBox">
       <form method="post" action = "/">
+  <br>
         <h2>Username</h2>
         <input type="text" name="welcome_username" placeholder="username" value = "">
         <br>
@@ -22,13 +26,19 @@
         <input type="password" name="welcome_password" placeholder="password" value = "">
         <br>
         <br>
-        <button type="submit" name="button">Login</button>
+        <button id="loginbutton" type="submit" name="button">Login</button>
         <br><br>
+
         <!-- <div class="g-signin2" data-onsuccess="onSignIn" id="googleSignIn"></div> -->
       </form>
-      <br><br>
-      <a href="/createAccount">Create Account</a>
+
+<a method="post" href="/createAccount">
+  <button id="createAccountbutton" type="submit">Create Account</button> </a>
+
+
+
+      <!-- <a href="/createAccount">Create Account</a> -->
       <p id = "incorrect">{{phrase}}</p>
     </div>
-  </body>
+
 </html>
