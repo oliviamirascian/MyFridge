@@ -42,37 +42,27 @@
 
 <div class="wrapperrecipe">
   <div id="leftrecipe">
+
+    <div id="reciperecommendbox">
+      <h2> Dish Suggestions Based on Fridge</h2>
+    </div>
     <br>
     <br>
-    <div id="recipesearchbox">
-      <br><br>
-      <form class="" action="/recipeInstructions" method="get">
-        <input type="text" placeholder="Search Recipe Instructions..." maxlength="30" id="search" name = "recipeName">
-        <input type="submit" value="Go!" id="submit">
-      </form>
 
-      <br>
-      <br>
-
-
-      <div id="reciperecommendbox">
-        <h4 style="padding: 15px;"> Possible Recipes Based on Fridge</h4>
-      </div>
-
-      <div class="">
-        {% for i in food_images %}
-          <form class="" action="/recipes" method="post">
-            <!-- <p>{{i[0]}}</p> -->
-            <p class="recipe-header" name="recipe_name">{{i[0]}}</p>
-            <!-- <img src={{i[1]}} /> -->
-            <input type="image" name="" src="{{i[1]}}" style="border-radius: 10px;">
-            <input type="hidden" name="recipe_picture" value="{{i[1]}}">
-            <br>
-            <input type="submit" name="" value="Save">
-          </form>
-          <br><br>
-        {% endfor %}
-      </div>
+    <div class="">
+      {% for i in food_images %}
+        <form class="" action="/recipes" method="post">
+          <!-- <p>{{i[0]}}</p> -->
+          <input type="text" name="recipe_name" value="{{i[0]}}">
+          <!-- <img src={{i[1]}} /> -->
+          <br>
+          <input type="image" name="" src="{{i[1]}}">
+          <input type="hidden" name="recipe_picture" value="{{i[1]}}">
+          <br>
+          <input type="submit" name="" value="Save">
+        </form>
+        <br><br>
+      {% endfor %}
     </div>
   </div>
 
