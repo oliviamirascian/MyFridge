@@ -12,6 +12,40 @@ padding:0;
 color:#000;
 background:#EFEFEF;
 }
+.container {
+  position: relative;
+  float: inherit;
+
+
+}
+
+.image {
+  display: block;
+  width: 100%;
+  align-content: center;
+  height: auto;
+}
+
+
+
+.overlay {
+  position: absolute;
+width:260px;
+height:260px;
+border-radius:300px;
+  top: 0;
+  bottom: 0;
+  align:center;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: white;
+}
+
+.container:hover .overlay {
+  opacity: 0.7;
+
+}
+
 
 
 #header {
@@ -46,7 +80,7 @@ h2{
 
 .tabs{
   display: flex;
-  margin-top: 4%;
+  margin-top: 1%;
   margin-left:auto;
   width: 100%;
   color: #f2f2f2;
@@ -77,15 +111,34 @@ button:hover{
 
 .tab{
 
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   font-size: 20px;
   color: white;
 }
+.tababoutus {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
+  color: white;
+  background-color: #707885;
+
+}
+
+.tababoutus:hover{
+  background-color: #606671;
+  cursor: pointer;
+
+}
+
+
 
 .tabs a:hover {
   background: #ddd;
   color: black;
+  cursor: pointer;
 }
 
 /* nutriTracker.html */
@@ -104,9 +157,14 @@ button:hover{
 /* recipes.html */
 
 #fridgeTitle {
-  font-size: 50px;
   text-align: center;
   margin-top: 1%;
+  font-size: 65px;
+  line-height: 68px;
+  font-family: "Poppins", sans-serif;
+  color: #707885;
+  font-weight: 500;
+  border-style: solid;
 }
  /* search bar */
 #search {
@@ -123,9 +181,56 @@ button:hover{
   background: #607d8b;
   border: 1px solid #607d8b;
   color: white;
-  margin-left: -5px;
-  cursor: pointer;
+  margin-left: -5px;}
+
+
+#Displayfoodbutton:hover {
+  background-color: grey;
+
+
+
 }
+
+#foodExpiration {
+  color: white;
+  box-sizing: border-box;
+  display: none;
+  overflow: hidden;
+  /* padding-left: 20px;
+  padding-right: 20px; */
+
+}
+
+.fridgefood-div:hover + #foodExpiration {
+  display:inline-table;
+}
+
+
+.fridgefood-div {
+  transition: all 0.2s ease-in-out;
+  color: darkgrey;
+ background: white;
+  box-sizing: border-box;
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.fridgefood-div:hover {
+  color: grey;
+ box-shadow: 0 13px 13px rgba(230, 228, 228, 0.4);
+ cursor: pointer;
+
+
+
+
+}
+
+
+
+
 #submit:hover{
   background: #333;
   transition: all 0.40s;
@@ -147,8 +252,32 @@ margin-top: 30%;
 
 h1 {
 margins:0;
+color: white;
 }
 /* columns for each page */
+
+.wrapperaboutus {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 500px;
+  
+  /* text-align: center; */
+}
+
+#leftaboutus{
+  padding-left: 20%;
+  background-color: #707885;
+
+}
+
+#middleaboutus{
+  background-color: #CAEBF2;
+}
+
+#rightaboutus{
+  background-color: #ff5053;
+}
+
 .wrapperrecipe {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -172,6 +301,14 @@ margins:0;
   text-align: center;
 
 }
+
+
+
+
+
+
+
+
 #fridgeAddRemovebox{
 position: relative;
 margin-left: auto;
@@ -300,12 +437,12 @@ background: white;
 /* fridge.html */
 
 #belowTitle{
-  height: 20px;
+  height: 0px;
   display: inline;
 }
 
 #belowTitle{
-  padding-top: 20px;
+  padding-top: 30px;
 }
 
 #temp {
@@ -316,6 +453,7 @@ background: white;
 #loggedIn{
   width: 160px;
   margin-left: auto;
+
   /* border-style: solid; */
   /* margin-right: 85% */
 }
