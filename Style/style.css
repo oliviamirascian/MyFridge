@@ -166,6 +166,13 @@ button:hover{
   font-weight: 500;
   border-style: solid;
 }
+
+.recipe-header {
+  background-color: white;
+  border-radius: 25px;
+  padding: 15px;
+  margin-bottom: 5px;
+}
  /* search bar */
 #search {
   padding:7px;
@@ -260,7 +267,7 @@ color: white;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   height: 500px;
-  
+
   /* text-align: center; */
 }
 
