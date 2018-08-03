@@ -62,7 +62,7 @@ class MainPage(BaseHandler):
             self.redirect("/aboutus")
         else:
             self.response.write(welcome_template.render())
-      
+
     def post(self):
         fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
@@ -151,7 +151,7 @@ class FridgeFoodPage(BaseHandler):
     def post(self):
         addFood = self.request.get('addFood')
         expirationDate = self.request.get('expirationDate')
-
+        
         if expirationDate == "":
             expirationDate = " "
 
