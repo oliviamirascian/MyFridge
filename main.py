@@ -244,35 +244,64 @@ class FridgeFoodPage(BaseHandler):
             self.redirect("/fridge")
 
 class RemoveFridgePage(BaseHandler):
-    def get(self):
-        remove_fridge_template = JINJA_ENVIRONMENT.get_template('templates/remove_fridge.html')
-        self.response.write(remove_fridge_template.render())
-
-
     def post(self):
-        removeFood = self.request.get("removeFood")
-        del FoodFridge().removeFood
+        fridge_template = JINJA_ENVIRONMENT.get_template('templates/fridge.html')
+        # recipe = self.request.get('recipe')
+        # username = self.session.get('username')
+        # user = User.query().filter(username == User.username).fetch()[0]
+        # recipe_keys = user.recipes
+        # new_recipe_keys = []
+        # for i in recipe_keys:
+        #     model = i.get()
+        #     if model.name != recipe:
+        #         print model.name
+        #         print recipe
+        #         new_recipe_keys.append(i)
+        food = self.request.get('foodName')
+        username = self.session.get('username')
+        user = User.query().filter(username == User.username).fetch()[0]
+        food_keys = user.fridge_foods
+        for i in food_keys:
+            model = i.get()
+            if model:
+                if model.name == food:
+                    food_keys.remove(i)
+                    break
 
-# class NutriTrackerPage(BaseHandler):
-#     def get(self):
-#         nutriTracker_template = JINJA_ENVIRONMENT.get_template('templates/nutriTracker.html')
-#         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-#         username = self.session.get('username')
-#
-#         d = {
-#             'username': username
-#         }
-#
-#         if self.isLoggedIn():
-#             self.response.write(nutriTracker_template.render(d))
-#             print self.session.get('username')
-#         else:
-#             self.response.write(welcome_template.render())
-#     def post(self):
-#         self.session['username'] = ""
-#         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-#         self.response.write(welcome_template.render())
 
+        user.fridge_foods = food_keys
+        user.put()
+        # self.response.write(fridge_template.render())
+
+        #parting thing
+
+        time.sleep(.250)
+        keys = user.fridge_foods
+        # user = User.query().filter(username == User.username).fetch()[0]
+        # keys = user.recipes
+        # recipe_models_list = []
+        # recipes_name = []
+        # for i in keys:
+        #     model = i.get()
+        #     if model:
+        #         for i in recipe_models_list:
+        #             recipes_name.append(i.name)
+        #         if model.name not in recipes_name:
+        #             recipe_models_list.append(model)
+
+        food_fridge = []
+        for i in keys:
+            model = i.get()
+            if model:
+                food_fridge.append(model)
+        d = {
+            'username': username,
+            'food_fridge': food_fridge
+        }
+        # checks if session username is  ""
+        self.response.write(fridge_template.render(d))
+
+RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=5&ranking=1&ingredients={}"
 
 
 class RecipesPage(BaseHandler):
@@ -298,8 +327,9 @@ class RecipesPage(BaseHandler):
             food_keys = user.fridge_foods
             food_names_list = []
             for i in food_keys:
-                model = i.get()
-                food_names_list.append(model.name)
+                    model = i.get()
+                    if model:
+                        food_names_list.append(model.name)
             ingredients = ""
             for i in food_names_list:
                 ingredients = ingredients + i + " "
@@ -365,8 +395,6 @@ class RecipesPage(BaseHandler):
 
         d = {'all_recipe_models' : recipe_models_list}
         self.response.write(recipes_template.render(d))
-
-RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=5&ranking=1&ingredients={}"
 
 # class RecipesDisplay(BaseHandler):
 #     def get(self):
@@ -441,10 +469,9 @@ class RemoveRecipe(BaseHandler):
         new_recipe_keys = []
         for i in recipe_keys:
             model = i.get()
-            if model.name != recipe:
-                print model.name
-                print recipe
-                new_recipe_keys.append(i)
+            if model:
+                if model.name != recipe:
+                    new_recipe_keys.append(i)
 
         user.recipes = new_recipe_keys
         user.put()
@@ -456,26 +483,55 @@ class RemoveRecipe(BaseHandler):
             for i in keys:
                 model = i.get()
                 if model:
-                    for i in recipe_models_list:
-                        recipes_name.append(i.name)
                     if model.name not in recipes_name:
+                        recipes_name.append(model.name)
                         recipe_models_list.append(model)
 
             d = {'all_recipe_models' : recipe_models_list,
                 'username': username
             }
-            self.response.write(recipes_template.render(d))
+
+            food_keys = user.fridge_foods
+            food_names_list = []
+            for i in food_keys:
+                    model = i.get()
+                    if model:
+                        food_names_list.append(model.name)
+            ingredients = ""
+            for i in food_names_list:
+                ingredients = ingredients + i + " "
+            # ingredients = self.request.get('food')
+            if "," not in ingredients:
+                url = RECIPE_API_URL_TEMPLATE.format(ingredients.replace(' ', '%2C'))
+            else:
+                url = RECIPE_API_URL_TEMPLATE.format(ingredients.replace(',', '%2C').replace(' ', ''))
+            result = urlfetch.fetch(
+                url=url,
+                headers={
+                    "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                    "Accept": "application/json"
+                },
+                validate_certificate=True,#makes website more secuire
+                method=urlfetch.GET,#get request
+                deadline=30# gives it at most 30 seconds until it errors
+            )
+
+            # [ { recipe info 1 }, {recipe info 2},...]
+            # the map operates on each element individually
+            # x is first { recipe info 1 }, turning it into [img name], then x is { recipe info 2},...
+            # so then becomes [ [img name 1], [img name 2] ]
+
+            # 200 means it's good
+            if result.status_code == 200:
+                print(result.content)
+                food_images = list(map(lambda x: (x["title"],x["image"]), json.loads(result.content)))#makes it an array of image urls
+                self.response.write(recipes_template.render(food_images=food_images,**d))
+                # do stuff you want
+            else:
+                self.response.write("oops an api call error occured")
+                # handle the error
         else:
-            self.redirect("/")
-
-
-
-
-
-        # sandy.key.delete()
-
-
-
+            self.redirect('/')
 
 class RecipeInstrucionsPage(BaseHandler):
     def get(self):
@@ -502,12 +558,12 @@ app = webapp2.WSGIApplication([
     ('/createAccount',CreateAccount),
     ('/fridge', FridgePage),
     ('/fridgefood', FridgeFoodPage),
-    ('/removefridge', RemoveFridgePage),
+    ('/removeFood', RemoveFridgePage),
     # ('/nutritracker', NutriTrackerPage),
     ('/recipes', RecipesPage),
     # ('/recipesdisplay', RecipesDisplay),
     ('/notfound', NotFoundPage),
     ('/signIn', FridgePage),
     ('/recipeInstructions',RecipeInstrucionsPage),
-    ('/removeRecipe', RemoveRecipe)
+    ('/removeRecipe', RemoveRecipe),
 ], debug=True, config = config)

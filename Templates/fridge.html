@@ -81,6 +81,10 @@
           <p class="foodName">{{food.name}}</p>
           <img src="{{food.image}}">
           <p class="foodExpiration">Expires {{food.expirationDate}}</p>
+          <form class="" action="/removeFood" method="post">
+            <input type="submit" name="" value="delete">
+            <input type="hidden" name="foodName" value="{{food.name}}">
+          </form>
         </div>
         {% endfor %}
       </div>
