@@ -262,6 +262,12 @@ button:hover{
 
 /* recipes.html */
 
+#Rightdish {
+
+font-size: 30px;
+font-family: "Poppins", sans-serif;
+}
+
 #fridgeTitle {
   text-align: center;
   margin-top: 1%;
@@ -275,9 +281,13 @@ button:hover{
 
 .recipe-header {
   background-color: white;
-  border-radius: 25px;
-  padding: 15px;
+  border-radius: 20px;
+  padding: 5px;
   margin-bottom: 5px;
+  text-align: center;
+  font-size: 20px;
+  filter: opacity(80);
+
 }
  /* search bar */
 #search {
@@ -361,6 +371,7 @@ margin-top: 30%;
 
 #Savedrecipes{
   float: right;
+
 }
 
 
@@ -505,7 +516,7 @@ h4{
   color: white;
   font-weight: 500;
   border-style: solid;
-
+  margin-bottom: 10px;
 }
 
 
@@ -714,6 +725,13 @@ text-align: center;
 cursor: pointer;
 border-radius: 10px;
 
+
+}
+
+.Savedtext{
+  font-size: 50px
+  color:white;
+  font-family: "Poppins", sans-serif;
 
 }
 

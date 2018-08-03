@@ -12,7 +12,7 @@
   <body>
 
     <div class="heading">
-      <h1 id ="fridgeTitle" >Recipes</h1>
+      <h1 id ="fridgeTitle" >Dishes</h1>
 
 
 
@@ -20,7 +20,7 @@
 
                 <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button></form>
 
-                <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button></form>
+                <form  action="/recipes"> <button type="submit" class = "tab" > Dishes </button></form>
 
                 <form  action="/aboutus"> <button type="submit" class = "tababoutus" > About Us </button></form>
 
@@ -44,19 +44,20 @@
   <div id="leftrecipe">
 
     <div id="reciperecommendbox">
-      <h2> Dish Suggestions Based on Fridge</h2>
+      <h2>Dish Suggestions Based on Fridge</h2>
     </div>
     <br>
     <br>
 
     <div class="">
       {% for i in food_images %}
-        <form class="" action="/recipes" method="post">
+        <form class="Savedtext" action="/recipes" method="post">
           <!-- <p>{{i[0]}}</p> -->
-          <input type="text" name="recipe_name" value="{{i[0]}}">
+          <input type="button" name="recipe_name"  class="recipe-header" value="{{i[0]}}" readonly>
           <!-- <img src={{i[1]}} /> -->
           <br>
-          <input type="image" name="" src="{{i[1]}}">
+          <input type="image" name="" src="{{i[1]}}" style=" border-radius: 20px;">
+
           <input type="hidden" name="recipe_picture" value="{{i[1]}}">
           <br>
           <input type="submit" name="" value="Save">
@@ -66,11 +67,10 @@
     </div>
   </div>
   <div id="rightrecipe">
-    <h2>+ Saved Recipes</h2>
-
+    <h2>+ Saved Dishes</h2>
     {% for i in all_recipe_models %}
 
-      <h4>{{i.name}}</h4>
+      <div class="Savedtext">{{i.name}}</div> <br>
       <img src="{{i.picture}}" alt="" style="border-radius:10px">
       <form class="" action="/removeRecipe" method="post">
         <input type="submit" name="" value="Delete">

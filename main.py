@@ -268,7 +268,7 @@ class RemoveFridgePage(BaseHandler):
 
 RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=5&ranking=1&ingredients={}"
 
-
+RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=4&ranking=1&ingredients={}"
 class RecipesPage(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
@@ -334,6 +334,7 @@ class RecipesPage(BaseHandler):
     def post(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         name = self.request.get('recipe_name')
+
         picture = self.request.get('recipe_picture')
         recipe = Recipe(name = name,
                         picture = picture)
