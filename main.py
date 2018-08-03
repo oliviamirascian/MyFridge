@@ -172,7 +172,7 @@ class FridgeFoodPage(BaseHandler):
     def post(self):
         addFood = self.request.get('addFood')
         expirationDate = self.request.get('expirationDate')
-
+        
         if expirationDate == "":
             expirationDate = " "
 

@@ -56,16 +56,16 @@
 
 
       <div id="reciperecommendbox">
-        <h4> Possible Recipes based on Fridge</h4>
+        <h4 style="padding: 15px;"> Possible Recipes Based on Fridge</h4>
       </div>
 
       <div class="">
         {% for i in food_images %}
           <form class="" action="/recipes" method="post">
             <!-- <p>{{i[0]}}</p> -->
-            <input type="text" name="recipe_name" value="{{i[0]}}">
+            <p class="recipe-header" name="recipe_name">{{i[0]}}</p>
             <!-- <img src={{i[1]}} /> -->
-            <input type="image" name="" src="{{i[1]}}">
+            <input type="image" name="" src="{{i[1]}}" style="border-radius: 10px;">
             <input type="hidden" name="recipe_picture" value="{{i[1]}}">
             <br>
             <input type="submit" name="" value="Save">
@@ -79,12 +79,14 @@
   <div id="rightrecipe">
     <h2>+ Saved Recipes</h2>
     {% for i in all_recipe_models %}
+    
       <h4>{{i.name}}</h4>
-      <img src="{{i.picture}}" alt="">
+      <img src="{{i.picture}}" alt="" style="border-radius:10px>
       <form class="" action="/removeRecipe" method="post">
         <input type="submit" name="" value="Delete">
         <input type="hidden" name="recipe" value="{{i.name}}">
       </form>
+
     {% endfor %}
   </div>
 
