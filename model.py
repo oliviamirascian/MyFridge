@@ -10,6 +10,7 @@ class FoodFridge(ndb.Model):
 class Recipe(ndb.Model):
     name = ndb.StringProperty(required = True)
     picture = ndb.StringProperty(required = True)
+    id = ndb.StringProperty(required = True)
 
 class User(ndb.Model):
     first_name = ndb.StringProperty(required = True)

@@ -9,17 +9,59 @@ body,
 html {
 margin:0;
 padding:0;
-color:#000;
-background:#f7f7f7;
+background:#ECF1F2;
 }
 
+/* paragraphs font */
+p{
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* h1 fonts */
+h1{
+  font-size: 40px;
+  line-height: 48px;
+  font-family: "Poppins", sans-serif;
+  color: #908f8f;
+  font-weight: 500;
+  border-style: solid;
+}
+
+h2{
+  font-family: "Poppins", sans-serif;
+  color: #000000ad;
+}
+
+button{
+ width: 100%;
+ margin-left: auto;
+ margin-right: auto;
+ background-color: #ff5053;
+}
+
+form{
+  width: 100%;
+}
+
+button:hover{
+  transition: all 0.40s;
+  background-color: #d84244;
+  cursor: pointer;
+}
+.tabs{
+  display: flex;
+  margin-top: 1%;
+  width: 100%;
+  color: #f2f2f2;
+
+}
+
+/* About Us page */
 .nameOlivia {
   font-family: "Poppins", sans-serif;
   font-size: 70px;
   text-align: center;
-  position: relative;
-  padding-left: 80px;
-  right: 100px;
   color: white;
 }
 
@@ -28,9 +70,6 @@ background:#f7f7f7;
   font-family: "Poppins", sans-serif;
   font-size: 70px;
   text-align: center;
-  position: relative;
-  padding-left: 200px;
-  right: 100px;
   color: white;
 }
 
@@ -38,46 +77,36 @@ background:#f7f7f7;
   font-family: "Poppins", sans-serif;
   font-size: 70px;
   text-align: center;
-  position: relative;
-  padding-left: 200px;
-  right: 100px;
   color: white;
-}
-.linkedin {
-  padding-left: 100px;
 }
 
 .container {
   position: relative;
   float: inherit;
-  padding-right: 100px;
+  display: flex;
+  justify-content: center;
+  /* padding-right: 100px; */
 }
+
 .containerjustin {
     position: relative;
     float: inherit;
-    padding-left: 100px;
-
-
+    display: flex;
+    justify-content: center;
 }
+
 .containercattien {
     position: relative;
     float: inherit;
-    padding-left: 100px;
-
-
+    display: flex;
+    justify-content: center;
 }
 
-.image {
-  display: block;
-  width: 100%;
-  align-content: center;
-  height: auto;
-}
 .overlaycattien {
   position: absolute;
-width:360px;
-height:360px;
-border-radius:400px;
+  width:360px;
+  height:360px;
+  border-radius:360px;
   top: 0;
   bottom: 0;
   align:center;
@@ -88,9 +117,9 @@ border-radius:400px;
 
 .overlayjustin {
   position: absolute;
-width:360px;
-height:360px;
-border-radius:400px;
+  width:360px;
+  height:360px;
+  border-radius:360px;
   top: 0;
   bottom: 0;
   align:center;
@@ -101,15 +130,16 @@ border-radius:400px;
 
 .overlay {
   position: absolute;
-width:360px;
-height:360px;
-border-radius:400px;
+  width:360px;
+  height:360px;
+  border-radius:360px;
   top: 0;
   bottom: 0;
   align:center;
   opacity: 0;
   transition: .5s ease;
   background-color: white;
+  display: block;
 }
 
 .container:hover .overlay {
@@ -145,75 +175,14 @@ border-radius:400px;
 }
 
 .text{
-padding-top: 80px ;
-color: black;
-text-align: center;
-font-size: 20px;
-font-family: "Poppins", sans-serif;
-
-
-}
-
-#header {
-padding:5px 10px;
-background:white;
-
-}
-/* paragraphs font */
-p{
-    font-family: "Poppins", sans-serif;
-}
-
-
-/* h1 fonts */
-h1{
-  font-size: 40px;
-  line-height: 48px;
-  font-family: "Poppins", sans-serif;
-  color: #908f8f;
-  font-weight: 500;
-  border-style: solid;
-}
-
-h2{
-  font-family: "Poppins", sans-serif;
-  color: #000000ad;
-
-}
-
-
-/*  */
-
-.tabs{
-  display: flex;
-  margin-top: 1%;
-  margin-left:auto;
-  width: 100%;
-  color: #f2f2f2;
-  padding: 14px 16px;
-  text-decoration: none;
-
-}
-button{
- width: 100%;
- margin-left: auto;
- margin-right: auto;
-background-color: #ff5053;
-}
-form{
-  width: 100%;
-}
-a {
-  text-decoration: none;
-  width: 100px;
+  padding-top: 80px ;
   color: black;
+  text-align: center;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
 }
 
-button:hover{
-  transition: all 0.40s;
-  background-color: #d84244;
-  cursor: pointer;
-}
+
 
 .tab{
 
@@ -223,6 +192,7 @@ button:hover{
   font-size: 20px;
   color: white;
 }
+
 .tababoutus {
   width: 100%;
   margin-left: auto;
@@ -386,16 +356,9 @@ color: white;
 .wrapperaboutus {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-
-  height: 1000px;
-
-
-
-  /* text-align: center; */
 }
 
 #leftaboutus{
-  padding-left: 20%;
   background-color: #707885;
 
 }
@@ -408,36 +371,28 @@ color: white;
   background-color: #fea5a669;
 }
 
+/* heading */
 .wrapperrecipe {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 2000px;
+  min-height: 100%;
+  min-height: 430px;
+  overflow: auto;
 }
 
 .wrapperfridge {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 2000px;
+  min-height: 430px;
+  overflow: auto
 }
 
-.wrappernutri {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 200px;
-}
 
 #leftfridge {
   background-color: #ff5053db;
   text-align: center;
 
 }
-
-
-
-
-
-
-
 
 #fridgeAddRemovebox{
 position: relative;
@@ -570,10 +525,7 @@ background: white;
 #belowTitle{
   height: 0px;
   display: inline;
-}
-
-#belowTitle{
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 #temp {
@@ -590,24 +542,43 @@ background: white;
 }
 
 /* welcome.html */
+
+.gifs{
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+#leftGif{
+  width:220px;
+  height:120px;
+  margin-left: auto;
+}
+
+#rightGif{
+  width:220px;
+  height:120px;
+  margin-right: auto
+}
+
 #background{
-  background-color: #f7f7f7;
+  background-color: #def2ee;
+
 }
 
 #frontTitle{
-  font-size: 100px;
-  font-family: "Poppins", sans-serif;;
-  text-align: center;
+  font-size: 80px;
+  font-family: "Poppins", sans-serif;
   box-sizing: border-box;
-  padding-left: 40px;
+  text-align: center;
+  padding-left: 5%;
   display: inline-block;
   margin-top: 1%;
   color: grey;
   width: auto;
   position: relative;
-
-
+  justify-content: center;
 }
+
 #loginbutton{
   text-align: center;
   font-size: 16px;
@@ -629,16 +600,18 @@ background: white;
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -600px;
+  margin-top: -450px;
   /*top: 275px;
   left: 39%;*/
   width: 300px;
-  height: 350px;
+  height: 360px;
   background-color: white;
   border-radius: 50px;
   text-align: center;
   filter: opacity(95%)
 }
+
+/* Create Account page */
 
 #createAccountbutton{
   text-align: center;
@@ -657,11 +630,20 @@ background: white;
 
 }
 
+
+#createAccountTitle{
+  text-align: center;
+  font-size: 80px;
+  width: auto;
+  font-family: "Poppins", sans-serif;
+  color: grey;
+}
+
 #createAccountBox{
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -650px;
+  margin-top: -480px;
   /* top: 200px;
   left: 39%; */
   width: 300px;
@@ -669,25 +651,22 @@ background: white;
   background-color: white;
   border-radius: 50px;
   text-align: center;
-  filter: opacity(95%)
+  filter: opacity(95%);
+  display: flex;
+  vertical-align: center;
 }
 
 #frontImage{
   position:relative;
-  height: 800px;
+  height: 500px;
   width: 100%;
   filter: opacity(70%);
 }
-#Welcometext {
-  font-size: 40px;
 
-
-
-}
 #incorrect{
   font-size: 15px;
   color: red;
-  background-color: white;
+  margin-top: 5px;
 }
 
 .abcRioButton{

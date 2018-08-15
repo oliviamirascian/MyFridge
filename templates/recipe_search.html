@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% for i in recipe_information%}
+      <h1>Dish: {{i[0]}}</h1>
+      <img src="https://spoonacular.com/recipeImages/{{i[3]}}" alt="">
+      <h1>Preparation time: {{i[1]}}</h1>
+      <form class="" action="/recipeInstructions" method="get">
+        <input type="submit" name="" value="Get Recipe">
+        <input type="hidden" name="recipe_id" value="{{i[2]}}">
+      </form>
+      <br>
+      <br>
+    {% endfor %}
+  </body>
+</html>

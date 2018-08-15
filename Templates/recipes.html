@@ -11,70 +11,76 @@
 
   <body>
 
-    <div class="heading">
-      <h1 id ="fridgeTitle" >Dishes</h1>
+      <div id ="fridgeTitle" >Recipes</div>
+
+      <div class="tabs">
+
+        <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button></form>
+
+        <form  action="/recipes"> <button type="submit" class = "tab" > Recipes </button></form>
+
+        <form  action="/aboutus"> <button type="submit" class = "tababoutus" > About Us </button></form>
+
+      </div>
 
 
-
-        <div class="tabs">
-
-                <form  action="/fridge"> <button type="submit" class = "tab" > My Fridge </button></form>
-
-                <form  action="/recipes"> <button type="submit" class = "tab" > Dishes </button></form>
-
-                <form  action="/aboutus"> <button type="submit" class = "tababoutus" > About Us </button></form>
-
-          </div>
-
-
-      <form id="temp" class="signOut" action="/signIn" method="post">
+      <form id="temp" action="/signIn" method="post">
         <div id = "belowTitle">
           <input type="submit" name="" value="Sign Out">
         </div>
-        <div class="work">
-          <p id = "loggedIn">{{username}} is logged in</p>
-        </div>
+        <p id = "loggedIn">{{username}} is logged in</p>
       </form>
-
-      <div id="header"></div>
 
     </div>
 
 <div class="wrapperrecipe">
   <div id="leftrecipe">
-
-    <div id="reciperecommendbox">
-      <h2>Dish Suggestions Based on Fridge</h2>
-    </div>
     <br>
-    <br>
-
+    <form class="" action="/getRecipe" method="get">
+      <input type="search" name="the_recipe" placeholder="Search recipe..." value="">
+      <input type="submit" name="" value="Go">
+    </form>
+    <h2>Recipe Suggestions Based on Fridge</h2>
+    <br><br>
     <div class="">
       {% for i in food_images %}
-        <form class="Savedtext" action="/recipes" method="post">
           <!-- <p>{{i[0]}}</p> -->
-          <input type="button" name="recipe_name"  class="recipe-header" value="{{i[0]}}" readonly>
+          <input type="button" class="recipe-header" value="{{i[0]}}">
           <!-- <img src={{i[1]}} /> -->
           <br>
           <input type="image" name="" src="{{i[1]}}" style=" border-radius: 20px;">
-
-          <input type="hidden" name="recipe_picture" value="{{i[1]}}">
           <br>
+        <form class="Savedtext" action="/recipes" method="post">
+          <input type="hidden" name="recipe_picture" value="{{i[1]}}">
+          <input type="hidden" name="recipe_name" value="{{i[0]}}">
           <input type="submit" name="" value="Save">
+          <input type="hidden" name="recipeID" value="{{i[2]}}">
+        </form>
+        <form class="" action="/recipeInstructions" method="get">
+          <input type="submit" name="" value="Get Recipe">
+          <input type="hidden" name="recipe_id" value="{{i[2]}}">
         </form>
         <br><br>
       {% endfor %}
     </div>
   </div>
-  <div id="rightrecipe">
-    <h2>+ Saved Dishes</h2>
-    {% for i in all_recipe_models %}
 
-      <div class="Savedtext">{{i.name}}</div> <br>
+  <div id="rightrecipe" class = "Savedtext">
+    <br>
+    <h2>Saved Recipes</h2>
+    {% for i in all_recipe_models %}
+    	<br>
+      <div class = "recipe-header">
+        {{i.name}}
+      </div>
       <img src="{{i.picture}}" alt="" style="border-radius:10px">
       <form class="" action="/removeRecipe" method="post">
         <input type="submit" name="" value="Delete">
         <input type="hidden" name="recipe" value="{{i.name}}">
+      </form>
+      <form class="" action="/recipeInstructions" method="get">
+        <input type="submit" value="Get Recipe">
+        <input type="hidden" name="recipe_id" value="{{i.id}}">
       </form>
 
     {% endfor %}
