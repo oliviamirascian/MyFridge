@@ -112,20 +112,24 @@ class CreateAccount(BaseHandler):
         self.response.write(createAccount_template.render())
 
     def post(self):
+        createAccount_template = JINJA_ENVIRONMENT.get_template('templates/createAccount.html')
         first_name = self.request.get('FirstName')
         last_name = self.request.get('LastName')
         username = self.request.get('Username')
         password = self.request.get('Password')
 
-        user = User(first_name = first_name,
-                    last_name = last_name,
-                    username = username,
-                    password = password)
-
-        user.put()
-
-        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-        self.response.write(welcome_template.render())
+        d = {
+            'exists': 'The username already exists.'
+        }
+        if len(User.query().filter(username == User.username).fetch()) == 0:
+            user = User(first_name = first_name,
+                        last_name = last_name,
+                        username = username,
+                        password = password)
+            user.put()
+            self.redirect('/')
+        else:
+            self.response.write(createAccount_template.render(d))
 
 class FridgePage(BaseHandler):
     def get(self):

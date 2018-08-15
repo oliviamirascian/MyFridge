@@ -549,8 +549,6 @@ background: white;
   filter: opacity(95%)
 }
 
-/* Create Account page */
-
 #createAccountbutton{
   text-align: center;
   font-size: 16px;
@@ -565,9 +563,18 @@ background: white;
 #createAccountbutton:hover{
   background: #85848440;
   color: white;
-
 }
 
+/* Create Account page */
+
+#create{
+  font-size: 20px; border-radius:10px
+}
+
+#create:hover{
+  background: #85848440;
+  color: white;
+}
 
 #createAccountTitle{
   text-align: center;
@@ -585,7 +592,7 @@ background: white;
   /* top: 200px;
   left: 39%; */
   width: 300px;
-  height: 450px;
+  height: 460px;
   background-color: white;
   border-radius: 50px;
   text-align: center;
