@@ -25,9 +25,7 @@
 
 
       <form id="temp" action="/signIn" method="post">
-        <div id = "belowTitle">
-          <input type="submit" name="" value="Sign Out">
-        </div>
+        <input type="submit" name="" value="Sign Out" id = "signOut">
         <p id = "loggedIn">{{username}} is logged in</p>
       </form>
 
@@ -37,11 +35,11 @@
   <div id="leftrecipe">
     <br>
     <form class="" action="/getRecipe" method="get">
-      <input type="search" name="the_recipe" placeholder="Search recipe..." value="">
-      <input type="submit" name="" value="Go">
+      <input type="search" name="the_recipe" placeholder="Search recipe..." value="" id = "search">
+      <input type="submit" name="" value="Go" id = "submit">
     </form>
-    <h2>Recipe Suggestions Based on Fridge</h2>
-    <br><br>
+    <h2>Recipe Suggestions</h2>
+    <br>
     <div class="">
       {% for i in food_images %}
           <!-- <p>{{i[0]}}</p> -->
@@ -67,12 +65,11 @@
 
   <div id="rightrecipe" class = "Savedtext">
     <br>
-    <h2>Saved Recipes</h2>
+    <h2 style = "">Saved Recipes</h2>
     {% for i in all_recipe_models %}
-    	<br>
-      <div class = "recipe-header">
-        {{i.name}}
-      </div>
+    <br>
+      <input type="button" name="" value="{{i.name}}" class = "recipe-header">
+      <br>
       <img src="{{i.picture}}" alt="" style="border-radius:10px">
       <form class="" action="/removeRecipe" method="post">
         <input type="submit" name="" value="Delete">

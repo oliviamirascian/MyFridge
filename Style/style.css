@@ -26,11 +26,22 @@ h1{
   color: #908f8f;
   font-weight: 500;
   border-style: solid;
+  margin: 0;
 }
 
 h2{
   font-family: "Poppins", sans-serif;
   color: #000000ad;
+}
+
+h4{
+  font-size: 40px;
+  line-height: 48px;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  font-weight: 500;
+  border-style: solid;
+  margin-bottom: 10px;
 }
 
 button{
@@ -49,12 +60,46 @@ button:hover{
   background-color: #d84244;
   cursor: pointer;
 }
+
+/* header */
+
 .tabs{
   display: flex;
   margin-top: 1%;
   width: 100%;
   color: #f2f2f2;
 
+}
+
+.tab{
+
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
+  color: white;
+}
+
+.tababoutus {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
+  color: white;
+  background-color: #707885;
+
+}
+
+.tababoutus:hover{
+  background-color: #606671;
+  cursor: pointer;
+
+}
+
+.tabs a:hover {
+  background: #ddd;
+  color: black;
+  cursor: pointer;
 }
 
 /* About Us page */
@@ -182,62 +227,7 @@ button:hover{
   font-family: "Poppins", sans-serif;
 }
 
-
-
-.tab{
-
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 20px;
-  color: white;
-}
-
-.tababoutus {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 20px;
-  color: white;
-  background-color: #707885;
-
-}
-
-.tababoutus:hover{
-  background-color: #606671;
-  cursor: pointer;
-
-}
-
-
-
-.tabs a:hover {
-  background: #ddd;
-  color: black;
-  cursor: pointer;
-}
-
-/* nutriTracker.html */
-
-.addButton{
-  height: 30px;
-  /*display: block;*/
-}
-
-.removeButton{
-  height: 30px;
-  /*display: block;*/
-}
-
-
-/* recipes.html */
-
-#Rightdish {
-
-font-size: 30px;
-font-family: "Poppins", sans-serif;
-}
-
+/* this is for every page title */
 #fridgeTitle {
   text-align: center;
   margin-top: 1%;
@@ -249,6 +239,7 @@ font-family: "Poppins", sans-serif;
   border-style: solid;
 }
 
+/* recipes.html */
 .recipe-header {
   background-color: white;
   border-radius: 20px;
@@ -271,34 +262,37 @@ font-family: "Poppins", sans-serif;
 
 #submit{
   padding: 7px;
-  background: white;
+  background: gray;
   border: 1px solid #607d8b;
   color: white;
   margin-left: -5px;}
 
+#submit:hover{
+  background: #333;
+  transition: all 0.40s;
+  background-color: #445963;
+  padding: 7px;
+  border: 1px solid #333;
+}
 
-#Displayfoodbutton:hover {
-  background-color: #f4f3f3;
-  color: black;
-   cursor: pointer;
-
-
+.Savedtext{
+  font-size: 50px
+  color:white;
+  font-family: "Poppins", sans-serif;
 
 }
+
+/* fridge.html */
 
 #foodExpiration {
   color: white;
   box-sizing: border-box;
   display: none;
   overflow: hidden;
-  /* padding-left: 20px;
-  padding-right: 20px; */
-
 }
 
 .fridgefood-div:hover + #foodExpiration {
   display:inline-table;
-
 }
 
 
@@ -317,50 +311,36 @@ font-family: "Poppins", sans-serif;
 .fridgefood-div:hover {
   color: grey;
  box-shadow: 0 13px 13px rgba(230, 228, 228, 0.4);
-
-
-
-
-
 }
 
-
-
-
-#submit:hover{
-  background: #333;
-  transition: all 0.40s;
-  background-color: #445963;
-  padding: 7px;
-  border: 1px solid #333;
+#Displayfoodbutton{
+border: 2px solid white;
+border-radius: 8px;
+color: grey;
 }
 
-#recipeAddRemove{
-margin-top: 30%;
-}
-
-#Savedrecipes{
-  float: right;
-
-}
-
-
-
-
-h1 {
-margins:0;
-color: white;
+#Displayfoodbutton:hover {
+  background-color: #f4f3f3;
+  color: black;
+   cursor: pointer;
 }
 /* columns for each page */
+
+/* AboutUs.html */
 
 .wrapperaboutus {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+@media screen and (max-width: 770px){
+  .wrapperaboutus{ display: grid;
+  grid-template-columns: 1fr;
+  }
+}
+
 #leftaboutus{
   background-color: #707885;
-
 }
 
 #middleaboutus{
@@ -387,63 +367,6 @@ color: white;
   overflow: auto
 }
 
-
-#leftfridge {
-  background-color: #ff5053db;
-  text-align: center;
-
-}
-
-#fridgeAddRemovebox{
-position: relative;
-margin-left: auto;
-margin-right: auto;
-margin-top: -00px;
-/*top: 275px;
-left: 39%;*/
-width: 300px;
-height: 350px;
-background-color: #CAEBF2;
-border-radius: 50px;
-text-align: center;
-filter: opacity(90%)
-}
-#nutriaddremovebox{
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: -00px;
-  /*top: 275px;
-  left: 39%;*/
-  width: 300px;
-  height: 350px;
-  background-color: #CAEBF2;
-  border-radius: 50px;
-  text-align: center;
-  filter: opacity(90%)
-
-
-}
-
-#recipesearchbox{
-
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: -00px;
-  /*top: 275px;
-  left: 39%;*/
-  width: 300px;
-  height: 100px;
-  background-color: #CAEBF2;
-  border-radius: 30px;
-  text-align: center;
-  filter: opacity(90%)
-
-
-}
-
-
 #recipeaddremovebox{
 
   position: relative;
@@ -462,46 +385,9 @@ filter: opacity(90%)
 
 }
 
-
-
-h4{
-  font-size: 40px;
-  line-height: 48px;
-  font-family: "Poppins", sans-serif;
-  color: white;
-  font-weight: 500;
-  border-style: solid;
-  margin-bottom: 10px;
-}
-
-
-
-
-
-
-#rightfridge {
-  background-color: #CAEBF2;
-  text-align: center;
-;
-}
-
-
-#leftnutri {
-  background-color: #c1c1c1;
-  text-align: center;
-}
-
-#rightnutri {
-  background-color: #CAEBF2;
-  text-align: center;
-}
-
-
-
 #leftrecipe {
   background-color: #ff5053db;
   text-align: center;
-  height: 100%;
 }
 
 #rightrecipe {
@@ -522,10 +408,21 @@ background: white;
 
 /* fridge.html */
 
-#belowTitle{
-  height: 0px;
-  display: inline;
-  padding-top: 20px;
+#rightfridge {
+  background-color: #CAEBF2;
+  text-align: center;
+}
+
+#leftfridge {
+  background-color: #ff5053db;
+  text-align: center;
+}
+
+#signOut{
+  width: 80px;
+  height: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 #temp {
@@ -538,7 +435,51 @@ background: white;
   white-space: normal;
 }
 
+#addFoodButton {
+  width: 100px;
+  color:white;
+  font-family: "Poppins", sans-serif;
+  background-color: #acc7dcd6;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 4px;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+#addFoodButton:hover {
+  transition: all 0.40s;
+  background-color: #9f9aaa;
+
+}
+
+#addFoodForm {
+  background-color: #ec4c4e;
+  font-family: "Poppins", sans-serif;
+  display: none;
+  padding: 8px 3px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  float: left;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+}
 /* welcome.html */
+
+#frontImage{
+  position:relative;
+  height: 500px;
+  width: 100%;
+  filter: opacity(70%);
+}
+
+#incorrect{
+  font-size: 15px;
+  color: red;
+  margin-top: 5px;
+}
 
 .gifs{
   display: grid;
@@ -651,68 +592,4 @@ background: white;
   filter: opacity(95%);
   display: flex;
   vertical-align: center;
-}
-
-#frontImage{
-  position:relative;
-  height: 500px;
-  width: 100%;
-  filter: opacity(70%);
-}
-
-#incorrect{
-  font-size: 15px;
-  color: red;
-  margin-top: 5px;
-}
-
-.abcRioButton{
-  margin: 0 auto;
-}
-
-#addFoodButton {
-  width: 100px;
-  color:white;
-  font-family: "Poppins", sans-serif;
-  background-color: #acc7dcd6;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 4px;
-  border: 1px solid white;
-  cursor: pointer;
-}
-#addFoodButton:hover {
-  transition: all 0.40s;
-  background-color: #9f9aaa;
-
-}
-
-#addFoodForm {
-
-background-color: #ec4c4e;
-  font-family: "Poppins", sans-serif;
-display: none;
-padding: 8px 3px;
-overflow: hidden;
-text-decoration: none;
-color: inherit;
-float: left;
-text-align: center;
-cursor: pointer;
-border-radius: 10px;
-
-
-}
-
-.Savedtext{
-  font-size: 50px
-  color:white;
-  font-family: "Poppins", sans-serif;
-
-}
-
-#Displayfoodbutton{
-border: 2px solid white;
-border-radius: 8px;
-color: grey;
 }
