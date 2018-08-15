@@ -1,26 +1,6 @@
 // This function will hide the add button and show the text
 // input that will allow the user to add an item to their
 // food list
-function addToTextInput(){
-  var addButton = document.getElementsByClassName('addButton');
-  var textInput = document.getElementsByClassName('textAddFood');
-  var addText = document.getElementsByClassName('addText');
-
-  addButton.style.display = "none";
-  textInput.style.display = "block";
-}
-
-// This function will hide the remove button and show the text
-// input that will allow the user to remove an item from their
-// food list
-function removeToTextInput(){
-  var removeButton = document.getElementsByClassName('removeButton');
-  var textInput = document.getElementsByClassName('textRemoveFood');
-  var removeText = document.getElementsByClassName('removeText');
-
-  removeButton.style.display = "none";
-  textInput.style.display = "block";
-}
 
 function addFood(){
   fetch("/fridgefood", {
@@ -32,14 +12,7 @@ function addFood(){
   }).then((response) => response.json())
   .then(function(jsonfoodID) {
     console.log(jsonfoodID);
-    console.log('Im here');
   })
-}
-
-// This function will move an object from the Today list to the
-// History list in the NutriTracker
-function moveToHistory(){
-
 }
 
 function checkExpirationDate(){
@@ -54,69 +27,47 @@ function checkExpirationDate(){
   } else {
     var day = String(today.getDate());
   }
+  // sets up today's date
   var date = String(today.getFullYear())+month+day;
   var dateCompare = Number(date);
   var foodList = document.getElementsByClassName("fridgefood-div");
-  // var food = foodList.getElementById("foodItem");
-  console.log(foodList)
   var expiringSoon = document.getElementById("expiringSoon");
   var expired = document.getElementById("expired");
-  var foodListLength = foodList.length;
-  for (var i = 0; i < foodListLength; i++){
+  console.log(foodList);
+  expiredStore = []
+  expiringSoonStore = []
+  for (var i = 0; i < foodList.length; i++){
     var food = foodList[i];
+    console.log(i);
+    // console.log(foodList);
+    console.log(food);
+    var name = food.getElementsByTagName("p")[0].innerHTML;
     var foodExpiration = food.getElementsByTagName("p")[1].innerHTML;
     if(foodExpiration == "Expires  "){
       food.getElementsByTagName("p")[1].innerHTML = "Does not expire";
-    } else {
+    }
+    else {
       var foodExpirationCompare = Number(foodExpiration.replace(/-|Expires| /g,""));
       if ((foodExpirationCompare - dateCompare) <= 0){
-        food.classList.add("expired-div");
-        expired.appendChild(food);
-      } else if ((foodExpirationCompare - dateCompare) <= 8){
-        food.classList.add("expiringsoon-div");
-        expiringSoon.appendChild(food);
+        // food.classList.add("expired-div");
+        // expired.appendChild(food);
+        expiredStore.push(food);
+      }
+      else if ((foodExpirationCompare - dateCompare) <= 7){
+        // food.classList.add("expiringsoon-div");
+        expiringSoonStore.push(food);
       }
     }
   }
-
-  expiringSoon = document.getElementsByClassName("expiringsoon-div");
-  for (var i = 0; i < expiringSoon.length; i++){
-    var expiringSoonItems = expiringSoon[i];
-    var foodExpiration = expiringSoonItems.getElementsByTagName("p")[1].innerHTML;
-    var foodExpirationCompare = Number(foodExpiration.replace(/-/g,""));
-    if (dateCompare >= foodExpirationCompare){
-      expired.appendChild(expiringSoonItems);
-    }
+  for (var i = 0; i < expiredStore.length; i++) {
+    expired.appendChild(expiredStore[i]);
+  }
+  for (var i = 0; i < expiringSoonStore.length; i++) {
+    expiringSoon.appendChild(expiringSoonStore[i]);
   }
 
 }
 
-function addItemToFridge(){
-  var ul = document.getElementById("listFridge");
-  var input = document.getElementById("addFoodFridge");
-  var li = document.createElement('li');
-  li.setAttribute('id',input.value);
-  li.appendChild(document.createTextNode(input.value));
-  ul.appendChild(li);
-}
-
-function removeItemFromFridge(){
-  var ul = document.getElementById("listFridge");
-  var input = document.getElementById("removeFoodFridge");
-  var item = document.getElementById(input.value);
-  ul.removeChild(item);
-}
-
-// welcome.html
-
-// function signOut() {
-//   var auth2 = gapi.auth2.getAuthInstance();
-//   auth2.signOut().then(function () {
-//   });
-//   window.location = "http://localhost:8080";
-// }
-
-// welcome.html
 
 document.addEventListener('DOMContentLoaded', () => {
   button = document.getElementById('addFoodButton');

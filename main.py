@@ -268,7 +268,6 @@ class RemoveFridgePage(BaseHandler):
 
 RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=5&ranking=1&ingredients={}"
 
-RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=4&ranking=1&ingredients={}"
 class RecipesPage(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
@@ -323,7 +322,7 @@ class RecipesPage(BaseHandler):
             # 200 means it's good
             if result.status_code == 200:
                 print(result.content)
-                food_images = list(map(lambda x: (x["title"],x["image"]), json.loads(result.content)))#makes it an array of image urls
+                food_images = list(map(lambda x: (x["title"],x["image"],x["id"]), json.loads(result.content)))#makes it an array of image urls
                 self.response.write(recipes_template.render(food_images=food_images,**d))
                 # do stuff you want
             else:
@@ -334,10 +333,11 @@ class RecipesPage(BaseHandler):
     def post(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
         name = self.request.get('recipe_name')
-
         picture = self.request.get('recipe_picture')
+        id = self.request.get('recipeID')
         recipe = Recipe(name = name,
-                        picture = picture)
+                        picture = picture,
+                        id = id)
         #just key
         recipe_key = recipe.put()
         #whole recipe model
@@ -350,17 +350,17 @@ class RecipesPage(BaseHandler):
         user.recipes.append(recipe_key)
         user.put()
 
-        keys = user.recipes
-        recipe_models_list = []
-        recipes_name = []
-        for i in keys:
-            model = i.get()
-            if model:
-                if model.name not in recipes_name:
-                    recipe_models_list.append(model)
-                    recipes_name.append(model.name)
-
-        d = {'all_recipe_models' : recipe_models_list}
+        # keys = user.recipes
+        # recipe_models_list = []
+        # recipes_name = []
+        # for i in keys:
+        #     model = i.get()
+        #     if model:
+        #         if model.name not in recipes_name:
+        #             recipe_models_list.append(model)
+        #             recipes_name.append(model.name)
+        #
+        # d = {'all_recipe_models' : recipe_models_list}
         # self.response.write(recipes_template.render(d))
         self.redirect("/recipes?")
 
@@ -428,8 +428,7 @@ class RemoveRecipe(BaseHandler):
 
             # 200 means it's good
             if result.status_code == 200:
-                print(result.content)
-                food_images = list(map(lambda x: (x["title"],x["image"]), json.loads(result.content)))#makes it an array of image urls
+                food_images = list(map(lambda x: (x["title"],x["image"], x["id"]), json.loads(result.content)))#makes it an array of image urls
                 self.response.write(recipes_template.render(food_images=food_images,**d))
                 # do stuff you want
             else:
@@ -438,12 +437,101 @@ class RemoveRecipe(BaseHandler):
         else:
             self.redirect('/')
 
-class RecipeInstrucionsPage(BaseHandler):
+recipe_instructions_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{}/analyzedInstructions?stepBreakdown=true"
+recipe_ingredients_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{}/information?includeNutrition=false"
+class PossibleRecipes(BaseHandler):
     def get(self):
-        recipeInstructions_template = JINJA_ENVIRONMENT.get_template('templates/recipe_display.html')
-        self.response.write(recipeInstructions_template.render())
-        recipe = self.request.get('recipeName')
+        recipeID = self.request.get('recipe_id')
+        url = recipe_instructions_url.format(recipeID)
+        url1 = recipe_ingredients_url.format(recipeID)
+        result = urlfetch.fetch(
+            url = url,
+            headers={
+                "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                "Accept": "application/json"
+              },
+          validate_certificate = True,
+          method = urlfetch.GET,
+          deadline = 30
+        )
 
+        result1 = urlfetch.fetch(
+            url = url1,
+            headers={
+                "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                "Accept": "application/json"
+            },
+            validate_certificate = True,
+            method = urlfetch.GET,
+            deadline = 30
+        )
+
+        if (result.status_code == 200) and len(json.loads(result.content)) > 0:
+            #ingredients
+            json_response1 = json.loads(result1.content)
+            ingredients = json_response1["extendedIngredients"]
+            self.response.write("<br><br> <a href = \"/recipes\">Back to Recipes Page </a> <br><br>")
+            self.response.write("Ingredients:" + "<br><br>")
+            for ingredient in ingredients:
+                self.response.write(ingredient["name"] + " ")
+                self.response.write(str(ingredient["amount"]) + " ")
+                self.response.write(ingredient["unit"])
+                self.response.write("<br>")
+            #recipeInstructions
+            self.response.write("<br>")
+            json_response = json.loads(result.content)[0]
+            steps = json_response["steps"]
+            self.response.write("<br> Recipe Insructions: <br> <br>")
+            counter = 1
+            for i in steps:
+                self.response.write("Step:" + str(counter))
+                counter+=1
+                self.response.write("<br>")
+                self.response.write(i["step"])
+                self.response.write("<br>")
+        else:
+            self.response.write("oops there was an error")
+
+search_recipe_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?instructionsRequired=true&number=5&offset=0&query={}"
+class RecipesSearch(BaseHandler):
+    def get(self):
+        recipe_search_template = JINJA_ENVIRONMENT.get_template('templates/recipe_search.html')
+        recipe = self.request.get('the_recipe')
+        recipe = recipe.replace(' ', '+')
+        url = search_recipe_url.format(recipe)
+        result = urlfetch.fetch(
+            url = url,
+            headers = {
+                "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                "Accept": "application/json"
+            },
+            validate_certificate = True,
+            method = urlfetch.GET,
+            deadline = 30
+        )
+        self.response.write("<br><br> <a href = \"/recipes\">Back to Recipes Page </a>")
+        if result.status_code == 200:
+            recipe_information = list(map(lambda x: (x["title"],x["readyInMinutes"],x["id"],x["image"]), json.loads(result.content)["results"]))
+            self.response.write(recipe_search_template.render(recipe_information = recipe_information))
+        else:
+            self.response.write("oops an error occurred")
+        # result = urlfetch.fetch(
+        #     url=url,
+        #     headers={
+        #         "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+        #         "Accept": "application/json"
+        #     },
+        #     validate_certificate=True,#makes website more secuire
+        #     method=urlfetch.GET,#get request
+        #     deadline=30# gives it at most 30 seconds until it errors
+        # )
+        # if result.status_code == 200:
+        #     print(result.content)
+        #     food_images = list(map(lambda x: (x["title"],x["image"], x["id"]), json.loads(result.content)))#makes it an array of image urls
+        #     self.response.write(recipes_template.render(food_images=food_images,**d))
+        #     # do stuff you want
+        # else:
+        #     self.response.write("oops an api call error occured")
 
 
 class NotFoundPage(BaseHandler):
@@ -469,6 +557,7 @@ app = webapp2.WSGIApplication([
     # ('/recipesdisplay', RecipesDisplay),
     ('/notfound', NotFoundPage),
     ('/signIn', FridgePage),
-    ('/recipeInstructions',RecipeInstrucionsPage),
+    ('/recipeInstructions',PossibleRecipes),
     ('/removeRecipe', RemoveRecipe),
+    ('/getRecipe', RecipesSearch)
 ], debug=True, config = config)
