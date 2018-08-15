@@ -534,11 +534,8 @@ background: white;
 }
 
 #loggedIn{
-  width: 160px;
   margin-left: auto;
-
-  /* border-style: solid; */
-  /* margin-right: 85% */
+  white-space: normal;
 }
 
 /* welcome.html */
