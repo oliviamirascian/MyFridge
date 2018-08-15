@@ -494,7 +494,8 @@ class PossibleRecipes(BaseHandler):
                 self.response.write(i["step"])
                 self.response.write("<br>")
         else:
-            self.response.write("oops there was an error")
+            self.response.write("sorry, recipe does not exist <br>")
+            self.response.write("<a href = \"/recipes\">Back to Recipes Page </a")
 
 search_recipe_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?instructionsRequired=true&number=5&offset=0&query={}"
 class RecipesSearch(BaseHandler):
@@ -518,24 +519,8 @@ class RecipesSearch(BaseHandler):
             recipe_information = list(map(lambda x: (x["title"],x["readyInMinutes"],x["id"],x["image"]), json.loads(result.content)["results"]))
             self.response.write(recipe_search_template.render(recipe_information = recipe_information))
         else:
-            self.response.write("oops an error occurred")
-        # result = urlfetch.fetch(
-        #     url=url,
-        #     headers={
-        #         "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
-        #         "Accept": "application/json"
-        #     },
-        #     validate_certificate=True,#makes website more secuire
-        #     method=urlfetch.GET,#get request
-        #     deadline=30# gives it at most 30 seconds until it errors
-        # )
-        # if result.status_code == 200:
-        #     print(result.content)
-        #     food_images = list(map(lambda x: (x["title"],x["image"], x["id"]), json.loads(result.content)))#makes it an array of image urls
-        #     self.response.write(recipes_template.render(food_images=food_images,**d))
-        #     # do stuff you want
-        # else:
-        #     self.response.write("oops an api call error occured")
+            self.response.write("sorry, recipe does not exist")
+            self.response.write("<a href = \"/recipes\">Back to Recipes Page </a")
 
 
 class NotFoundPage(BaseHandler):
