@@ -209,6 +209,29 @@ button:hover{
 
 }
 
+.button {
+  padding: 5px 10px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  outline: none;
+  border-radius: 15px;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  transform: translateY(1px);
+}
+
+#recipeButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 /* fridge.html */
 
 #foodExpiration {
@@ -238,6 +261,19 @@ button:hover{
 .fridgefood-div:hover {
   color: grey;
  box-shadow: 0 13px 13px rgba(230, 228, 228, 0.4);
+}
+
+
+#delete{
+  font-size: 20px;
+  background-color: #FED6D6;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+#delete:hover{
+  background-color:#DCC7C7;
 }
 
 #Displayfoodbutton{

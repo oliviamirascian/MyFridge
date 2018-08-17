@@ -39,47 +39,53 @@
       <input type="submit" name="" value="Go" id = "submit">
     </form>
     <h2>Recipe Suggestions</h2>
-    <br>
     <div class="">
       {% for i in food_images %}
-          <!-- <p>{{i[0]}}</p> -->
-          <input type="button" class="recipe-header" value="{{i[0]}}">
-          <!-- <img src={{i[1]}} /> -->
-          <br>
-          <input type="image" name="" src="{{i[1]}}" style=" border-radius: 20px;">
-          <br>
-        <form class="Savedtext" action="/recipes" method="post">
-          <input type="hidden" name="recipe_picture" value="{{i[1]}}">
-          <input type="hidden" name="recipe_name" value="{{i[0]}}">
-          <input type="submit" name="" value="Save">
-          <input type="hidden" name="recipeID" value="{{i[2]}}">
-        </form>
-        <form class="" action="/recipeInstructions" method="get">
-          <input type="submit" name="" value="Get Recipe">
-          <input type="hidden" name="recipe_id" value="{{i[2]}}">
-        </form>
+      <div style = "border-style: groove;">
+        <br>
+        <input type="button" class="recipe-header" value="{{i[0]}}">
+        <br>
+        <input type="image" name="" src="{{i[1]}}" style=" border-radius: 20px;">
         <br><br>
+        <div id="recipeButtons">
+          <form class="Savedtext" action="/recipes" method="post">
+            <input type="hidden" name="recipe_picture" value="{{i[1]}}">
+            <input type="hidden" name="recipe_name" value="{{i[0]}}">
+            <input type="submit" name="" value="Save" class = "button" style = "margin-left: auto; margin-right: auto;">
+            <input type="hidden" name="recipeID" value="{{i[2]}}">
+          </form>
+          <form class="" action="/recipeInstructions" method="get">
+            <input type="submit" name="" value="Get Recipe" class = "button" style = "margin-left: auto; margin-right: auto;">
+            <input type="hidden" name="recipe_id" value="{{i[2]}}">
+          </form>
+        </div>
+        <br>
+      </div>
       {% endfor %}
     </div>
   </div>
 
   <div id="rightrecipe" class = "Savedtext">
-    <br>
+    <br><br>
     <h2 style = "">Saved Recipes</h2>
     {% for i in all_recipe_models %}
-    <br>
+    <div style = "border-style: groove">
+      <br>
       <input type="button" name="" value="{{i.name}}" class = "recipe-header">
       <br>
       <img src="{{i.picture}}" alt="" style="border-radius:10px">
-      <form class="" action="/removeRecipe" method="post">
-        <input type="submit" name="" value="Delete">
-        <input type="hidden" name="recipe" value="{{i.name}}">
-      </form>
-      <form class="" action="/recipeInstructions" method="get">
-        <input type="submit" value="Get Recipe">
-        <input type="hidden" name="recipe_id" value="{{i.id}}">
-      </form>
-
+      <div id = "recipeButtons">
+        <form class="" action="/removeRecipe" method="post">
+          <input type="submit" name="" value="Delete" class = "button" style = "margin-left: auto; margin-right: auto;">
+          <input type="hidden" name="recipe" value="{{i.name}}">
+        </form>
+        <form class="" action="/recipeInstructions" method="get">
+          <input type="submit" value="Get Recipe" class = "button" style = "margin-left: auto; margin-right: auto;">
+          <input type="hidden" name="recipe_id" value="{{i.id}}">
+        </form>
+      </div>
+      <br>
+    </div>
     {% endfor %}
   </div>
 

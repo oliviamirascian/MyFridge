@@ -51,14 +51,14 @@
             </div>
           </div>
 
-          <div id="foodList" >
+          <div id="foodList">
             {% for food in food_fridge %}
             <div class="fridgefood-div">
               <p class="foodName">{{food.name}}</p>
               <img src="{{food.image}}">
               <p class="foodExpiration">Expires {{food.expirationDate}}</p>
               <form class="" action="/removeFood" method="post">
-                <input type="submit" name="" value="delete">
+                <input type="submit" name="" value="delete" id = "delete">
                 <input type="hidden" name="foodName" value="{{food.name}}">
                 <input type="hidden" name="expirationDate" value="{{food.expirationDate}}">
               </form>
