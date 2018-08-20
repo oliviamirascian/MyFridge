@@ -485,7 +485,7 @@ class PossibleRecipes(BaseHandler):
             self.response.write("<br>")
             json_response = json.loads(result.content)[0]
             steps = json_response["steps"]
-            self.response.write("<br> Recipe Insructions: <br> <br>")
+            self.response.write("<br> Recipe Instructions: <br> <br>")
             counter = 1
             for i in steps:
                 self.response.write("Step:" + str(counter))
