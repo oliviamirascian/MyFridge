@@ -2,19 +2,24 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/Style/style.css">
     <title></title>
   </head>
   <body>
+    <br><br>
     {% for i in recipe_information%}
+    <div style = "border-style: solid;">
       <h1>Dish: {{i[0]}}</h1>
       <img src="https://spoonacular.com/recipeImages/{{i[3]}}" alt="">
       <h1>Preparation time: {{i[1]}}</h1>
+      <br>
       <form class="" action="/recipeInstructions" method="get">
-        <input type="submit" name="" value="Get Recipe">
+        <input type="submit" name="" value="Get Recipe" class = "button">
         <input type="hidden" name="recipe_id" value="{{i[2]}}">
       </form>
       <br>
-      <br>
+    </div>
+    <br><br>
     {% endfor %}
   </body>
 </html>
