@@ -354,18 +354,6 @@ class RecipesPage(BaseHandler):
         user.recipes.append(recipe_key)
         user.put()
 
-        # keys = user.recipes
-        # recipe_models_list = []
-        # recipes_name = []
-        # for i in keys:
-        #     model = i.get()
-        #     if model:
-        #         if model.name not in recipes_name:
-        #             recipe_models_list.append(model)
-        #             recipes_name.append(model.name)
-        #
-        # d = {'all_recipe_models' : recipe_models_list}
-        # self.response.write(recipes_template.render(d))
         self.redirect("/recipes?")
 
 class RemoveRecipe(BaseHandler):

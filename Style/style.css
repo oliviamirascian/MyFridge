@@ -226,7 +226,7 @@ button:hover{
   transform: translateY(1px);
 }
 
-#recipeButtons {
+.recipeButtons {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }

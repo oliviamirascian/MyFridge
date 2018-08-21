@@ -45,9 +45,9 @@
         <br>
         <input type="button" class="recipe-header" value="{{i[0]}}">
         <br>
-        <input type="image" name="" src="{{i[1]}}" style=" border-radius: 20px;">
+        <input type="image" name="" src="{{i[1]}}" style=" border-radius: 10px;">
         <br><br>
-        <div id="recipeButtons">
+        <div class="recipeButtons">
           <form action="/recipes" method="post">
             <input type="hidden" name="recipe_picture" value="{{i[1]}}">
             <input type="hidden" name="recipe_name" value="{{i[0]}}">
@@ -73,8 +73,8 @@
       <br>
       <input type="button" name="" value="{{i.name}}" class = "recipe-header">
       <br>
-      <img src="{{i.picture}}" alt="" style="border-radius:10px">
-      <div id = "recipeButtons">
+      <img src="{{i.picture}}" alt="" style="border-radius:10px; height:231px; width: 312px;">
+      <div class = "recipeButtons">
         <form class="" action="/removeRecipe" method="post">
           <input type="submit" name="" value="Delete" class = "button" style = "margin-left: auto; margin-right: auto;">
           <input type="hidden" name="recipe" value="{{i.name}}">

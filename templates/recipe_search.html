@@ -10,14 +10,22 @@
     {% for i in recipe_information%}
     <div style = "border-style: solid;">
       <h1>Dish: {{i[0]}}</h1>
-      <img src="https://spoonacular.com/recipeImages/{{i[3]}}" alt="">
+      <img src="https://spoonacular.com/recipeImages/{{i[3]}}" alt="food" style = "height: 231px; width: 312px;">
       <h1>Preparation time: {{i[1]}}</h1>
       <br>
-      <form class="" action="/recipeInstructions" method="get">
-        <input type="submit" name="" value="Get Recipe" class = "button">
-        <input type="hidden" name="recipe_id" value="{{i[2]}}">
-      </form>
+      <div class="recipeButtons">
+        <form action="/recipes" method="post">
+          <input type="hidden" name="recipe_picture" value="https://spoonacular.com/recipeImages/{{i[3]}}">
+          <input type="hidden" name="recipe_name" value="{{i[0]}}">
+          <input type="submit" name="" value="Save" class = "button" style = "margin-left: auto; margin-right: auto;">
+          <input type="hidden" name="recipeID" value="{{i[2]}}">
+        </form>
+        <form class="" action="/recipeInstructions" method="get">
+          <input type="submit" name="" value="Get Recipe" class = "button" style = "margin-left: auto; margin-right: auto;">
+          <input type="hidden" name="recipe_id" value="{{i[2]}}">
+        </form>
       <br>
+      </div>
     </div>
     <br><br>
     {% endfor %}
