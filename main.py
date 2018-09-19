@@ -182,7 +182,6 @@ class FridgeFoodPage(BaseHandler):
             "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
           }
         ).content
-        print(response)
         json_response = json.loads(response)
 
         foodID = str(getFoodID(json_response))
@@ -271,7 +270,6 @@ class RemoveFridgePage(BaseHandler):
         self.response.write(fridge_template.render(d))
 
 RECIPE_API_URL_TEMPLATE = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&limitLicense=false&number=5&ranking=1&ingredients={}"
-
 class RecipesPage(BaseHandler):
     def get(self):
         recipes_template = JINJA_ENVIRONMENT.get_template('templates/recipes.html')
@@ -310,7 +308,9 @@ class RecipesPage(BaseHandler):
             result = urlfetch.fetch(
                 url=url,
                 headers={
-                    "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                    # "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                    # "Accept": "application/json"
+                    "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
                     "Accept": "application/json"
                 },
                 validate_certificate=True,#makes website more secuire
@@ -325,7 +325,6 @@ class RecipesPage(BaseHandler):
 
             # 200 means it's good
             if result.status_code == 200:
-                print(result.content)
                 food_images = list(map(lambda x: (x["title"],x["image"],x["id"]), json.loads(result.content)))#makes it an array of image urls
                 self.response.write(recipes_template.render(food_images=food_images,**d))
                 # do stuff you want
@@ -405,7 +404,7 @@ class RemoveRecipe(BaseHandler):
             result = urlfetch.fetch(
                 url=url,
                 headers={
-                    "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                    "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
                     "Accept": "application/json"
                 },
                 validate_certificate=True,#makes website more secuire
@@ -439,7 +438,7 @@ class PossibleRecipes(BaseHandler):
         result = urlfetch.fetch(
             url = url,
             headers={
-                "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
                 "Accept": "application/json"
               },
           validate_certificate = True,
@@ -450,7 +449,7 @@ class PossibleRecipes(BaseHandler):
         result1 = urlfetch.fetch(
             url = url1,
             headers={
-                "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
                 "Accept": "application/json"
             },
             validate_certificate = True,
@@ -495,7 +494,7 @@ class RecipesSearch(BaseHandler):
         result = urlfetch.fetch(
             url = url,
             headers = {
-                "X-Mashape-Key": "1JtCtxBW9UmshioZoOu5KHTJq7nop19lNHVjsnzbMCzcmil9Hb",
+                "X-Mashape-Key": "mJg6lyimB0mshXFRCjyqO6ZJ5mUup1xzQ4ijsnldTTcG83VyNc",
                 "Accept": "application/json"
             },
             validate_certificate = True,
